@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+
+
+<VBox fx:controller="sepm.ss13.gast.gui.GASTController"
+    xmlns:fx="http://javafx.com/fxml">
+    <children>
+    	<Label text="Hello, World!"/>
+    	<TextField fx:id="textField"/>
+        <Button text="Click Me!" onAction="#handleButtonAction" />
+    </children>
+</VBox>
+
