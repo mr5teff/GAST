@@ -4,10 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="298.0" prefWidth="355.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.GASTController">
+<VBox prefHeight="413.0" prefWidth="574.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.GASTController">
   <children>
-    <Label text="Hello, World!" />
-    <TabPane prefHeight="177.0" prefWidth="314.0" tabClosingPolicy="UNAVAILABLE">
+    <TabPane prefHeight="281.0" prefWidth="574.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
         <Tab text="Untitled Tab 1">
           <content>

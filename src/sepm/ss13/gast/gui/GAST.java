@@ -31,10 +31,11 @@ public class GAST extends Application {
 	public void start(Stage s) throws Exception {
 		// TODO Auto-generated method stub
 		
-		Parent root = FXMLLoader.load(getClass().getResource("gast.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("WelcomeScreen.fxml"));
+		
         
-        s.setTitle("FXML Welcome");
-        s.setScene(new Scene(root, 300, 275));
+        s.setTitle("Gastronomie Assistent für Statistik- und Tischmanagement");  
+        s.setScene(new Scene(root, 800, 600));
         s.show();
 		
 	}
