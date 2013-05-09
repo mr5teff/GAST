@@ -105,6 +105,7 @@ public class GAST extends Application {
         } finally {
             in.close();
         } 
+        
         Scene scene = new Scene(page);
         stage.setScene(scene);
         stage.sizeToScene();

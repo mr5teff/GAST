@@ -2,6 +2,7 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
@@ -14,10 +15,81 @@
           <children>
             <TabPane prefHeight="374.0" prefWidth="596.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <tabs>
-                <Tab content="$null" text="Untitled Tab 1" />
-                <Tab text="Untitled Tab 2">
+                <Tab text="Konfiguration">
                   <content>
-                    <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                      <children>
+                        <FlowPane layoutX="45.0" layoutY="61.0" prefHeight="252.0" prefWidth="377.0">
+                          <children>
+                            <Label alignment="CENTER_LEFT" contentDisplay="RIGHT" mnemonicParsing="false" mouseTransparent="false" pickOnBounds="false" text="Hier können Sie die Daten Ihrer Gastronomie konfigurieren" textAlignment="LEFT" underline="false" wrapText="false">
+                              <FlowPane.margin>
+                                <Insets bottom="15.0" />
+                              </FlowPane.margin>
+                            </Label>
+                            <GridPane prefHeight="185.0" prefWidth="322.0000999999975">
+                              <children>
+                                <Label text="Betriebsname" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                <Label text="Adresse" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <Label text="Telefonnummer" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                <Label text="Betriebslogo" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                <Label text="Tischanzahl" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              </children>
+                              <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="124.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="199.0" />
+                              </columnConstraints>
+                              <rowConstraints>
+                                <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="-1.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              </rowConstraints>
+                            </GridPane>
+                            <Button cancelButton="false" defaultButton="false" depthTest="INHERIT" focusTraversable="true" mnemonicParsing="false" mouseTransparent="false" pickOnBounds="false" text="Änderungen speichern" textAlignment="LEFT" textOverrun="ELLIPSIS" underline="false" visible="true" wrapText="false">
+                              <FlowPane.margin>
+                                <Insets right="100.0" top="30.0" />
+                              </FlowPane.margin>
+                            </Button>
+                            <Button cancelButton="false" defaultButton="false" depthTest="INHERIT" focusTraversable="true" mnemonicParsing="false" mouseTransparent="false" pickOnBounds="false" text="Rückgängig" textAlignment="LEFT" textOverrun="ELLIPSIS" underline="false" visible="true" wrapText="false">
+                              <FlowPane.margin>
+                                <Insets top="30.0" />
+                              </FlowPane.margin>
+                            </Button>
+                          </children>
+                        </FlowPane>
+                        <TextArea layoutX="422.0" layoutY="203.0" prefWidth="200.0" text="Kom. Manuel:&#10;Beim Betriebslogo würde ich aus dem Filesystem ein image laden.&#10;(Hier nur mal ein Test feld)" wrapText="true" />
+                      </children>
+                    </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Speisekarte verwalten">
+                  <content>
+                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                      <children>
+                        <Label layoutX="14.0" layoutY="23.0" text="Hier können SIe Ihre Speisekarte konfigurieren" />
+                        <AnchorPane layoutX="14.0" layoutY="56.0" prefHeight="466.0" prefWidth="768.0">
+                          <children>
+                            <Label layoutX="14.0" layoutY="6.0" text="Produktkategorien" />
+                            <ListView layoutX="13.0" layoutY="33.0" prefHeight="419.0" prefWidth="185.0" />
+                            <Button layoutX="209.0" layoutY="48.0" mnemonicParsing="false" prefWidth="135.0" text="Neue Kategorie" />
+                            <Label layoutX="370.0" layoutY="6.0" text="Produkte der gewählten Kategorie" />
+                            <ListView layoutX="370.0" layoutY="33.0" prefHeight="419.0" prefWidth="185.0" />
+                            <Button layoutX="574.0" layoutY="48.0" mnemonicParsing="false" prefWidth="135.0" text="Neues Produkt" />
+                            <Button layoutX="574.0" layoutY="84.0" mnemonicParsing="false" prefWidth="135.0" text="Produkt bearbeiten" />
+                            <Button layoutX="574.0" layoutY="123.0" mnemonicParsing="false" prefWidth="135.0" text="Produkt löschen" />
+                            <TextArea layoutX="555.0" layoutY="158.0" prefHeight="186.0" prefWidth="200.0" text="Kommentar Manuel:&#10;Bei neues Produkt könnte ein Formular Fenster geöffnet werden, wo dann alle relevanten Informationen eines Produktes eingegeben werden.&#10;&#10;In der Liste würde ich nur den Namen anzeigen, zusätzliche ein Kontext menü mit &quot;New, edit, delete&quot;" wrapText="true" />
+                            <Button layoutX="209.0" layoutY="84.0" mnemonicParsing="false" prefWidth="135.0" text="Kategorie bearbeiten" />
+                            <Button layoutX="209.0" layoutY="123.0" mnemonicParsing="false" prefWidth="135.0" text="Kategorie löschen" />
+                          </children>
+                        </AnchorPane>
+                      </children>
+                    </AnchorPane>
                   </content>
                 </Tab>
               </tabs>
@@ -30,8 +102,8 @@
           <menus>
             <Menu disable="false" mnemonicParsing="true" text="Anzeige" visible="true">
               <items>
-                <MenuItem onAction="#clickOnKassa" mnemonicParsing="false" text="Kassa" />
-                <MenuItem onAction="#clickOnKueche" mnemonicParsing="false" text="Küche" />
+                <MenuItem mnemonicParsing="false" onAction="#clickOnKassa" text="Kassa" />
+                <MenuItem mnemonicParsing="false" onAction="#clickOnKueche" text="Küche" />
               </items>
             </Menu>
           </menus>
