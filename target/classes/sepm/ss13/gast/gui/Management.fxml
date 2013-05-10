@@ -63,6 +63,7 @@
                             </Button>
                           </children>
                         </FlowPane>
+                        <TextArea layoutX="422.0" layoutY="203.0" prefWidth="200.0" text="Kom. Manuel:&#10;Beim Betriebslogo würde ich aus dem Filesystem ein image laden.&#10;(Hier nur mal ein Test feld)" wrapText="true" />
                       </children>
                     </AnchorPane>
                   </content>
@@ -76,13 +77,15 @@
                           <children>
                             <Label layoutX="14.0" layoutY="6.0" text="Produktkategorien" />
                             <ListView layoutX="13.0" layoutY="33.0" prefHeight="419.0" prefWidth="185.0" />
-                            <Button layoutX="209.0" layoutY="48.0" mnemonicParsing="false" text="Neue Kategorie" />
+                            <Button layoutX="209.0" layoutY="48.0" mnemonicParsing="false" prefWidth="135.0" text="Neue Kategorie" />
                             <Label layoutX="370.0" layoutY="6.0" text="Produkte der gewählten Kategorie" />
                             <ListView layoutX="370.0" layoutY="33.0" prefHeight="419.0" prefWidth="185.0" />
-                            <Button layoutX="574.0" layoutY="48.0" mnemonicParsing="false" prefWidth="130.0" text="Neues Produkt" />
-                            <Button layoutX="574.0" layoutY="84.0" mnemonicParsing="false" prefWidth="130.0" text="Produkt bearbeiten" />
-                            <Button layoutX="574.0" layoutY="123.0" mnemonicParsing="false" prefWidth="130.0" text="Produkt löschen" />
+                            <Button layoutX="574.0" layoutY="48.0" mnemonicParsing="false" prefWidth="135.0" text="Neues Produkt" />
+                            <Button layoutX="574.0" layoutY="84.0" mnemonicParsing="false" prefWidth="135.0" text="Produkt bearbeiten" />
+                            <Button layoutX="574.0" layoutY="123.0" mnemonicParsing="false" prefWidth="135.0" text="Produkt löschen" />
                             <TextArea layoutX="555.0" layoutY="158.0" prefHeight="186.0" prefWidth="200.0" text="Kommentar Manuel:&#10;Bei neues Produkt könnte ein Formular Fenster geöffnet werden, wo dann alle relevanten Informationen eines Produktes eingegeben werden.&#10;&#10;In der Liste würde ich nur den Namen anzeigen, zusätzliche ein Kontext menü mit &quot;New, edit, delete&quot;" wrapText="true" />
+                            <Button layoutX="209.0" layoutY="84.0" mnemonicParsing="false" prefWidth="135.0" text="Kategorie bearbeiten" />
+                            <Button layoutX="209.0" layoutY="123.0" mnemonicParsing="false" prefWidth="135.0" text="Kategorie löschen" />
                           </children>
                         </AnchorPane>
                       </children>
