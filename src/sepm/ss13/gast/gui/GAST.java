@@ -1,11 +1,17 @@
 package sepm.ss13.gast.gui;
 
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import sepm.ss13.gast.dao.DAOException;
+import sepm.ss13.gast.dao.DBConnector;
 
 
 import javafx.application.Application;
@@ -20,8 +26,16 @@ public class GAST extends Application {
 	
 	private static Logger log = Logger.getLogger(Application.class);
 	
+	private static String kuecheFxml = "Kueche.fxml";
+	private static String welcomeFxml = "WelcomeScreen.fxml";
+	private static String managementFxml = "Management.fxml";
+	private static String kassaFxml = "Kassa.fxml";
+	
 	private Stage stage;
-
+	private ManagementController managementController;
+	private KassaController kassaController;
+	private KuecheController kuecheController;
+	private WelcomeScreenController welcomeScreenController;
 	/**
 	 * @param args
 	 */
@@ -42,54 +56,61 @@ public class GAST extends Application {
 		stage = primaryStage;
 		stage.setTitle("Gastronomie Assistent für Statistik- und Tischmanagement");
 		
+		initService();
+		
 		gotoWelcome();
 		
-		/*
-		Parent root = FXMLLoader.load(getClass().getResource("WelcomeScreen.fxml"));
-        
-        Scene welcomeScene = new Scene(root, 800, 600); 
-        welcomeScene.addEventFilter(arg0, arg1)
-        primaryStage.setScene(welcomeScene);
-        */
-		
         primaryStage.show();
+	}
+	
+	private void initService()
+	{
+		DBConnector dbcon = DBConnector.instance();
+		
+		try {
+			dbcon.openConnection("www.bachl.tk", "", "SA", "lalalalalala");
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
+	
 	public void gotoManagement() {
         try {
-            ManagementController managementController = (ManagementController) replaceSceneContent("Management.fxml");
+            managementController = (ManagementController) replaceSceneContent(managementFxml);
             managementController.setApp(this);
         } catch (Exception ex) {
-        	log.error("ERROR");
+        	log.error("Management Scene could not be loaded");
         }
     }
 	
 	public void gotoKassa() {
         try {
-            KassaController kassaController = (KassaController) replaceSceneContent("Kassa.fxml");
+            kassaController = (KassaController) replaceSceneContent(kassaFxml);
             kassaController.setApp(this);
         } catch (Exception ex) {
-        	log.error("ERROR");
+        	log.error("Kassa Scene could not be loaded");
         }
     }
 	
 	public void gotoKueche() {
         try {
-            KuecheController kuecheController = (KuecheController) replaceSceneContent("Kueche.fxml");
+            kuecheController = (KuecheController) replaceSceneContent(kuecheFxml);
             kuecheController.setApp(this);
         } catch (Exception ex) {
-        	log.error("ERROR");
+        	log.error("Kueche Scene could not be loaded");
         }
     }
 	
 	
 	public void gotoWelcome() {
         try {
-            WelcomeScreenController welcomeScreenController = (WelcomeScreenController) replaceSceneContent("WelcomeScreen.fxml");
+            welcomeScreenController = (WelcomeScreenController) replaceSceneContent(welcomeFxml);
             welcomeScreenController.setApp(this);
         } catch (Exception ex) {
-        	log.error("ERROR");
+        	log.error("Welcome Scene could not be loaded");
         }
     }
 	
@@ -104,7 +125,7 @@ public class GAST extends Application {
             page = (AnchorPane) loader.load(in);
         } finally {
             in.close();
-        } 
+        }
         
         Scene scene = new Scene(page);
         stage.setScene(scene);

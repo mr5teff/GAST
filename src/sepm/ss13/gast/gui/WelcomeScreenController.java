@@ -22,6 +22,7 @@ public class WelcomeScreenController implements Initializable {
 	 
 	 
 	 public void clickOnKassa(ActionEvent event) {
+		 
 		 if (application == null){
 	            // We are running in isolated FXML, possibly in Scene Builder.
 	            // NO-OP.
@@ -30,7 +31,7 @@ public class WelcomeScreenController implements Initializable {
 		 else {
 			 
 			 application.gotoKassa();
-	           
+	     
 	     }
 	 }
 
