@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 public class WelcomeScreenController implements Initializable {
@@ -14,13 +15,18 @@ public class WelcomeScreenController implements Initializable {
 	 private static Logger log = Logger.getLogger(Application.class);
 	
 	 private GAST application;    
+	 
+	 public void initialize(URL arg0, ResourceBundle arg1) {
+			// TODO Auto-generated method stub
+			
+		}
 	    
 	 public void setApp(GAST application){
 	        this.application = application;
 	 }
 	 
 	 
-	 
+	 @FXML
 	 public void clickOnKassa(ActionEvent event) {
 		 
 		 if (application == null){
@@ -35,6 +41,7 @@ public class WelcomeScreenController implements Initializable {
 	     }
 	 }
 
+	 @FXML
 	 public void clickOnKueche(ActionEvent event) {
 		 if (application == null){
 	            // We are running in isolated FXML, possibly in Scene Builder.
@@ -47,6 +54,7 @@ public class WelcomeScreenController implements Initializable {
 	        }
 	 }
 	 
+	 @FXML
 	 public void clickOnManagement(ActionEvent event) {
 		 if (application == null){
 	            // We are running in isolated FXML, possibly in Scene Builder.
@@ -61,9 +69,6 @@ public class WelcomeScreenController implements Initializable {
 	 }
  
 	
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }
