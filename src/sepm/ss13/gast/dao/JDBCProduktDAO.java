@@ -1,7 +1,6 @@
 package sepm.ss13.gast.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,10 +9,7 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import sepm.ss13.gast.domain.Bestellung;
-import sepm.ss13.gast.domain.Einkauf;
 import sepm.ss13.gast.domain.Produkt;
-import sepm.ss13.gast.domain.Rechnung;
 
 /**
  * 
