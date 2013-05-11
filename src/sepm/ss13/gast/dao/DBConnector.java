@@ -14,20 +14,33 @@ import java.sql.SQLException;
 public class DBConnector {
 
 	private static DBConnector dbConnector = null;
-	private static Connection conn = null;
+	
+	private Connection conn = null;
+	
+	private String host;
+	private String database;
+	private String userName;
+	private String password;
 	
 	/**
 	 * Private constructor
+	 * @throws DAOException 
 	 */
-	private DBConnector() {};
+	private DBConnector(String host, String database, String userName, String password) throws DAOException {
+		this.host=host;
+		this.database=database;
+		this.userName=userName;
+		this.password=password;
+	}
 	
 	/**
 	 * Returns a single instance of a DBConnector.
 	 * @return An instance of a DBConnector.
+	 * @throws DAOException 
 	 */
-	public static DBConnector instance() {
+	public static DBConnector instance(String host, String database, String userName, String password) throws DAOException {
 		if(dbConnector == null)
-			dbConnector = new DBConnector();
+			dbConnector = new DBConnector(host,database,userName,password);
 		
 		return dbConnector;
 	}
@@ -41,7 +54,7 @@ public class DBConnector {
 	 * @param password The password to get access to the database.
 	 * @throws DAOException if connection could not be opened.
 	 */
-	public void openConnection(String host, String database, String userName, String password) throws DAOException
+	public void openConnection() throws DAOException
 	{
 		
 		String connectionString = "jdbc:hsqldb:hsql://" + host + "/" + database;

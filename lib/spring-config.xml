@@ -3,14 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!--  <bean id="databaseManager" class="at.ac.tuwien.sepm.database.HSQLDatabaseManager" init-method="init" scope="singleton">
-        <constructor-arg name="host" value="localhost" />
-        <constructor-arg name="database" value="productive" />
-        <constructor-arg name="username" value="sa" />
-        <constructor-arg name="password" value="" />
+    <bean id="databaseManager" class="sepm.ss13.gast.dao.DBConnector" factory-method="instance" init-method="openConnection" scope="singleton">
+        <constructor-arg name="host" value="www.bachl.tk" />
+        <constructor-arg name="database" value="" />
+        <constructor-arg name="userName" value="SA" />
+        <constructor-arg name="password" value="lalalalalala" />
     </bean>
 
-    <bean name="productDAO" class="at.ac.tuwien.sepm.dao.JDBCProductDAO" scope="singleton">
+    <!--<bean name="productDAO" class="at.ac.tuwien.sepm.dao.JDBCProductDAO" scope="singleton">
         <constructor-arg name="databaseManager" ref="databaseManager" />
     </bean>
 

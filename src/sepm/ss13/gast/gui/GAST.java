@@ -36,6 +36,9 @@ public class GAST extends Application {
 	private KassaController kassaController;
 	private KuecheController kuecheController;
 	private WelcomeScreenController welcomeScreenController;
+	
+	private static ApplicationContext ac;
+	
 	/**
 	 * @param args
 	 */
@@ -43,7 +46,7 @@ public class GAST extends Application {
 		// TODO Auto-generated method stub
 		
 		log.info("Start Application");
-		ApplicationContext ac = new ClassPathXmlApplicationContext("spring-config.xml");
+		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		
 		Application.launch(GAST.class, args);
 
@@ -65,14 +68,16 @@ public class GAST extends Application {
 	
 	private void initService()
 	{
-		DBConnector dbcon = DBConnector.instance();
+		/*DBConnector dbcon = DBConnector.instance();
 		
 		try {
 			dbcon.openConnection("www.bachl.tk", "", "SA", "lalalalalala");
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+		
+        DBConnector dbc = (DBConnector) ac.getBean("databaseManager");
 		
 	}
 	
