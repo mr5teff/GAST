@@ -12,7 +12,7 @@ import sepm.ss13.gast.domain.Konfiguration;
 /**
  * 
  */
-public class JDBCKonfigurationDAO {
+public class JDBCKonfigurationDAO implements KonfigurationDAO {
 
 	private static final Logger log = Logger.getLogger (JDBCKonfigurationDAO.class);
 	

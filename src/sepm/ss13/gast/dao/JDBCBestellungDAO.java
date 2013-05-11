@@ -14,7 +14,7 @@ import sepm.ss13.gast.domain.Bestellung;
 /**
  * 
  */
-public class JDBCBestellungDAO {
+public class JDBCBestellungDAO implements BestellungDAO {
 
 	private static final Logger log = Logger.getLogger (JDBCBestellungDAO.class);
 	

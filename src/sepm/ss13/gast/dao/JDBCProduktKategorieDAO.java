@@ -14,7 +14,7 @@ import sepm.ss13.gast.domain.ProduktKategorie;
 /**
  * 
  */
-public class JDBCProduktKategorieDAO {
+public class JDBCProduktKategorieDAO implements ProduktKategorieDAO {
 
 	private static final Logger log = Logger.getLogger (JDBCProduktKategorieDAO.class);
 	

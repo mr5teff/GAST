@@ -15,7 +15,7 @@ import sepm.ss13.gast.domain.Rechnung;
 /**
  * 
  */
-public class JDBCRechnungDAO {
+public class JDBCRechnungDAO implements RechnungDAO {
 	
 	private static final Logger log = Logger.getLogger (JDBCRechnungDAO.class);
 
