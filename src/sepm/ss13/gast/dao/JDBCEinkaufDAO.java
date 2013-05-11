@@ -14,7 +14,7 @@ import sepm.ss13.gast.domain.Einkauf;
 /**
  * 
  */
-public class JDBCEinkaufDAO 
+public class JDBCEinkaufDAO implements EinkaufDAO 
 {
 
 	private static final Logger log = Logger.getLogger (JDBCEinkaufDAO.class);
@@ -26,7 +26,7 @@ public class JDBCEinkaufDAO
 		this.c = c;
 	}
 	
-	public void create(Einkauf ek) throws DAOException 
+	public Einkauf create(Einkauf ek) throws DAOException 
 	{
 		try 
 		{
@@ -44,6 +44,8 @@ public class JDBCEinkaufDAO
 		{
 			throw new DAOException("ERROR: failed to save Einkauf to DB!");
 		}
+		
+		return ek;
 	}
 	
 	public ArrayList<Einkauf> search(Einkauf ek) throws DAOException 
@@ -51,17 +53,22 @@ public class JDBCEinkaufDAO
 		try 
 		{
 			PreparedStatement ps = c.prepareStatement("SELECT id, warenid, menge, datum, preis FROM einkauf WHERE (id=? OR ?=-1) AND (warenid=? OR ?=-1) AND (menge=? OR ?=-1) AND datum LIKE ? AND (preis=? OR ?=-1)");
-			ps.setInt(1, ek.getWarenId());
-			ps.setInt(2, ek.getMenge());
-			ps.setDate(3, ek.getDatum());
-			ps.setDouble(4, ek.getPreis());
+			ps.setInt(1, ek.getId());
+			ps.setInt(2, ek.getId());
+			ps.setInt(3, ek.getWarenId());
+			ps.setInt(4, ek.getWarenId());
+			ps.setInt(5, ek.getMenge());
+			ps.setInt(6, ek.getMenge());
+			ps.setDate(7, ek.getDatum());
+			ps.setInt(8, ek.getPreis());
+			ps.setInt(9, ek.getPreis());
 			
 			ResultSet rs = ps.executeQuery();
 			ArrayList<Einkauf> al= new ArrayList<Einkauf>();
 			
 			while(rs.next()) 
 			{
-				al.add(new Einkauf(rs.getInt("id"), rs.getInt("warenid"), rs.getInt("menge"), rs.getDate("datum"), rs.getDouble("preis")));		
+				al.add(new Einkauf(rs.getInt("id"), rs.getInt("warenid"), rs.getInt("menge"), rs.getDate("datum"), rs.getInt("preis")));		
 			}
 			
 			return al;			
@@ -76,12 +83,13 @@ public class JDBCEinkaufDAO
 	{	
 		try
 		{
-			PreparedStatement ps = c.prepareStatement("UPDATE einkauf SET warenid=?, menge=?, datum=?, preisd=? WHERE id=?");
+			PreparedStatement ps = c.prepareStatement("UPDATE einkauf SET warenid=?, menge=?, datum=?, preis=? WHERE id=?");
 			
 			ps.setInt(1, ek.getWarenId());
 			ps.setInt(2, ek.getMenge());
 			ps.setDate(3, ek.getDatum());
 			ps.setDouble(4, ek.getPreis());
+			ps.setInt(5, ek.getId());
 						
 			int updatedRows = ps.executeUpdate();
 			
