@@ -8,9 +8,9 @@ public class Einkauf {
 	private int warenId;
 	private int menge;
 	private Date datum;
-	private double preis;
+	private int preis;
 	
-	public Einkauf(int id, int warenId, int menge, Date datum, double preis) {
+	public Einkauf(int id, int warenId, int menge, Date datum, int preis) {
 		
 		this.id = id;
 		this.warenId = warenId;
@@ -59,12 +59,12 @@ public class Einkauf {
 		this.datum = datum;
 	}
 	
-	public double getPreis(){
+	public int getPreis(){
 		
 		return preis;
 	}
 	
-	public void setPreis(double preis){
+	public void setPreis(int preis){
 		
 		this.preis = preis;
 	}
