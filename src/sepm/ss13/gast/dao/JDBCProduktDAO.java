@@ -27,10 +27,11 @@ public class JDBCProduktDAO implements ProduktDAO {
 	
 	public Produkt create(Produkt p) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("INSERT INTO produkt (id,name,typid,preis) VALUES (NULL,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps=c.prepareStatement("INSERT INTO produkt (id,name,typid,preis,deleted) VALUES (NULL,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1,p.getName());
 			ps.setInt(2, p.getKategorie());
 			ps.setInt(3, p.getPreis());
+			ps.setBoolean(4, p.getDeleted());
 			ps.executeUpdate();
 			
 			ResultSet rs = ps.getGeneratedKeys();
@@ -47,7 +48,7 @@ public class JDBCProduktDAO implements ProduktDAO {
 	
 	public ArrayList<Produkt> search(Produkt p) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT id,name,typid,preis FROM produkt WHERE (id=? OR ?=-1) AND name LIKE ? AND (typid=? OR ?=-1)");
+			PreparedStatement ps=c.prepareStatement("SELECT id,name,typid,preis,deleted FROM produkt WHERE (id=? OR ?=-1) AND name LIKE ? AND (typid=? OR ?=-1)");
 			ps.setInt(1,p.getId());
 			ps.setInt(2,p.getId());
 			ps.setString(3,"%"+p.getName()+"%");
@@ -57,7 +58,7 @@ public class JDBCProduktDAO implements ProduktDAO {
 			ResultSet rs=ps.executeQuery();
 			ArrayList<Produkt> al=new ArrayList<Produkt>();
 			while(rs.next()) {
-				al.add(new Produkt(rs.getInt("id"),rs.getString("name"),rs.getInt("typid"),rs.getInt("preis")));
+				al.add(new Produkt(rs.getInt("id"),rs.getString("name"),rs.getInt("typid"),rs.getInt("preis"),rs.getBoolean("deleted")));
 				
 			}
 			return al;
@@ -95,10 +96,37 @@ public class JDBCProduktDAO implements ProduktDAO {
 		}
 	}
 	
+	
+	public void delete(Produkt p) throws DAOException{
+		try
+		{
+			PreparedStatement ps = c.prepareStatement("UPDATE produkt SET deleted = true WHERE id=?");
+			
+			ps.setInt(1, p.getId());
+						
+			int updatedRows = ps.executeUpdate();
+			
+			log.info("SQL updated rows: " + updatedRows);
+			
+			if(updatedRows == 0)
+				throw new DAOException("product id not found in DB!");				
+		}
+		catch(SQLException e) {
+			throw new DAOException("ERROR: failed to update product in DB!");
+		}
+		catch (NullPointerException e) {
+			throw new IllegalArgumentException();
+		}
+	}
+	
+	
+	
 	/**
 	 * Liefert alle Produkte einer bestimmten Produktkategorie
 	 */
 	public ArrayList<Produkt> getProdukteNachKategorie(ProduktKategorie pk) throws DAOException {
+		return this.search(new Produkt(-1,"",pk.getId(),0));
+		/*
 		try {
 			PreparedStatement ps=c.prepareStatement("SELECT id,name,typid,preis FROM produkt WHERE (typid=? OR ?=-1);");
 			ps.setInt(1,pk.getId());
@@ -116,6 +144,6 @@ public class JDBCProduktDAO implements ProduktDAO {
 		}
 		catch (NullPointerException e) {
 			throw new IllegalArgumentException();
-		}
+		}*/
 	}
 }
