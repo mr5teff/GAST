@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="810.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.KonfigurationController">
+  <children>
+    <FlowPane prefHeight="252.0" prefWidth="377.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0">
+      <children>
+        <Label contentDisplay="RIGHT" text="Hier können Sie die Daten Ihrer Gastronomie konfigurieren">
+          <FlowPane.margin>
+            <Insets bottom="15.0" />
+          </FlowPane.margin>
+        </Label>
+        <GridPane prefHeight="185.0" prefWidth="322.0000999999975">
+          <children>
+            <Label id="name" text="Betriebsname" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label id="adresse" text="Adresse" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <Label id="tel" text="Telefonnummer" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <Label id="logo" text="Betriebslogo" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <Label id="tischanzahl" text="Tischanzahl" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+          </children>
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="124.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="199.0" />
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+        </GridPane>
+        <Button mnemonicParsing="false" text="Änderungen speichern" onAction="#saveKonfiguration">
+          <FlowPane.margin>
+            <Insets right="100.0" top="30.0" />
+          </FlowPane.margin>
+        </Button>
+        <Button mnemonicParsing="false" text="Rückgängig">
+          <FlowPane.margin>
+            <Insets top="30.0" />
+          </FlowPane.margin>
+        </Button>
+      </children>
+    </FlowPane>
+    <TextArea layoutX="449.0" layoutY="200.0" prefWidth="200.0" text="Kom. Manuel:&#10;Beim Betriebslogo würde ich aus dem Filesystem ein image laden.&#10;(Hier nur mal ein Test feld)" wrapText="true" />
+  </children>
+</AnchorPane>
