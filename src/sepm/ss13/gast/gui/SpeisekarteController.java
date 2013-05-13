@@ -46,7 +46,7 @@ public class SpeisekarteController implements Initializable {
 	 private ObservableList<ProduktKategorie> kategorieItems;
 	 private ObservableList<Produkt> produktItems;
 	 
-	 @FXML private NeueProduktKategorieDialog npkd;
+	 private NeueProduktKategorieDialog npkd;
 	 
 	 private static final ProduktKategorie kategorieBlank = new ProduktKategorie();
 	 
