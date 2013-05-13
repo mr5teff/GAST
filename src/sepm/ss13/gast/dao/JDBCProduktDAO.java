@@ -95,27 +95,4 @@ public class JDBCProduktDAO implements ProduktDAO {
 		}
 	}
 	
-	/**
-	 * Liefert alle Produkte einer bestimmten Produktkategorie
-	 */
-	public ArrayList<Produkt> getProdukteNachKategorie(ProduktKategorie pk) throws DAOException {
-		try {
-			PreparedStatement ps=c.prepareStatement("SELECT id,name,typid,preis FROM produkt WHERE (typid=? OR ?=-1);");
-			ps.setInt(1,pk.getId());
-			ps.setInt(2,pk.getId());
-			
-			ResultSet rs=ps.executeQuery();
-			ArrayList<Produkt> al=new ArrayList<Produkt>();
-			while(rs.next()) {
-				al.add(new Produkt(rs.getInt("id"),rs.getString("name"),rs.getInt("typid"),rs.getInt("preis")));
-				
-			}
-			return al;
-		} catch (SQLException e) {
-			throw new DAOException("ERROR: failed to search DB for products!");
-		}
-		catch (NullPointerException e) {
-			throw new IllegalArgumentException();
-		}
-	}
 }

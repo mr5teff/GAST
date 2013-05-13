@@ -54,8 +54,6 @@ public interface Service {
 
 	public void updateProdukt(Produkt p) throws DAOException, IllegalArgumentException;
 	
-	public ArrayList<Produkt> getProduktNachKategorie(ProduktKategorie pk) throws DAOException, IllegalArgumentException;
-	
 	/*
 	 * Services für ProduktKategorie
 	 */

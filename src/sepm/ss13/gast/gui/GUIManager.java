@@ -14,6 +14,11 @@ public class GUIManager {
 		stage=s;
 	}
 	
+	public Stage getStage()
+	{
+		return stage;
+	}
+	
 	public void replaceSceneContent(String fxml) {
 		AnchorPane page = null;
 		try {

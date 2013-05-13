@@ -12,7 +12,5 @@ public interface ProduktDAO {
 	public ArrayList<Produkt> search(Produkt p) throws DAOException;
 
 	public void update(Produkt p) throws DAOException;
-	
-	public ArrayList<Produkt> getProdukteNachKategorie(ProduktKategorie pk) throws DAOException;
 
 }

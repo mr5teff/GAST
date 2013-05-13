@@ -127,11 +127,6 @@ public class GASTService implements Service{
 		if(p==null) throw new IllegalArgumentException();
 		produktDAO.update(p);
 	}
-	
-	public ArrayList<Produkt> getProduktNachKategorie(ProduktKategorie pk) throws DAOException, IllegalArgumentException {
-		if(pk==null) throw new IllegalArgumentException();
-		return produktDAO.getProdukteNachKategorie(pk);
-	}
 
 
 	/*

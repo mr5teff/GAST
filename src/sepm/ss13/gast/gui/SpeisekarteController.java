@@ -1,5 +1,6 @@
 package sepm.ss13.gast.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -11,10 +12,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Callback;
 
 import org.apache.log4j.Logger;
@@ -33,15 +40,19 @@ public class SpeisekarteController implements Initializable {
 	private GUIManager gast;
 	 private static Logger log = Logger.getLogger(Application.class);
 	 private Service s;
+	 
 	 private ArrayList<ProduktKategorie> DAOkategorien;
 	 private ArrayList<Produkt> DAOprodukte;
 	 private ObservableList<ProduktKategorie> kategorieItems;
 	 private ObservableList<Produkt> produktItems;
 	 
-	 private static final ProduktKategorie kategoreiBlank = new ProduktKategorie();
+	 @FXML private NeueProduktKategorieDialog npkd;
+	 
+	 private static final ProduktKategorie kategorieBlank = new ProduktKategorie();
 	 
 	 @FXML private ListView<ProduktKategorie> kategorieListView;
 	 @FXML private ListView<Produkt> produktListView;
+	 
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -52,11 +63,9 @@ public class SpeisekarteController implements Initializable {
 		 s = (Service) ac.getBean("GASTService");
 		 
 		 initListView();
+		 	
 		 
-		
-		 
-		 
-		
+		npkd = new NeueProduktKategorieDialog(gast.getStage().getScene().getWindow(), Modality.WINDOW_MODAL, "Neue Produktkategorie");		 
 	}
 	
 	private void initListView()
@@ -78,7 +87,7 @@ public class SpeisekarteController implements Initializable {
 		 
 		 //Lade alle Produktkategorien
 		 try {
-			 DAOkategorien = s.searchProduktKategorie(kategoreiBlank);
+			 DAOkategorien = s.searchProduktKategorie(kategorieBlank);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -112,7 +121,7 @@ public class SpeisekarteController implements Initializable {
 	{
 		//Lade alle Produkte einer bestimmten Kategorie
 		 try {
-			 DAOprodukte = s.getProduktNachKategorie(pk);
+			 DAOprodukte = s.searchProdukt(new Produkt(-1, "", pk.getId(), 0));
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,13 +138,16 @@ public class SpeisekarteController implements Initializable {
 	 @FXML
 	 public void clickOnNeueKategorie(ActionEvent event) {
 		 
-		System.out.println("GEEEHT");
+		 npkd.clearForm();
+		 npkd.setTitle("Neue Kategorie anlegen");
+		 npkd.show();
 	 }
 	 
 	 @FXML
 	 public void clickOnKategorieBearbeiten(ActionEvent event) {
-		 
-		System.out.println("GEEEHT");
+		 npkd.setContent(kategorieListView.getSelectionModel().getSelectedItem());
+		 npkd.setTitle("Kategorie bearbeiten");
+		 npkd.show();
 	 }
 	 @FXML
 	 public void clickOnKategorieLoeschen(ActionEvent event) {
