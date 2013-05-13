@@ -5,14 +5,14 @@ public class Produkt {
 	private String name;
 	private int kategorie;
 	private int preis;
-	
+	private boolean deleted;
 	
 	/**
 	 * Default Konstruktor. "Leeres" Domänenelement
 	 */
 	public Produkt()
 	{
-		this(-1, "", 0, 0);
+		this(-1, "", 0, 0,false);
 	}
 	
 	public Produkt(int id, String name, int kategorie, int preis) {
@@ -20,6 +20,15 @@ public class Produkt {
 		this.setName(name);
 		this.setKategorie(kategorie);
 		this.setPreis(preis);
+		this.setDeleted(false);
+	}
+	
+	public Produkt(int id, String name, int kategorie, int preis,boolean deleted) {
+		this.setId(id);
+		this.setName(name);
+		this.setKategorie(kategorie);
+		this.setPreis(preis);
+		this.setDeleted(deleted);
 	}
 
 	public int getId() {
@@ -54,6 +63,13 @@ public class Produkt {
 		this.preis = preis;
 	}
 	
-	
+	public boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+		
 
 }
