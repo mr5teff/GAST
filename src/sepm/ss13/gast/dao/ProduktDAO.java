@@ -3,6 +3,7 @@ package sepm.ss13.gast.dao;
 import java.util.ArrayList;
 
 import sepm.ss13.gast.domain.Produkt;
+import sepm.ss13.gast.domain.ProduktKategorie;
 
 public interface ProduktDAO {
 
@@ -11,5 +12,7 @@ public interface ProduktDAO {
 	public ArrayList<Produkt> search(Produkt p) throws DAOException;
 
 	public void update(Produkt p) throws DAOException;
+	
+	public ArrayList<Produkt> getProdukteNachKategorie(ProduktKategorie pk) throws DAOException;
 
 }
