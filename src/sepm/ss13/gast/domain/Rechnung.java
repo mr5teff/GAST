@@ -7,6 +7,15 @@ public class Rechnung {
 	private Date datum;
 	private int trinkgeld;
 	
+	
+	/**
+	 * Default Konstruktor. "Leeres" Domänenelement
+	 */
+	public Rechnung()
+	{
+		this(-1, new Date(0), 0);
+	}
+	
 	public Rechnung(int id, Date datum, int trinkgeld) {
 		this.setId(id);
 		this.setDatum(datum);

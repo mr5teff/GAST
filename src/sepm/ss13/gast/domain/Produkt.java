@@ -6,6 +6,15 @@ public class Produkt {
 	private int kategorie;
 	private int preis;
 	
+	
+	/**
+	 * Default Konstruktor. "Leeres" Domänenelement
+	 */
+	public Produkt()
+	{
+		this(-1, "", 0, 0);
+	}
+	
 	public Produkt(int id, String name, int kategorie, int preis) {
 		this.setId(id);
 		this.setName(name);

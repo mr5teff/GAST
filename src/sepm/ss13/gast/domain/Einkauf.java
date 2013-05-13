@@ -10,6 +10,15 @@ public class Einkauf {
 	private Date datum;
 	private int preis;
 	
+	
+	/**
+	 * Default Konstruktor. "Leeres" Domänenelement
+	 */
+	public Einkauf()
+	{
+		this(-1, 0, 0, new Date(0), 0);
+	}
+	
 	public Einkauf(int id, int warenId, int menge, Date datum, int preis) {
 		
 		this.id = id;

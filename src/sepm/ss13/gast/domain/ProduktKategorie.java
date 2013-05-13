@@ -5,6 +5,15 @@ public class ProduktKategorie {
 	private String bezeichnung;
 	private String kurzbezeichnung;
 
+	
+	/**
+	 * Default Konstruktor. "Leeres" Domänenelement
+	 */
+	public ProduktKategorie()
+	{
+		this(-1, "", "");
+	}
+	
 	public ProduktKategorie(int id, String bezeichnung, String kurzbezeichnung) {
 		this.setId(id);
 		this.setBezeichnung(bezeichnung);

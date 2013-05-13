@@ -8,6 +8,14 @@ public class Bestellung {
 	private int rechnung;
 	private String status;
 	
+	/**
+	 * Default Konstruktor. "Leeres" Domänenelement
+	 */
+	public Bestellung()
+	{
+		this(-1, 0, 0, 0, 0, "");
+	}
+	
 	public Bestellung(int id, int tisch, int produkt, int preis, int rechnung, String status) {
 		this.setId(id);
 		this.setTisch(tisch);

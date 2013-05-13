@@ -12,6 +12,14 @@ public class Reservierung {
 	private String name;
 	private String telefonnummer;
 	
+	/**
+	 * Default Konstruktor. "Leeres" Domänenelement
+	 */
+	public Reservierung()
+	{
+		this(-1, new Date(0), 0, 0 ,0 , "", "");
+	}
+	
 	public Reservierung(int id, Date datum, int dauer, int personen, int tischnummer, String name, String telefonnummer) {
 		
 		this.id = id;

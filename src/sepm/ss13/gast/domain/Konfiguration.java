@@ -1,11 +1,22 @@
 package sepm.ss13.gast.domain;
 
+import java.sql.Date;
+
 public class Konfiguration {
 	private String name;
 	private String adresse;
 	private String tel;
 	private byte[] logo;
 	private int tischanzahl;
+	
+	
+	/**
+	 * Default Konstruktor. "Leeres" Domänenelement
+	 */
+	public Konfiguration()
+	{
+		this("", "", "", new byte[1], 0);
+	}
 	
 	public Konfiguration(String name, String adresse, String tel, byte[] logo, int tischanzahl) {
 		this.setName(name);

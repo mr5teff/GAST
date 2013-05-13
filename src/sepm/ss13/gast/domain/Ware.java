@@ -1,10 +1,20 @@
 package sepm.ss13.gast.domain;
 
+import java.sql.Date;
+
 public class Ware {
 	
 	private int id;
 	private String bezeichnung;
 	private int lagerstand;
+	
+	/**
+	 * Default Konstruktor. "Leeres" Domänenelement
+	 */
+	public Ware()
+	{
+		this(-1, "", 0);
+	}
 	
 	public Ware(int id, String bezeichnung, int lagerstand) {
 		

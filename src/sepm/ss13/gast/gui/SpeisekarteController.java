@@ -32,6 +32,8 @@ public class SpeisekarteController implements Initializable {
 	 private ArrayList<ProduktKategorie> DAOkategorien;
 	 private ObservableList<String> kategorieItems;
 	 
+	 private static final ProduktKategorie kategoreiBlank = new ProduktKategorie();
+	 
 	 @FXML private ListView<String> kategorieListe;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -42,26 +44,23 @@ public class SpeisekarteController implements Initializable {
 		 
 		 s = (Service) ac.getBean("GASTService");
 		 
-		 kategorieItems = FXCollections.observableArrayList();
-		 
+		 //Lade alle Produktkategorien
 		 try {
-			 DAOkategorien = s.searchProduktKategorie(new ProduktKategorie(-1, "", ""));
+			 DAOkategorien = s.searchProduktKategorie(kategoreiBlank);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		 
-		 for(ProduktKategorie pk: DAOkategorien)
-		 {
-			 kategorieItems.add(pk.getBezeichnung());
-		 }
-		 
-		// kategorieListe
-		 
-		 kategorieListe.setItems(kategorieItems);
+		} 
+		kategorieItems = FXCollections.observableArrayList();
+		for(ProduktKategorie pk: DAOkategorien)
+		{
+			kategorieItems.add(pk.getBezeichnung());
+		}	 
+		kategorieListe.setItems(kategorieItems);
+		
 		
 	}
 	
