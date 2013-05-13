@@ -36,6 +36,19 @@ public class ManagementController implements Initializable{
 	 public void initialize(URL location, ResourceBundle resources) {
 		 ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		 //s = (Service) ac.getBean("totalesService");
+		 
+		 /*Konfiguration k = null;
+		try {
+			k = s.loadKonfiguration();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		 name.setText(k.getName());
+		 adresse.setText(k.getAdresse());
+		 tel.setText(k.getTel());
+		 tischanzahl.setText(String.valueOf(k.getTischanzahl()));*/
 		}
 	    
 	 public void setApp(GAST application){
