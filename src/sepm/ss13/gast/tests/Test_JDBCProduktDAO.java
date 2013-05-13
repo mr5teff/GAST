@@ -3,7 +3,13 @@
  */
 package sepm.ss13.gast.tests;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,9 +19,12 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.dao.DBConnector;
 import sepm.ss13.gast.dao.JDBCProduktDAO;
+import sepm.ss13.gast.dao.JDBCProduktKategorieDAO;
 import sepm.ss13.gast.domain.Produkt;
+import sepm.ss13.gast.domain.ProduktKategorie;
 
 /**
  * @author Admin
@@ -24,8 +33,30 @@ import sepm.ss13.gast.domain.Produkt;
 public class Test_JDBCProduktDAO {
 	
 	private static ApplicationContext ac;
-	
+	static DBConnector dbc;
 	static JDBCProduktDAO test = null;
+	static JDBCProduktKategorieDAO testKategorie = null;
+	
+	static ProduktKategorie p1_kategorie = null; //create
+	static ProduktKategorie p2_kategorie = null; //create
+
+	static Produkt p1 = null; //create
+	static Produkt p2 = null; //create
+	static Produkt p3 = null; //create
+
+	static Produkt p4 = null; //update
+	static Produkt p5 = null; //update
+	
+	static Produkt p6 = null; //serach
+	static Produkt p7 = null; //serach
+	static Produkt p8 = null; //serach
+	static Produkt p9 = null; //serach
+	
+	static Produkt p10 = null; //delete
+	
+	static ArrayList<Integer> mykeys_Kategorie = new ArrayList<Integer>();
+	static ArrayList<Integer> mykeys = new ArrayList<Integer>();
+	static ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
 	
 
 	/**
@@ -34,68 +65,343 @@ public class Test_JDBCProduktDAO {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
-		DBConnector dbc = (DBConnector) ac.getBean("databaseManager");
+		dbc = (DBConnector) ac.getBean("databaseManager");
 		test = new JDBCProduktDAO(dbc.getConnection());
+		testKategorie = new JDBCProduktKategorieDAO(dbc.getConnection());
 		
-		Produkt p1 = new Produkt(-1,"Test Schnitzel",0,1);
+		p1_kategorie = new ProduktKategorie(-1,"Test 1","T 1");
+		p2_kategorie = new ProduktKategorie(-1,"Test 2","T 2");
+		
+		ProduktKategorie p_temp_kategorie = null;
+		p_temp_kategorie = testKategorie.create(p1_kategorie);
+		p1_kategorie.setId(p_temp_kategorie.getId());
+		p_temp_kategorie = testKategorie.create(p2_kategorie);
+		p2_kategorie.setId(p_temp_kategorie.getId());
+		
+		
+		p1 = new Produkt(-1,"TEST Schnitzel",p1_kategorie.getId(),1000);
+		p2 = new Produkt(-1,"TEST Schnitzel",-2,0);
+		p3 = new Produkt(-1,"TEST Schnitzel IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",p1_kategorie.getId(),1000);
+		
+		p4 = new Produkt(-1,"TEST Update",p2_kategorie.getId(),5000);
+		p5 = new Produkt(-1,"TEST Update IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",p2_kategorie.getId(),5000);
+	
+		p6 = new Produkt(-1,"TEST Search 1",p1_kategorie.getId(),100);
+		p7 = new Produkt(-1,"TEST Search 2",p1_kategorie.getId(),200);
+		p8 = new Produkt(-1,"TEST Search 3",p2_kategorie.getId(),1000);
+		p9 = new Produkt(-1,"TEST Search 4",p2_kategorie.getId(),2000);
+
+		
+		Produkt p_temp = null;
+		p_temp = test.create(p6);
+		p6.setId(p_temp.getId());
+		mykeys.add(p_temp.getId());		
+		p_temp = test.create(p7);
+		p7.setId(p_temp.getId());
+		mykeys.add(p_temp.getId());
+		p_temp = test.create(p8);
+		p8.setId(p_temp.getId());
+		mykeys.add(p_temp.getId());
+		p_temp = test.create(p9);
+		p9.setId(p_temp.getId());
+		mykeys.add(p_temp.getId());
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		for(int i = 0; i < mykeys.size();i++){
+			try {
+				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM produkt WHERE id=?");
+				ps.setInt(1,mykeys.get(i));
+				ps.executeUpdate();
+			} catch (SQLException e) {
+				throw new DAOException("ERROR: failed to delete product from DB!");
+			}
+			catch (NullPointerException e) {
+				throw new IllegalArgumentException();
+			}
+		}
+		testKategorie.delete(p1_kategorie);
+		testKategorie.delete(p2_kategorie);
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@Before
 	public void setUp() throws Exception {
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@After
 	public void tearDown() throws Exception {
+		for(int i = 0; i < mykeys_generated.size();i++){
+			try {
+				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM produkt WHERE id=?");
+				ps.setInt(1,mykeys_generated.get(i));
+				ps.executeUpdate();
+			} catch (SQLException e) {
+				throw new DAOException("ERROR: failed to delete product from DB!");
+			}
+			catch (NullPointerException e) {
+				throw new IllegalArgumentException();
+			}
+		}
 	}
 
 	
-	
-	
-	
-	
-	/**
-	 * Test method for {@link sepm.ss13.gast.dao.JDBCProduktDAO#JDBCProduktDAO(java.sql.Connection)}.
+
+	/* 
+	 * TESTs for CREATE 
 	 */
-	@Test
-	public void testJDBCProduktDAO() {
-		fail("Not yet implemented");
-	}
 
 	/**
 	 * Test method for {@link sepm.ss13.gast.dao.JDBCProduktDAO#create(sepm.ss13.gast.domain.Produkt)}.
 	 */
 	@Test
-	public void testCreate() {
-		fail("Not yet implemented");
+	public void testCreate_1() throws DAOException,IllegalArgumentException {
+		/* INSERT */
+		Produkt p_test = null;
+		p_test = test.create(p1);
+		
+		mykeys_generated.add(p_test.getId());
+		
+		/* GET INSERTED */
+		try {
+			PreparedStatement ps=dbc.getConnection().prepareStatement("SELECT id,name,typid,preis FROM produkt WHERE id=?");
+			ps.setInt(1,p_test.getId());
+
+			
+			ResultSet rs=ps.executeQuery();
+			if(rs.next()) {
+				assertThat(rs.getInt("id"), equalTo(p_test.getId()));
+				assertThat(rs.getString("name"), equalTo(p1.getName()));
+				assertThat(rs.getInt("typid"), equalTo(p1.getKategorie()));
+				assertThat(rs.getInt("preis"), equalTo(p1.getPreis()));
+				return;
+			}else{
+				fail("No Data found");
+				return;
+			}
+		} catch (SQLException e) {
+			fail("ERROR: failed to search DB for product categories!");
+			return;
+		}
+		catch (NullPointerException e) {
+			fail("NullPointerException");
+			return;
+		}
+	}
+	
+	
+	/**
+	 * Test method for {@link sepm.ss13.gast.dao.JDBCProduktDAO#create(sepm.ss13.gast.domain.Produkt)}.
+	 * @throws DAOException 
+	 */
+	@Test (expected=IllegalArgumentException.class) 
+	public void testCreate_2() throws DAOException,IllegalArgumentException {
+		
+		/* INSERT */
+		test.create(null);
+		
+	}
+	
+	/**
+	 * Test method for {@link sepm.ss13.gast.dao.JDBCProduktDAO#create(sepm.ss13.gast.domain.Produkt)}.
+	 * @throws DAOException 
+	 */
+	@Test (expected=DAOException.class) 
+	public void testCreate_3() throws DAOException,IllegalArgumentException {
+		
+		/* INSERT */
+		test.create(p2);
+		
+	}	
+	
+	/**
+	 * Test method for {@link sepm.ss13.gast.dao.JDBCProduktDAO#create(sepm.ss13.gast.domain.Produkt)}.
+	 * @throws DAOException 
+	 */
+	@Test (expected=DAOException.class) 
+	public void testCreate_4() throws DAOException,IllegalArgumentException {
+		
+		/* INSERT */
+		test.create(p3);
+		
+	}	
+
+	
+	
+	
+	
+	
+	
+	
+	/* TESTs for SEARCH */
+	
+	/**
+	 * Test method for {@link sepm.ss13.gast.dao.JDBCProduktDAO#search(sepm.ss13.gast.domain.Produkt)}.
+	 * @throws DAOException 
+	 */
+	@Test
+	public void testSearch_1() throws DAOException {
+		//6
+		//7
+		//8
+		//9
+		
+		Produkt toSearch = new Produkt(p6.getId(),"",-1,-1);
+		
+		/* SEARCH */
+		ArrayList<Produkt> p_test = new ArrayList<Produkt>();
+		p_test = test.search(toSearch);
+	
+		for(int i = 0; i < p_test.size();i++){
+			assertThat(p_test.get(i).getId(), equalTo(p6.getId()));
+			assertThat(p_test.get(i).getName(), equalTo(p6.getName()));
+			assertThat(p_test.get(i).getKategorie(), equalTo(p6.getKategorie()));
+			assertThat(p_test.get(i).getPreis(), equalTo(p6.getPreis()));
+		}
+		
+		toSearch = new Produkt(p7.getId(),"",-1,-1);
+		
+		p_test = new ArrayList<Produkt>();
+		p_test = test.search(toSearch);
+	
+		for(int i = 0; i < p_test.size();i++){
+			assertThat(p_test.get(i).getId(), equalTo(p7.getId()));
+			assertThat(p_test.get(i).getName(), equalTo(p7.getName()));
+			assertThat(p_test.get(i).getKategorie(), equalTo(p7.getKategorie()));
+			assertThat(p_test.get(i).getPreis(), equalTo(p7.getPreis()));
+		}
 	}
 
 	/**
 	 * Test method for {@link sepm.ss13.gast.dao.JDBCProduktDAO#search(sepm.ss13.gast.domain.Produkt)}.
+	 * @throws DAOException 
 	 */
 	@Test
-	public void testSearch() {
-		fail("Not yet implemented");
-	}
+	public void testSearch_2() throws DAOException {
+		//6
+		//7
+		//8
+		//9
+		
+		Produkt toSearch = new Produkt(-1,"TEST Search 4",-1,-1);
+		
+		/* SEARCH */
+		ArrayList<Produkt> p_test = new ArrayList<Produkt>();
+		p_test = test.search(toSearch);
+	
+		for(int i = 0; i < p_test.size();i++){
+			assertThat(p_test.get(i).getId(), equalTo(p9.getId()));
+			assertThat(p_test.get(i).getName(), equalTo(p9.getName()));
+			assertThat(p_test.get(i).getKategorie(), equalTo(p9.getKategorie()));
+			assertThat(p_test.get(i).getPreis(), equalTo(p9.getPreis()));
+		}
 
+	}	
+	
+	/**
+	 * Test method for {@link sepm.ss13.gast.dao.JDBCProduktDAO#search(sepm.ss13.gast.domain.Produkt)}.
+	 * @throws DAOException 
+	 */
+	@Test (expected=IllegalArgumentException.class) 
+	public void testSearch_3() throws DAOException {
+		//6
+		//7
+		//8
+		//9
+		
+		Produkt toSearch = null;
+		
+		/* SEARCH */
+		test.search(toSearch);
+
+	}	
+	
+	/* TESTs for UPDATE */
+	
+	
 	/**
 	 * Test method for {@link sepm.ss13.gast.dao.JDBCProduktDAO#update(sepm.ss13.gast.domain.Produkt)}.
 	 */
 	@Test
-	public void testUpdate() {
-		fail("Not yet implemented");
+	public void testUpdate_1() throws DAOException,IllegalArgumentException {
+		
+		/* INSERT */
+		Produkt p_test = null;
+		p_test = test.create(p1);
+		
+		mykeys_generated.add(p_test.getId());
+		p4.setId(p_test.getId());
+		
+		/* UPDATE */
+		test.update(p4);
+		
+		/* GET UPDATED */
+		try {
+			PreparedStatement ps = dbc.getConnection().prepareStatement("SELECT id,name,typid,preis FROM produkt WHERE id=?");
+			ps.setInt(1,p4.getId());
+			
+			ResultSet rs=ps.executeQuery();
+			if(rs.next()) {
+				assertThat(rs.getInt("id"), equalTo(p4.getId()));
+				assertThat(rs.getString("name"), equalTo(p4.getName()));
+				assertThat(rs.getInt("typid"), equalTo(p4.getKategorie()));
+				assertThat(rs.getInt("preis"), equalTo(p4.getPreis()));
+				return;
+			}else{
+				fail("No Data found");
+				return;
+			}
+		} catch (SQLException e) {
+			fail("ERROR: failed to search DB for product categories!");
+			return;
+		}
+		catch (NullPointerException e) {
+			fail("NullPointerException");
+			return;
+		}
 	}
+	
+	/**
+	 * Test method for {@link sepm.ss13.gast.dao.JDBCProduktDAO#update(sepm.ss13.gast.domain.Produkt)}.
+	 */
+	@Test (expected=IllegalArgumentException.class) 
+	public void testUpdate_2() throws DAOException,IllegalArgumentException {
+		
+		/* INSERT */
+		test.update(null);
+		
+	}
+	
+	/**
+	 * Test method for {sepm.ss13.gast.dao.JDBCProduktKategorieDAO}.
+	 * @throws DAOException 
+	 */
+	@Test (expected=DAOException.class) 
+	public void testUpdate_3() throws DAOException,IllegalArgumentException {
+		
+		/* INSERT */
+		Produkt p_test = null;
+		p_test = test.create(p1);
+		
+		mykeys_generated.add(p_test.getId());
+		p5.setId(p_test.getId());
+		
+		/* UPDATE */
+		test.update(p5);
+		
+	}	
+	
+	/**
+	 * Test method for {sepm.ss13.gast.dao.JDBCProduktKategorieDAO}.
+	 * @throws DAOException 
+	 */
+	@Test (expected=DAOException.class) 
+	public void testUpdate_4() throws DAOException,IllegalArgumentException {
+		
+		/* UPDATE */
+		test.update(p5);
+		
+	}	
+	
 
 }
