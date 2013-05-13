@@ -8,7 +8,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import sepm.ss13.gast.dao.DAOException;
+import sepm.ss13.gast.dao.DBConnector;
 import sepm.ss13.gast.domain.Konfiguration;
+import sepm.ss13.gast.service.GASTService;
 import sepm.ss13.gast.service.Service;
 
 import javafx.application.Application;
@@ -16,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class KonfigurationController implements Initializable {
 
@@ -25,29 +28,44 @@ public class KonfigurationController implements Initializable {
 	 
 	private Service s;
 	 
-	 
-	 @FXML private Label name;
-	 @FXML private Label adresse;
-	 @FXML private Label tel;
-	 @FXML private Label logo;
-	 @FXML private Label tischanzahl;
+	 @FXML private TextField name;
+	 @FXML private TextField adresse;
+	 @FXML private TextField tel;
+	 @FXML private TextField logo;
+	 @FXML private TextField tischanzahl;
 
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		
-		 ac = new ClassPathXmlApplicationContext("spring-config.xml");
-		 gast = (GUIManager) ac.getBean("GUIManager");
+		ac = new ClassPathXmlApplicationContext("spring-config.xml");
+		gast = (GUIManager) ac.getBean("GUIManager");
+		s = (Service) ac.getBean("GASTService");
+		loadKonfiguration();
 		
 	}
 	
+	private void loadKonfiguration()  {
+		Konfiguration k = null;
+		try {
+			k = s.loadKonfiguration();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		name.setText(k.getName());
+		adresse.setText(k.getAdresse());
+		tel.setText(k.getTel());
+		logo.setText("");
+		tischanzahl.setText(String.valueOf(k.getTischanzahl()));
+	}
 	 @FXML
 	 public void saveKonfiguration(ActionEvent e) {
-		 
-		 
-		 Konfiguration k = new Konfiguration(name.getText(), adresse.getText(), tel.getText(), null, Integer.parseInt(tischanzahl.getText()));
-		 
-		 try {
+		 Konfiguration k = new Konfiguration(name.getText(),adresse.getText(),tel.getText(),null,Integer.parseInt(tischanzahl.getText()));
+		
+		try {
 			s.saveKonfiguration(k);
 		} catch (IllegalArgumentException e1) {
 			// TODO Auto-generated catch block
@@ -57,8 +75,9 @@ public class KonfigurationController implements Initializable {
 			e1.printStackTrace();
 		}
 		 
-		 System.out.println("GEEEHT auch");
 	 }
-	
-	
+	 
+	 public void undoKonfiguration(ActionEvent e) {
+		 loadKonfiguration();
+	 }	
 }
