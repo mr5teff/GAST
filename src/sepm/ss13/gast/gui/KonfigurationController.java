@@ -43,8 +43,10 @@ public class KonfigurationController implements Initializable {
 	
 	 @FXML
 	 public void saveKonfiguration(ActionEvent e) {
-	/*	 Konfiguration k = new Konfiguration(name.getText(),adresse.getText(),tel.getText(),null,Integer.parseInt(tischanzahl.getText()));
-		/* 
+		 
+		 
+		 Konfiguration k = new Konfiguration(name.getText(), adresse.getText(), tel.getText(), null, Integer.parseInt(tischanzahl.getText()));
+		 
 		 try {
 			s.saveKonfiguration(k);
 		} catch (IllegalArgumentException e1) {
@@ -54,7 +56,7 @@ public class KonfigurationController implements Initializable {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		 */
+		 
 		 System.out.println("GEEEHT auch");
 	 }
 	

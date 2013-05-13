@@ -13,10 +13,10 @@
     <bean name="GUIManager" class="sepm.ss13.gast.gui.GUIManager" scope="singleton">
     </bean>
 
-    <!--<bean name="productDAO" class="at.ac.tuwien.sepm.dao.JDBCProductDAO" scope="singleton">
-        <constructor-arg name="databaseManager" ref="databaseManager" />
+    <bean name="GASTService" class="sepm.ss13.gast.service.GASTService" scope="singleton">
+        <constructor-arg name="dbCon" ref="databaseManager" />
     </bean>
-
+<!--  
     <bean name="productService" class="at.ac.tuwien.sepm.service.ProductService" scope="singleton">
         <property name="productDAO" ref="productDAO" />
     </bean>

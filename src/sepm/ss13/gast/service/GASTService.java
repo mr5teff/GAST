@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import sepm.ss13.gast.dao.BestellungDAO;
 import sepm.ss13.gast.dao.DAOException;
+import sepm.ss13.gast.dao.DBConnector;
 import sepm.ss13.gast.dao.EinkaufDAO;
 import sepm.ss13.gast.dao.JDBCBestellungDAO;
 import sepm.ss13.gast.dao.JDBCEinkaufDAO;
@@ -40,7 +41,9 @@ public class GASTService implements Service{
 	private ReservierungDAO reservierungDAO;
 	private WareDAO wareDAO;
 	
-	public GASTService(Connection con) {	//Die Zuweisung hier sollte man glaub ich über spring machen
+	public GASTService(DBConnector dbCon) {	//Die Zuweisung hier sollte man glaub ich über spring machen
+		
+		Connection con = dbCon.getConnection();
 		this.bestellungDAO = new JDBCBestellungDAO(con);
 		this.einkaufDAO = new JDBCEinkaufDAO(con);
 		this.konfigurationDAO = new JDBCKonfigurationDAO(con);
