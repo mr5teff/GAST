@@ -8,17 +8,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
-
 import sepm.ss13.gast.domain.Rechnung;
 
 /**
  * 
  */
 public class JDBCRechnungDAO implements RechnungDAO {
-	
-	private static final Logger log = Logger.getLogger (JDBCRechnungDAO.class);
-
 	private Connection c;
 	
 	public JDBCRechnungDAO(Connection c) {

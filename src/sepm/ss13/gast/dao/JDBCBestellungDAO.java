@@ -7,17 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
-
 import sepm.ss13.gast.domain.Bestellung;
 
 /**
  * 
  */
 public class JDBCBestellungDAO implements BestellungDAO {
-
-	private static final Logger log = Logger.getLogger (JDBCBestellungDAO.class);
-	
 	private Connection c;
 	
 	public JDBCBestellungDAO(Connection c) {

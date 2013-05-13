@@ -5,17 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.log4j.Logger;
-
 import sepm.ss13.gast.domain.Konfiguration;
 
 /**
  * 
  */
 public class JDBCKonfigurationDAO implements KonfigurationDAO {
-
-	private static final Logger log = Logger.getLogger (JDBCKonfigurationDAO.class);
-	
 	private Connection c;
 	
 	public JDBCKonfigurationDAO(Connection c) {
