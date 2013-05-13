@@ -21,10 +21,9 @@ public class ManagementController implements Initializable{
 	
 	
 	 private static Logger log = Logger.getLogger(Application.class);
-		
-	 private GAST application;
 	 
 	 private ApplicationContext ac;
+	 private GUIManager gast;
 	 private Service s;
 	 
 	 @FXML private Label name;
@@ -35,6 +34,7 @@ public class ManagementController implements Initializable{
 	 
 	 public void initialize(URL location, ResourceBundle resources) {
 		 ac = new ClassPathXmlApplicationContext("spring-config.xml");
+		 gast = (GUIManager) ac.getBean("GUIManager");
 		 //s = (Service) ac.getBean("totalesService");
 		 
 		 /*Konfiguration k = null;
@@ -50,37 +50,15 @@ public class ManagementController implements Initializable{
 		 tel.setText(k.getTel());
 		 tischanzahl.setText(String.valueOf(k.getTischanzahl()));*/
 		}
-	    
-	 public void setApp(GAST application){
-	        this.application = application;
-	 }
 	 
 	 @FXML
 	 public void clickOnKassa(ActionEvent event) {
-		 if (application == null){
-	            // We are running in isolated FXML, possibly in Scene Builder.
-	            // NO-OP.
-			 	log.warn("No application set. No operation!");
-	        } 
-		 else {
-			 
-			 application.gotoKassa();
-	           
-	     }
+		 gast.replaceSceneContent("Kassa.fxml");
 	 }
 	 
 	 @FXML
 	 public void clickOnKueche(ActionEvent event) {
-		 if (application == null){
-	            // We are running in isolated FXML, possibly in Scene Builder.
-	            // NO-OP.
-			 	log.warn("No application set. No operation!");
-	        } 
-		 else {
-			 
-			 application.gotoKueche();
-	           
-	     }
+		 gast.replaceSceneContent("Kueche.fxml");
 	 }
 	 
 	 @FXML
