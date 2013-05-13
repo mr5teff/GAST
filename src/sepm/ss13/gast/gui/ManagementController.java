@@ -26,12 +26,7 @@ public class ManagementController implements Initializable{
 	 private GUIManager gast;
 	 private Service s;
 	 
-	 @FXML private Label name;
-	 @FXML private Label adresse;
-	 @FXML private Label tel;
-	 @FXML private Label logo;
-	 @FXML private Label tischanzahl;
-	 
+	 	 
 	 public void initialize(URL location, ResourceBundle resources) {
 		 ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		 gast = (GUIManager) ac.getBean("GUIManager");
@@ -61,20 +56,7 @@ public class ManagementController implements Initializable{
 		 gast.replaceSceneContent("Kueche.fxml");
 	 }
 	 
-	 @FXML
-	 public void saveKonfiguration(ActionEvent e) {
-		 Konfiguration k = new Konfiguration(name.getText(),adresse.getText(),tel.getText(),null,Integer.parseInt(tischanzahl.getText()));
-		 
-		 try {
-			s.saveKonfiguration(k);
-		} catch (IllegalArgumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (DAOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	 }
+	
 
 	
 
