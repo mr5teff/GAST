@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.service.Service;
 
@@ -24,7 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
-public class NeueProduktKategorieDialog extends Stage{
+public class NeueProduktKategorieDialog extends Stage {
 	
 
 	private static Logger log = Logger.getLogger(Application.class);
@@ -33,6 +34,9 @@ public class NeueProduktKategorieDialog extends Stage{
 	
 	 @FXML private TextField kurzbezeichnung;
 	 @FXML private TextField bezeichnung;
+	 
+	 private ApplicationContext ac;
+	 private Service s;
 	 
 	
 	 /**
@@ -61,11 +65,11 @@ public class NeueProduktKategorieDialog extends Stage{
    	 	} catch (IOException e) {
    		// TODO Auto-generated catch block
    		e.printStackTrace();
-   	 	}
-   	 	
-   	 	
-   	 	
+   	 	}	
    	 	setScene(new Scene(root)); 
+   	 	
+   	 	ac = new ClassPathXmlApplicationContext("spring-config.xml");
+   	 	s = (Service) ac.getBean("GASTService");
     }
    
     
@@ -96,13 +100,36 @@ public class NeueProduktKategorieDialog extends Stage{
 	
 	 @FXML
 	 public void clickOnSave(ActionEvent event) {
-		
+		 ProduktKategorie pkNew = null;
+		 if(content == null)
+			 pkNew = new ProduktKategorie(0, bezeichnung.getText(), kurzbezeichnung.getText());
+		 
+		 try {
+			 if(content == null)
+				 s.createProduktKategorie(pkNew);
+			 else
+			 {
+				 content.setBezeichnung(bezeichnung.getText());
+				 content.setKurzbezeichnung(kurzbezeichnung.getText());
+				 s.updateProduktKategorie(content);
+			 }
+				 
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		 super.hide();
+		 
 	 }
 	 
 	 @FXML
 	 public void clickOnAbbort(ActionEvent event) {
 		
-		 
+		 super.hide();
 	 }
     
  
