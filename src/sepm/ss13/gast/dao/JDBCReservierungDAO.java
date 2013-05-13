@@ -14,7 +14,7 @@ import sepm.ss13.gast.domain.Reservierung;
 /**
  * 
  */
-public class JDBCReservierungDAO {
+public class JDBCReservierungDAO implements ReservierungDAO{
 
 	private static final Logger log = Logger.getLogger (JDBCReservierungDAO.class);
 

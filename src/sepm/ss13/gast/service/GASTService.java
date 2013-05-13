@@ -12,6 +12,7 @@ import sepm.ss13.gast.dao.JDBCKonfigurationDAO;
 import sepm.ss13.gast.dao.JDBCProduktDAO;
 import sepm.ss13.gast.dao.JDBCProduktKategorieDAO;
 import sepm.ss13.gast.dao.JDBCRechnungDAO;
+import sepm.ss13.gast.dao.JDBCReservierungDAO;
 import sepm.ss13.gast.dao.JDBCWareDAO;
 import sepm.ss13.gast.dao.KonfigurationDAO;
 import sepm.ss13.gast.dao.ProduktDAO;
@@ -46,7 +47,7 @@ public class GASTService implements Service{
 		this.produktDAO = new JDBCProduktDAO(con);
 		this.produktKategorieDAO = new JDBCProduktKategorieDAO(con);
 		this.rechnungDAO = new JDBCRechnungDAO(con);
-		//this.reservierungDAO = new JDBCReservierungDAO(con);
+		this.reservierungDAO = new JDBCReservierungDAO(con);
 		this.wareDAO = new JDBCWareDAO(con);
 	}
 	
