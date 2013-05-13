@@ -1,10 +1,18 @@
 package sepm.ss13.gast.service;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import sepm.ss13.gast.dao.BestellungDAO;
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.dao.EinkaufDAO;
+import sepm.ss13.gast.dao.JDBCBestellungDAO;
+import sepm.ss13.gast.dao.JDBCEinkaufDAO;
+import sepm.ss13.gast.dao.JDBCKonfigurationDAO;
+import sepm.ss13.gast.dao.JDBCProduktDAO;
+import sepm.ss13.gast.dao.JDBCProduktKategorieDAO;
+import sepm.ss13.gast.dao.JDBCRechnungDAO;
+import sepm.ss13.gast.dao.JDBCWareDAO;
 import sepm.ss13.gast.dao.KonfigurationDAO;
 import sepm.ss13.gast.dao.ProduktDAO;
 import sepm.ss13.gast.dao.ProduktKategorieDAO;
@@ -31,71 +39,17 @@ public class GASTService implements Service{
 	private ReservierungDAO reservierungDAO;
 	private WareDAO wareDAO;
 	
-	public BestellungDAO getBestellungDAO() {
-		return bestellungDAO;
-	}
-
-	public void setBestellungDAO(BestellungDAO bestellungDAO) {
-		this.bestellungDAO = bestellungDAO;
-	}
-	
-
-	public EinkaufDAO getEinkaufDAO() {
-		return einkaufDAO;
-	}
-
-	public void setEinkaufDAO(EinkaufDAO einkaufDAO) {
-		this.einkaufDAO = einkaufDAO;
+	public GASTService(Connection con) {	//Die Zuweisung hier sollte man glaub ich über spring machen
+		this.bestellungDAO = new JDBCBestellungDAO(con);
+		this.einkaufDAO = new JDBCEinkaufDAO(con);
+		this.konfigurationDAO = new JDBCKonfigurationDAO(con);
+		this.produktDAO = new JDBCProduktDAO(con);
+		this.produktKategorieDAO = new JDBCProduktKategorieDAO(con);
+		this.rechnungDAO = new JDBCRechnungDAO(con);
+		//this.reservierungDAO = new JDBCReservierungDAO(con);
+		this.wareDAO = new JDBCWareDAO(con);
 	}
 	
-	public KonfigurationDAO getKonfigurationDAO() {
-		return konfigurationDAO;
-	}
-
-	public void setKonfigurationDAO(KonfigurationDAO konfigurationDAO) {
-		this.konfigurationDAO = konfigurationDAO;
-	}
-	
-	public ProduktDAO getProduktDAO() {
-		return produktDAO;
-	}
-
-	public void setProduktDAO(ProduktDAO produktDAO) {
-		this.produktDAO = produktDAO;
-	}
-	
-	public ProduktKategorieDAO getProduktKategorieDAO() {
-		return produktKategorieDAO;
-	}
-
-	public void setProduktKategorieDAO(ProduktKategorieDAO produktKategorieDAO) {
-		this.produktKategorieDAO = produktKategorieDAO;
-	}
-	
-	public RechnungDAO getRechnungDAO() {
-		return rechnungDAO;
-	}
-
-	public void setRechnungDAO(RechnungDAO rechnungDAO) {
-		this.rechnungDAO = rechnungDAO;
-	}
-
-	public ReservierungDAO getReservierungDAO() {
-		return reservierungDAO;
-	}
-
-	public void setReservierungDAO(ReservierungDAO reservierungDAO) {
-		this.reservierungDAO = reservierungDAO;
-	}
-
-	public WareDAO getWareDAO() {
-		return wareDAO;
-	}
-
-	public void setWareDAO(WareDAO wareDAO) {
-		this.wareDAO = wareDAO;
-	}
-
 	/*
 	 * Services für Bestellung
 	 */
