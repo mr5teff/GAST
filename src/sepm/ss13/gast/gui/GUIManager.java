@@ -1,7 +1,6 @@
 package sepm.ss13.gast.gui;
 
 import java.io.IOException;
-import java.net.URL;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -48,9 +47,11 @@ public class GUIManager {
 		return s;
 	}
 	
-	public static Scene loadFXML(String fxml, Object controller) throws IOException {
+	public static Object loadFXML(String fxml, Stage stage) throws IOException {
 		FXMLLoader fxmlLoader = new FXMLLoader(GUIManager.class.getResource(fxml));
-		fxmlLoader.setController(controller);
-   	 	return new Scene((Parent) fxmlLoader.load());
+		stage.setScene(new Scene((Parent) fxmlLoader.load()));
+   	 	Controller c = fxmlLoader.getController();
+   	 	c.setStage(stage);
+   	 	return c;
 	}
 }

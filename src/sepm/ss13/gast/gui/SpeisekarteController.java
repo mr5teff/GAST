@@ -1,5 +1,6 @@
 package sepm.ss13.gast.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -28,7 +29,6 @@ import sepm.ss13.gast.service.Service;
 public class SpeisekarteController implements Initializable {
 	
 	private ApplicationContext ac;
-	private GUIManager gast;
 	 private Service s;
 	 
 	 private ArrayList<ProduktKategorie> DAOkategorien;
@@ -44,9 +44,7 @@ public class SpeisekarteController implements Initializable {
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
-		gast = (GUIManager) ac.getBean("GUIManager");
-		 
-		 s = (Service) ac.getBean("GASTService");
+		s = (Service) ac.getBean("GASTService");
 		 
 		 initListView();
 	}
@@ -123,7 +121,12 @@ public class SpeisekarteController implements Initializable {
 	 @FXML
 	 public void clickOnNeueKategorie(ActionEvent event) {
 		 Stage stage = GUIManager.openDialog("Produktkategorie anlegen");
-		 new ProduktKategorieDialogController(stage,null);
+		 try {
+			GUIManager.loadFXML("NeueKategorieDialog.fxml", stage);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		 stage.show();
 	 }
 	 
@@ -131,7 +134,15 @@ public class SpeisekarteController implements Initializable {
 	 public void clickOnKategorieBearbeiten(ActionEvent event) {
 		 Stage stage = GUIManager.openDialog("Produktkategorie bearbeiten");
 		 ProduktKategorie pk = kategorieListView.getSelectionModel().getSelectedItem();
-		 new ProduktKategorieDialogController(stage,pk);
+		 ProduktKategorieDialogController pkdc = null;
+		 try {
+				pkdc=(ProduktKategorieDialogController) GUIManager.loadFXML("NeueKategorieDialog.fxml", stage);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 
+		 pkdc.setPK(pk);
 		 stage.show();
 	 }
 	 
