@@ -9,9 +9,6 @@
         <constructor-arg name="userName" value="SA" />
         <constructor-arg name="password" value="lalalalalala" />
     </bean>
-    
-    <bean name="GUIManager" class="sepm.ss13.gast.gui.GUIManager" scope="singleton">
-    </bean>
 
     <bean name="GASTService" class="sepm.ss13.gast.service.GASTService" scope="singleton">
         <constructor-arg name="dbCon" ref="databaseManager" />

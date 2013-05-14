@@ -30,16 +30,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
-public class KonfigurationController implements Initializable {
+public class KonfigurationController implements Initializable,Controller {
 
 	private ApplicationContext ac;
-	private GUIManager gast;
 	private static Logger log = Logger.getLogger(Application.class);
 	 
 	private Service s;
 	private BufferedImage image;
-
+	
+	private Stage stage;
 	 
 	 @FXML private TextField name;
 	 @FXML private TextField adresse;
@@ -52,11 +53,13 @@ public class KonfigurationController implements Initializable {
 		// TODO Auto-generated method stub
 		
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
-		gast = (GUIManager) ac.getBean("GUIManager");
 		s = (Service) ac.getBean("GASTService");
-		loadKonfiguration();
-		
+		loadKonfiguration();	
 	}
+	
+	public void setStage(Stage s) {
+    	this.stage=s;
+    }
 	
 	private void loadKonfiguration()  {
 		Konfiguration k = null;

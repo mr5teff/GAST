@@ -11,26 +11,30 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 
-public class KassaController implements Initializable {
+public class KassaController implements Initializable,Controller {
 	
 	private ApplicationContext ac;
-	private GUIManager gast;
 	 private static Logger log = Logger.getLogger(Application.class);
+	 private Stage stage;
 	 
 	 public void initialize(URL location, ResourceBundle resources) {
 		 ac = new ClassPathXmlApplicationContext("spring-config.xml");
-		 gast = (GUIManager) ac.getBean("GUIManager");
 	}
+	 
+	 public void setStage(Stage s) {
+	    	this.stage=s;
+	 }
 	 
 	 @FXML
 	 public void clickOnManagement(ActionEvent event) {
-		 gast.replaceSceneContent("Management.fxml");
+		 GUITools.loadFXML("Management.fxml",stage);
 	 }
 	 
 	 @FXML
 	 public void clickOnKueche(ActionEvent event) {
-		 gast.replaceSceneContent("Kueche.fxml");
+		 GUITools.loadFXML("Kueche.fxml",stage);
 	 }
 
 	
