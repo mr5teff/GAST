@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
@@ -118,18 +119,14 @@ public class SpeisekarteController extends Controller {
 	
 	 @FXML
 	 public void clickOnNeueKategorie(ActionEvent event) {
-		 Stage stage=(Stage) kategorieListView.getScene().getWindow();
-		 
-		 stage = GUITools.openDialog("Produktkategorie anlegen",stage);
+		 Stage stage = GUITools.openDialog("Produktkategorie anlegen",this.getStage());
 		 GUITools.loadFXML("NeueKategorieDialog.fxml", stage,this);
 		 stage.show();
 	 }
 	 
 	 @FXML
 	 public void clickOnKategorieBearbeiten(ActionEvent event) {
-		 Stage stage=(Stage) kategorieListView.getScene().getWindow();
-		 
-		 stage = GUITools.openDialog("Produktkategorie bearbeiten",stage);
+		 Stage stage = GUITools.openDialog("Produktkategorie bearbeiten",this.getStage());
 		 ProduktKategorie pk = kategorieListView.getSelectionModel().getSelectedItem();
 		 ProduktKategorieDialogController pkdc = null;
 		 pkdc=(ProduktKategorieDialogController) GUITools.loadFXML("NeueKategorieDialog.fxml", stage,this);
