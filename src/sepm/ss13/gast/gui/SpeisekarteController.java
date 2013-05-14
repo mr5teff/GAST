@@ -49,8 +49,6 @@ public class SpeisekarteController implements Initializable {
 	 private ObservableList<ProduktKategorie> kategorieItems;
 	 private ObservableList<Produkt> produktItems;
 	 
-	 private NeueProduktKategorieDialog npkd;
-	 
 	 private static final ProduktKategorie kategorieBlank = new ProduktKategorie();
 	 
 	 @FXML private ListView<ProduktKategorie> kategorieListView;
@@ -58,16 +56,12 @@ public class SpeisekarteController implements Initializable {
 	 
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		
-		 ac = new ClassPathXmlApplicationContext("spring-config.xml");
-		 gast = (GUIManager) ac.getBean("GUIManager");
+		ac = new ClassPathXmlApplicationContext("spring-config.xml");
+		gast = (GUIManager) ac.getBean("GUIManager");
 		 
 		 s = (Service) ac.getBean("GASTService");
 		 
 		 initListView();
-		 	
-		npkd = new NeueProduktKategorieDialog(gast.getStage().getScene().getWindow(), Modality.WINDOW_MODAL, "Neue Produktkategorie");
 	}
 	
 	private void initListView()
@@ -139,17 +133,16 @@ public class SpeisekarteController implements Initializable {
 	
 	 @FXML
 	 public void clickOnNeueKategorie(ActionEvent event) {
-		 
+		 NeueProduktKategorieDialog npkd = new NeueProduktKategorieDialog();
 		 npkd.clearForm();
-		 npkd.setTitle("Neue Kategorie anlegen");
-		 npkd.show();
+		 npkd.showDialog();
 	 }
 	 
 	 @FXML
 	 public void clickOnKategorieBearbeiten(ActionEvent event) {
+		 NeueProduktKategorieDialog npkd = new NeueProduktKategorieDialog();
 		 npkd.setContent(kategorieListView.getSelectionModel().getSelectedItem());
-		 npkd.setTitle("Kategorie bearbeiten");
-		 npkd.show();
+		 npkd.showDialog();
 	 }
 	 @FXML
 	 public void clickOnKategorieLoeschen(ActionEvent event) {

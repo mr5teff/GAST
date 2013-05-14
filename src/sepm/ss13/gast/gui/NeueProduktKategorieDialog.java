@@ -25,11 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
-public class NeueProduktKategorieDialog extends Stage {
-	
-
-	private static Logger log = Logger.getLogger(Application.class);
-	
+public class NeueProduktKategorieDialog {
 	 private ProduktKategorie content = null;
 	
 	 @FXML private TextField kurzbezeichnung;
@@ -37,6 +33,8 @@ public class NeueProduktKategorieDialog extends Stage {
 	 
 	 private ApplicationContext ac;
 	 private Service s;
+	 
+	 private Stage stage;
 	 
 	
 	 /**
@@ -47,26 +45,15 @@ public class NeueProduktKategorieDialog extends Stage {
      * @param style
      * @param title
      */	
-    public NeueProduktKategorieDialog(Window owner, Modality modality, String title) {
+    public NeueProduktKategorieDialog() {
+    	stage=GUIManager.openDialog("Produktkategorie anlegen/bearbeiten");
  
-    	super();
- 
-        initOwner(owner);
-        initModality(modality);
-        setOpacity(1);
-        if (title != null && !title.isEmpty())
-            setTitle(title);
-        
-        Parent root = null;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NeueKategorieDialog.fxml"));
-        fxmlLoader.setController(this);
-   	 	try {
-   		 root = (Parent)fxmlLoader.load(); 
-   	 	} catch (IOException e) {
-   		// TODO Auto-generated catch block
-   		e.printStackTrace();
-   	 	}	
-   	 	setScene(new Scene(root)); 
+    	try {
+			stage.setScene(GUIManager.loadFXML("NeueKategorieDialog.fxml", this));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
    	 	
    	 	ac = new ClassPathXmlApplicationContext("spring-config.xml");
    	 	s = (Service) ac.getBean("GASTService");
@@ -75,13 +62,13 @@ public class NeueProduktKategorieDialog extends Stage {
     
     public void showDialog()
     {
-    	super.show();
+    	stage.show();
     }
     
     
     public void hideDialog()
     {
-    	super.hide();
+    	stage.hide();
     }
     
 	public void clearForm()
@@ -122,14 +109,14 @@ public class NeueProduktKategorieDialog extends Stage {
 			e.printStackTrace();
 		}
 		 
-		 super.hide();
+		 stage.hide();
 		 
 	 }
 	 
 	 @FXML
 	 public void clickOnAbbort(ActionEvent event) {
 		
-		 super.hide();
+		 stage.hide();
 	 }
     
  
