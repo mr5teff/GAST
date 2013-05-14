@@ -47,7 +47,7 @@ public class SpeisekarteController extends Controller {
 		 initListView();
 	}
 	
-	public void initListView()
+	private void initListView()
 	{
 		 kategorieListView.setCellFactory(new Callback<ListView<ProduktKategorie>, ListCell<ProduktKategorie>>() {
 		      public ListCell<ProduktKategorie> call(ListView<ProduktKategorie> list) {
@@ -64,6 +64,30 @@ public class SpeisekarteController extends Controller {
 		 kategorieItems = FXCollections.observableArrayList();
 		 produktItems = FXCollections.observableArrayList();
 		 
+		 refreshKategorieListView();
+		
+		 kategorieListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProduktKategorie>() {	   
+		    public void changed(ObservableValue<? extends ProduktKategorie> observable, ProduktKategorie oldValue, ProduktKategorie newValue) {
+		        // Your action here
+		    	if(newValue != null)
+		    	{
+		    		System.out.println("Selected item: " + newValue.getBezeichnung());
+		    		produktListeBefuellen(newValue);
+		    	}
+		    }
+		 });
+		 
+		 produktListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Produkt>() {	   
+			    public void changed(ObservableValue<? extends Produkt> observable, Produkt oldValue, Produkt newValue) {
+			        // Your action here
+			       
+			    }
+		 });
+		 
+	}
+	
+	public void refreshKategorieListView()
+	{
 		 //Lade alle Produktkategorien
 		 try {
 			 DAOkategorien = s.searchProduktKategorie(kategorieBlank);
@@ -76,24 +100,9 @@ public class SpeisekarteController extends Controller {
 		}
 		 
 		 //Mit allen Produktkategorien befüllen
+		 kategorieItems.clear();
 		 kategorieItems.addAll(DAOkategorien);
 		 kategorieListView.setItems(kategorieItems);
-		
-		 kategorieListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ProduktKategorie>() {	   
-		    public void changed(ObservableValue<? extends ProduktKategorie> observable, ProduktKategorie oldValue, ProduktKategorie newValue) {
-		        // Your action here
-		        System.out.println("Selected item: " + newValue.getBezeichnung());
-		        produktListeBefuellen(newValue);
-		    }
-		 });
-		 
-		 produktListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Produkt>() {	   
-			    public void changed(ObservableValue<? extends Produkt> observable, Produkt oldValue, Produkt newValue) {
-			        // Your action here
-			       
-			    }
-		 });
-		 
 	}
 	
 	private void produktListeBefuellen(ProduktKategorie pk)

@@ -71,7 +71,7 @@ public class ProduktKategorieDialogController extends Controller {
 		 
 		 this.getStage().hide();
 		 SpeisekarteController skc = (SpeisekarteController) this.getParentController();
-		 skc.initListView(); //TODO funktioniert, liefert aber exceptions
+		 skc.refreshKategorieListView(); //TODO funktioniert, liefert aber exceptions
 	 }
 	 
 	 @FXML
