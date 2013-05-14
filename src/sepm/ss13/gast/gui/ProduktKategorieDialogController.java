@@ -16,7 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ProduktKategorieDialogController implements Initializable,Controller {
+public class ProduktKategorieDialogController extends Controller {
 	 private ProduktKategorie pk;
 	
 	 @FXML private TextField kurzbezeichnung;
@@ -25,18 +25,12 @@ public class ProduktKategorieDialogController implements Initializable,Controlle
 	 private ApplicationContext ac;
 	 private Service s;
 	 
-	 private Stage stage;
-
 	public void initialize(URL location, ResourceBundle resources) {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
    	 	s = (Service) ac.getBean("GASTService");
    	 	
    	 	this.pk=null;
 	}
-    
-    public void setStage(Stage s) {
-    	this.stage=s;
-    }
     
     public void setPK(ProduktKategorie pk) {
     	this.pk=pk;
@@ -75,11 +69,11 @@ public class ProduktKategorieDialogController implements Initializable,Controlle
 			}
 		 }
 		 
-		 stage.hide();
+		 this.getStage().hide();
 	 }
 	 
 	 @FXML
 	 public void clickOnAbbort(ActionEvent event) {
-		 stage.hide();
+		 this.getStage().hide();
 	 }
 }

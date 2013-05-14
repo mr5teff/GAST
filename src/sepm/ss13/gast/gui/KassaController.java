@@ -13,28 +13,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
-public class KassaController implements Initializable,Controller {
+public class KassaController extends Controller {
 	
 	private ApplicationContext ac;
 	 private static Logger log = Logger.getLogger(Application.class);
-	 private Stage stage;
 	 
 	 public void initialize(URL location, ResourceBundle resources) {
 		 ac = new ClassPathXmlApplicationContext("spring-config.xml");
 	}
 	 
-	 public void setStage(Stage s) {
-	    	this.stage=s;
-	 }
-	 
 	 @FXML
 	 public void clickOnManagement(ActionEvent event) {
-		 GUITools.loadFXML("Management.fxml",stage);
+		 GUITools.loadFXML("Management.fxml",this.getStage());
 	 }
 	 
 	 @FXML
 	 public void clickOnKueche(ActionEvent event) {
-		 GUITools.loadFXML("Kueche.fxml",stage);
+		 GUITools.loadFXML("Kueche.fxml",this.getStage());
 	 }
 
 	

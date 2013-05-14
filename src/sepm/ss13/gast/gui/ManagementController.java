@@ -15,36 +15,24 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
-public class ManagementController implements Initializable,Controller{
-	
+public class ManagementController extends Controller {
 	
 	 private static Logger log = Logger.getLogger(Application.class);
 	 
 	 private ApplicationContext ac;
 	 private Service s;
-	 
-	 private Stage stage;
 	 	 
 	 public void initialize(URL location, ResourceBundle resources) {
 		 ac = new ClassPathXmlApplicationContext("spring-config.xml");
-		}
-	 
-	 public void setStage(Stage s) {
-	    	this.stage=s;
 	 }
 	 
 	 @FXML
 	 public void clickOnKassa(ActionEvent event) {
-		 GUITools.loadFXML("Kassa.fxml",stage);
+		 GUITools.loadFXML("Kassa.fxml",this.getStage());
 	 }
 	 
 	 @FXML
 	 public void clickOnKueche(ActionEvent event) {
-		 GUITools.loadFXML("Kueche.fxml",stage);
+		 GUITools.loadFXML("Kueche.fxml",this.getStage());
 	 }
-	 
-	
-
-	
-
 }

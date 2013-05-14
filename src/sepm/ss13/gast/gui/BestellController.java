@@ -16,30 +16,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
-public class BestellController implements Initializable,Controller {
+public class BestellController extends Controller {
 	
 	private ApplicationContext ac;
 	 private static Logger log = Logger.getLogger(Application.class);
 	 
-	 private Stage stage;
-
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	 public void initialize(URL arg0, ResourceBundle arg1) {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 	}
-	
-	public void setStage(Stage s) {
-    	this.stage=s;
-    }
 	
 	 @FXML
 	 public void clickOnAddBestellung(ActionEvent event) {
 		 
 		System.out.println("GEEEHT");
 	 }
-	 
-	 
-	
-	
-	
-
 }
