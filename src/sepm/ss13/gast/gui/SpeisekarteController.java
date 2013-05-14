@@ -47,7 +47,7 @@ public class SpeisekarteController extends Controller {
 		 initListView();
 	}
 	
-	private void initListView()
+	public void initListView()
 	{
 		 kategorieListView.setCellFactory(new Callback<ListView<ProduktKategorie>, ListCell<ProduktKategorie>>() {
 		      public ListCell<ProduktKategorie> call(ListView<ProduktKategorie> list) {
@@ -121,7 +121,7 @@ public class SpeisekarteController extends Controller {
 		 Stage stage=(Stage) kategorieListView.getScene().getWindow();
 		 
 		 stage = GUITools.openDialog("Produktkategorie anlegen",stage);
-		 GUITools.loadFXML("NeueKategorieDialog.fxml", stage);
+		 GUITools.loadFXML("NeueKategorieDialog.fxml", stage,this);
 		 stage.show();
 	 }
 	 
@@ -132,7 +132,7 @@ public class SpeisekarteController extends Controller {
 		 stage = GUITools.openDialog("Produktkategorie bearbeiten",stage);
 		 ProduktKategorie pk = kategorieListView.getSelectionModel().getSelectedItem();
 		 ProduktKategorieDialogController pkdc = null;
-		 pkdc=(ProduktKategorieDialogController) GUITools.loadFXML("NeueKategorieDialog.fxml", stage);
+		 pkdc=(ProduktKategorieDialogController) GUITools.loadFXML("NeueKategorieDialog.fxml", stage,this);
 		 
 		 pkdc.setPK(pk);
 		 stage.show();

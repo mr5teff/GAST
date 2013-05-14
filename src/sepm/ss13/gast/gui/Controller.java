@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 
 public abstract class Controller implements Initializable {
 	private Stage s;
+	private Controller pc;
 	
 	protected void setStage(Stage s) {
 		this.s=s;
@@ -12,5 +13,13 @@ public abstract class Controller implements Initializable {
 	
 	protected Stage getStage() {
 		return s;
+	}
+	
+	protected void setParentController(Controller c) {
+		this.pc=c;
+	}
+	
+	protected Controller getParentController() {
+		return pc;
 	}
 }

@@ -18,7 +18,7 @@ public class GUITools {
 		return s;
 	}
 	
-	public static Object loadFXML(String fxml, Stage stage) {
+	public static Controller loadFXML(String fxml, Stage stage) {
 		FXMLLoader fxmlLoader = new FXMLLoader(GUITools.class.getResource(fxml));
 		try {
 			stage.setScene(new Scene((Parent) fxmlLoader.load()));
@@ -29,5 +29,11 @@ public class GUITools {
    	 	Controller c = fxmlLoader.getController();
    	 	c.setStage(stage);
    	 	return c;
+	}
+	
+	public static Controller loadFXML(String fxml, Stage stage, Controller pc) {
+		Controller c = loadFXML(fxml,stage);
+		c.setParentController(pc);
+		return c;
 	}
 }
