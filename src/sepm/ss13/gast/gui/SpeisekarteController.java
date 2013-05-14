@@ -106,7 +106,7 @@ public class SpeisekarteController implements Initializable {
 		    public void changed(ObservableValue<? extends ProduktKategorie> observable, ProduktKategorie oldValue, ProduktKategorie newValue) {
 		        // Your action here
 		        System.out.println("Selected item: " + newValue.getBezeichnung());
-		        ProduktListeBefuellen(newValue);
+		        produktListeBefuellen(newValue);
 		    }
 		 });
 		 
@@ -119,11 +119,13 @@ public class SpeisekarteController implements Initializable {
 		 
 	}
 	
-	private void ProduktListeBefuellen(ProduktKategorie pk)
+	private void produktListeBefuellen(ProduktKategorie pk)
 	{
+		Produkt searchP = new Produkt();
+		searchP.setKategorie(pk.getId());
 		//Lade alle Produkte einer bestimmten Kategorie
 		 try {
-			 DAOprodukte = s.searchProdukt(new Produkt(-1, "", pk.getId(), 0));
+			 DAOprodukte = s.searchProdukt(searchP);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
