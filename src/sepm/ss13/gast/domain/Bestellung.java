@@ -13,7 +13,7 @@ public class Bestellung {
 	 */
 	public Bestellung()
 	{
-		this(-1, 0, 0, 0, 0, "");
+		this(-1, -1, 0, 0, 0, "-1");
 	}
 	
 	public Bestellung(int id, int tisch, int produkt, int preis, int rechnung, String status) {

@@ -13,62 +13,38 @@
       <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="534.0" prefWidth="611.0">
           <children>
-            <Label layoutX="14.0" layoutY="28.0" text="Wählen Sie einen Tisch aus:" />
-            <ComboBox layoutX="172.0" layoutY="28.0" minHeight="20.0" prefWidth="120.0">
+            <Label layoutX="39.0" layoutY="256.0" text="Kategorie wählen:" />
+            <Label layoutX="35.0" layoutY="93.0" text="Wählen Sie einen Tisch aus:" />
+            <ComboBox id="table" fx:id="tisch" layoutX="238.0" layoutY="93.0" minHeight="20.0" prefWidth="120.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
+                  <Integer fx:value="1" />
+                  <Integer fx:value="2" />
+                  <Integer fx:value="3" />
                 </FXCollections>
               </items>
             </ComboBox>
-            <Label layoutX="14.0" layoutY="77.0" text="Produktkategorie wählen:" />
-            <ComboBox layoutX="172.0" layoutY="75.0" minHeight="20.0" prefWidth="120.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <Label layoutX="14.0" layoutY="122.0" text="Produkt wählen:" />
-            <ComboBox layoutX="172.0" layoutY="120.0" minHeight="20.0" prefWidth="120.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <Label layoutX="13.0" layoutY="168.0" prefWidth="138.0" text="Anzahl:" />
-            <ComboBox layoutX="172.0" layoutY="168.0" minHeight="20.0" prefWidth="120.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-            </ComboBox>
-            <Button onAction="#clickOnAddBestellung" layoutX="103.0" layoutY="227.0" mnemonicParsing="false" text="Bestellung hinzufügen" />
-            <TextArea layoutX="60.0" layoutY="280.0" prefWidth="200.0" text="Kom: Das kann man natürlich noch stark bearbeiten ;) Nur mal für den Funktionstest" wrapText="true" />
+            <ComboBox fx:id="kategorie" layoutX="176.0" layoutY="256.0" minHeight="20.0" prefWidth="186.0" />
+            <Label layoutX="39.0" layoutY="301.0" text="Produkt wählen:" />
+            <ComboBox fx:id="produkt" layoutX="176.0" layoutY="299.0" minHeight="20.0" prefWidth="186.00009999999747" />
+            <Label layoutX="38.0" layoutY="347.0" prefWidth="138.0" text="Anzahl:" />
+            <Button layoutX="102.0" layoutY="422.0" mnemonicParsing="false" onAction="#clickOnAddBestellung" text="Bestellung hinzufügen" />
+            <Label layoutX="38.0" layoutY="196.0" text="Bestellung hinzufügen:" />
+            <TextField fx:id="anzahl" layoutX="176.0" layoutY="344.0" prefWidth="56.0" />
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="534.0" prefWidth="369.0">
           <children>
             <Label layoutX="14.0" layoutY="27.0" text="Offene Bestellungen für den gewählten Tisch" />
-            <TableView layoutX="14.0" layoutY="58.0" prefHeight="347.0" prefWidth="366.0">
+            <TableView fx:id="bestellungTableView" layoutX="14.0" layoutY="58.0" prefHeight="347.0" prefWidth="366.0">
               <columns>
-                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="141.0" text="Produktname" />
-                <TableColumn prefWidth="75.0" text="Preis" />
-                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="77.0" text="serviert Ja/Nein" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="141.0" text="Produktname" fx:id="nameCol" />
+                <TableColumn id="" prefWidth="75.0" text="Preis" fx:id="preisCol" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="150.0" text="Status" fx:id="statusCol" />
               </columns>
             </TableView>
-            <CheckBox layoutX="14.0" layoutY="418.0" mnemonicParsing="false" text="Alle Bestellungen anzeigen" />
-            <Button layoutX="14.0" layoutY="458.0" mnemonicParsing="false" text="Stornieren" />
+            <CheckBox fx:id="alleBestellungen" layoutX="14.0" layoutY="418.0" mnemonicParsing="false" onAction="#listBestellungen" text="Alle Bestellungen anzeigen" />
+            <Button layoutX="14.0" layoutY="458.0" mnemonicParsing="false" onAction="#storniereBestellung" text="Stornieren" />
             <Button layoutX="115.0" layoutY="458.0" mnemonicParsing="false" text="Rechnung drucken" />
           </children>
         </AnchorPane>
