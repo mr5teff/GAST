@@ -18,12 +18,8 @@ public class GAST extends Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
 		log.info("Start Application");
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
-		
-		DBConnector dbc = (DBConnector) ac.getBean("databaseManager");
 		
 		Application.launch(GAST.class, args);
 	}
@@ -32,10 +28,7 @@ public class GAST extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Gastronomie Assistent für Statistik- und Tischmanagement");
 		
-		GUIManager gm = (GUIManager) ac.getBean("GUIManager");
-		gm.setStage(primaryStage);
-		gm.replaceSceneContent("WelcomeScreen.fxml");
-		
+		GUITools.loadFXML("WelcomeScreen.fxml",primaryStage);
         primaryStage.show();
 	}
 }

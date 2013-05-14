@@ -1,6 +1,5 @@
 package sepm.ss13.gast.gui;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -26,7 +25,7 @@ import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.service.Service;
 
-public class SpeisekarteController implements Initializable {
+public class SpeisekarteController implements Initializable,Controller {
 	
 	private ApplicationContext ac;
 	 private Service s;
@@ -41,6 +40,7 @@ public class SpeisekarteController implements Initializable {
 	 @FXML private ListView<ProduktKategorie> kategorieListView;
 	 @FXML private ListView<Produkt> produktListView;
 	 
+	 private Stage stage=null;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
@@ -48,6 +48,10 @@ public class SpeisekarteController implements Initializable {
 		 
 		 initListView();
 	}
+	
+	public void setStage(Stage s) {
+    	this.stage=s;
+    }
 	
 	private void initListView()
 	{
@@ -120,27 +124,21 @@ public class SpeisekarteController implements Initializable {
 	
 	 @FXML
 	 public void clickOnNeueKategorie(ActionEvent event) {
-		 Stage stage = GUIManager.openDialog("Produktkategorie anlegen");
-		 try {
-			GUIManager.loadFXML("NeueKategorieDialog.fxml", stage);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		 this.stage=(Stage) kategorieListView.getScene().getWindow();
+		 
+		 Stage stage = GUITools.openDialog("Produktkategorie anlegen",this.stage);
+		 GUITools.loadFXML("NeueKategorieDialog.fxml", stage);
 		 stage.show();
 	 }
 	 
 	 @FXML
 	 public void clickOnKategorieBearbeiten(ActionEvent event) {
-		 Stage stage = GUIManager.openDialog("Produktkategorie bearbeiten");
+		 this.stage=(Stage) kategorieListView.getScene().getWindow();
+		 
+		 Stage stage = GUITools.openDialog("Produktkategorie bearbeiten",this.stage);
 		 ProduktKategorie pk = kategorieListView.getSelectionModel().getSelectedItem();
 		 ProduktKategorieDialogController pkdc = null;
-		 try {
-				pkdc=(ProduktKategorieDialogController) GUIManager.loadFXML("NeueKategorieDialog.fxml", stage);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		 pkdc=(ProduktKategorieDialogController) GUITools.loadFXML("NeueKategorieDialog.fxml", stage);
 		 
 		 pkdc.setPK(pk);
 		 stage.show();

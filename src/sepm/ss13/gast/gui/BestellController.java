@@ -14,21 +14,22 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 
-public class BestellController implements Initializable {
+public class BestellController implements Initializable,Controller {
 	
 	private ApplicationContext ac;
-	private GUIManager gast;
 	 private static Logger log = Logger.getLogger(Application.class);
+	 
+	 private Stage stage;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		
-		 ac = new ClassPathXmlApplicationContext("spring-config.xml");
-		 gast = (GUIManager) ac.getBean("GUIManager");
-		
+		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 	}
 	
+	public void setStage(Stage s) {
+    	this.stage=s;
+    }
 	
 	 @FXML
 	 public void clickOnAddBestellung(ActionEvent event) {
