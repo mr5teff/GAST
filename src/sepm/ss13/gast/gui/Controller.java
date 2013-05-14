@@ -12,7 +12,9 @@ public abstract class Controller implements Initializable {
 	}
 	
 	protected Stage getStage() {
-		return s;
+		if(s!=null) return s;
+		else if(pc!=null) return pc.getStage();
+		else return null;
 	}
 	
 	protected void setParentController(Controller c) {

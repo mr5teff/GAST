@@ -21,9 +21,12 @@ public class ManagementController extends Controller {
 	 
 	 private ApplicationContext ac;
 	 private Service s;
+	 
+	 @FXML private SpeisekarteController speisekarteContentController;
 	 	 
 	 public void initialize(URL location, ResourceBundle resources) {
 		 ac = new ClassPathXmlApplicationContext("spring-config.xml");
+		 speisekarteContentController.setParentController(this);
 	 }
 	 
 	 @FXML
