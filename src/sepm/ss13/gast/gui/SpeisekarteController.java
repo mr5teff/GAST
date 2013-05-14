@@ -14,8 +14,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+
+import name.antonsmirnov.javafx.dialog.Dialog;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -147,7 +150,33 @@ public class SpeisekarteController extends Controller {
 	 @FXML
 	 public void clickOnKategorieLoeschen(ActionEvent event) {
 		 
-		System.out.println("GEEEHT");
+		 ProduktKategorie pk = kategorieListView.getSelectionModel().getSelectedItem();
+		 
+		 if(pk == null)
+		 {
+			Dialog.showInfo("Produktkategorie löschen", "Bitte wählen Sie eine Kategorie die Sie löschen wollen aus.", this.getStage().getScene().getWindow());
+			return;
+		 }
+		 
+		 Dialog.Builder db = Dialog.buildConfirmation("Produktkategorie löschen", "Wollen Sie wirklich löschen?", this.getStage().getScene().getWindow());
+		 db.addYesButton(null);
+		 db.addNoButton(null);
+		 db.addCancelButton(null);
+		 
+		 db.build().show();
+		 
+		 try {
+			 s.deleteProduktKategorie(pk);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		 
+		 refreshKategorieListView();
+		
 	 }
 	 @FXML
 	 public void clickOnNeuesProdukt(ActionEvent event) {
