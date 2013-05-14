@@ -22,8 +22,10 @@ public class JDBCRechnungDAO implements RechnungDAO {
 	
 	public Rechnung create(Rechnung r) throws DAOException {
 		try {
+			long t = r.getDatum().getTime();
+			java.sql.Date dt = new java.sql.Date(t);
 			PreparedStatement ps=c.prepareStatement("INSERT INTO rechnung (id,datum,trinkgeld) VALUES (NULL,?,?)",Statement.RETURN_GENERATED_KEYS);
-			ps.setDate(1,(Date) r.getDatum());
+			ps.setDate(1,dt);
 			ps.setInt(2, r.getTrinkgeld());
 			ps.executeUpdate();
 			
@@ -41,11 +43,21 @@ public class JDBCRechnungDAO implements RechnungDAO {
 	
 	public ArrayList<Rechnung> search(Rechnung r) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT id,datum,trinkgeld FROM bestellung WHERE (id=? OR ?=-1) AND (datum=? OR ? IS NULL)");
+			java.sql.Date dt = null;
+			if(r.getDatum() != null){
+				long t = r.getDatum().getTime();
+				dt = new java.sql.Date(t);
+			}
+			/*
+			PreparedStatement ps=c.prepareStatement("SELECT id,datum,trinkgeld FROM rechnung WHERE (id=? OR ?=-1) AND (datum=? OR ? IS NULL)");
 			ps.setInt(1,r.getId());
 			ps.setInt(2,r.getId());
-			ps.setDate(3,(Date) r.getDatum());
-			ps.setDate(4,(Date) r.getDatum());
+			ps.setDate(3,dt);
+			ps.setDate(4,dt);
+			*/
+			PreparedStatement ps=c.prepareStatement("SELECT id,datum,trinkgeld FROM rechnung WHERE (id=? OR ?=-1)");
+			ps.setInt(1,r.getId());
+			ps.setInt(2,r.getId());
 			
 			ResultSet rs=ps.executeQuery();
 			ArrayList<Rechnung> al=new ArrayList<Rechnung>();
