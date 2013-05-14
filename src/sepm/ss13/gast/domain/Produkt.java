@@ -12,7 +12,7 @@ public class Produkt {
 	 */
 	public Produkt()
 	{
-		this(-1, "", 0, 0,false);
+		this(-1, "", -1, 0,false);
 	}
 	
 	public Produkt(int id, String name, int kategorie, int preis) {
