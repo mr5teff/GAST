@@ -25,7 +25,7 @@ import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.service.Service;
 
-public class SpeisekarteController implements Initializable,Controller {
+public class SpeisekarteController extends Controller {
 	
 	private ApplicationContext ac;
 	 private Service s;
@@ -40,18 +40,12 @@ public class SpeisekarteController implements Initializable,Controller {
 	 @FXML private ListView<ProduktKategorie> kategorieListView;
 	 @FXML private ListView<Produkt> produktListView;
 	 
-	 private Stage stage=null;
-
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		s = (Service) ac.getBean("GASTService");
 		 
 		 initListView();
 	}
-	
-	public void setStage(Stage s) {
-    	this.stage=s;
-    }
 	
 	private void initListView()
 	{
@@ -124,18 +118,18 @@ public class SpeisekarteController implements Initializable,Controller {
 	
 	 @FXML
 	 public void clickOnNeueKategorie(ActionEvent event) {
-		 this.stage=(Stage) kategorieListView.getScene().getWindow();
+		 Stage stage=(Stage) kategorieListView.getScene().getWindow();
 		 
-		 Stage stage = GUITools.openDialog("Produktkategorie anlegen",this.stage);
+		 stage = GUITools.openDialog("Produktkategorie anlegen",stage);
 		 GUITools.loadFXML("NeueKategorieDialog.fxml", stage);
 		 stage.show();
 	 }
 	 
 	 @FXML
 	 public void clickOnKategorieBearbeiten(ActionEvent event) {
-		 this.stage=(Stage) kategorieListView.getScene().getWindow();
+		 Stage stage=(Stage) kategorieListView.getScene().getWindow();
 		 
-		 Stage stage = GUITools.openDialog("Produktkategorie bearbeiten",this.stage);
+		 stage = GUITools.openDialog("Produktkategorie bearbeiten",stage);
 		 ProduktKategorie pk = kategorieListView.getSelectionModel().getSelectedItem();
 		 ProduktKategorieDialogController pkdc = null;
 		 pkdc=(ProduktKategorieDialogController) GUITools.loadFXML("NeueKategorieDialog.fxml", stage);
