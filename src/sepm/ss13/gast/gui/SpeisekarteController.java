@@ -96,7 +96,7 @@ public class SpeisekarteController implements Initializable {
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		 
 		 //Mit allen Produktkategorien befüllen
 		 kategorieItems.addAll(DAOkategorien);
@@ -115,7 +115,7 @@ public class SpeisekarteController implements Initializable {
 			        // Your action here
 			       
 			    }
-			 });
+		 });
 		 
 	}
 	
