@@ -5,28 +5,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
-import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -34,22 +24,17 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
-import sepm.ss13.gast.service.GASTService;
 import sepm.ss13.gast.service.Service;
 
 public class SpeisekarteController implements Initializable {
 	
 	private ApplicationContext ac;
-	private GUIManager gast;
-	 private static Logger log = Logger.getLogger(Application.class);
 	 private Service s;
 	 
 	 private ArrayList<ProduktKategorie> DAOkategorien;
 	 private ArrayList<Produkt> DAOprodukte;
 	 private ObservableList<ProduktKategorie> kategorieItems;
 	 private ObservableList<Produkt> produktItems;
-	 
-	 private NeueProduktKategorieDialog npkd;
 	 
 	 private static final ProduktKategorie kategorieBlank = new ProduktKategorie();
 	 
@@ -58,16 +43,10 @@ public class SpeisekarteController implements Initializable {
 	 
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		
-		 ac = new ClassPathXmlApplicationContext("spring-config.xml");
-		 gast = (GUIManager) ac.getBean("GUIManager");
-		 
-		 s = (Service) ac.getBean("GASTService");
+		ac = new ClassPathXmlApplicationContext("spring-config.xml");
+		s = (Service) ac.getBean("GASTService");
 		 
 		 initListView();
-		 	
-		npkd = new NeueProduktKategorieDialog(gast.getStage().getScene().getWindow(), Modality.WINDOW_MODAL, "Neue Produktkategorie");
 	}
 	
 	private void initListView()
@@ -141,18 +120,32 @@ public class SpeisekarteController implements Initializable {
 	
 	 @FXML
 	 public void clickOnNeueKategorie(ActionEvent event) {
-		 
-		 npkd.clearForm();
-		 npkd.setTitle("Neue Kategorie anlegen");
-		 npkd.show();
+		 Stage stage = GUIManager.openDialog("Produktkategorie anlegen");
+		 try {
+			GUIManager.loadFXML("NeueKategorieDialog.fxml", stage);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 stage.show();
 	 }
 	 
 	 @FXML
 	 public void clickOnKategorieBearbeiten(ActionEvent event) {
-		 npkd.setContent(kategorieListView.getSelectionModel().getSelectedItem());
-		 npkd.setTitle("Kategorie bearbeiten");
-		 npkd.show();
+		 Stage stage = GUIManager.openDialog("Produktkategorie bearbeiten");
+		 ProduktKategorie pk = kategorieListView.getSelectionModel().getSelectedItem();
+		 ProduktKategorieDialogController pkdc = null;
+		 try {
+				pkdc=(ProduktKategorieDialogController) GUIManager.loadFXML("NeueKategorieDialog.fxml", stage);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 
+		 pkdc.setPK(pk);
+		 stage.show();
 	 }
+	 
 	 @FXML
 	 public void clickOnKategorieLoeschen(ActionEvent event) {
 		 
@@ -173,10 +166,4 @@ public class SpeisekarteController implements Initializable {
 		 
 		System.out.println("GEEEHT");
 	 }
-	 
-	 
-	 
-	
-	 
-
 }
