@@ -50,7 +50,7 @@ public class BestellController extends Controller {
 	@FXML private ComboBox<String> kategorie;
 	@FXML private ComboBox<String> produkt;
 	@FXML private TableView<Bestellung> bestellungTableView;
-	@FXML private TableColumn<Bestellung,Integer> nameCol;
+	@FXML private TableColumn<Bestellung,String> nameCol;
 	@FXML private TableColumn<Bestellung,Integer> preisCol;
 	@FXML private TableColumn<Bestellung,String> statusCol;
 	@FXML private CheckBox alleBestellungen;
@@ -63,7 +63,7 @@ public class BestellController extends Controller {
 
 			s = (Service) ac.getBean("GASTService");
 			
-			nameCol.setCellValueFactory(new PropertyValueFactory<Bestellung,Integer>("produkt"));
+			nameCol.setCellValueFactory(new PropertyValueFactory<Bestellung,String>("pname"));
 			preisCol.setCellValueFactory(new PropertyValueFactory<Bestellung,Integer>("preis"));
 			statusCol.setCellValueFactory(new PropertyValueFactory<Bestellung,String>("status"));
 			
@@ -149,7 +149,20 @@ public class BestellController extends Controller {
 		 
 		 @FXML
 		 protected void storniereBestellung(ActionEvent event) {
-			 System.out.println("GEEEHT");
+			 try {
+				 Bestellung b= new Bestellung();
+				 b.setId(liste.get(tisch.getSelectionModel().getSelectedIndex()-1).getId());
+				 System.out.println(b.getId());
+				 s.deleteBestellung(b);
+				 
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			listBestellungen();
 		}
 		
 		 @FXML

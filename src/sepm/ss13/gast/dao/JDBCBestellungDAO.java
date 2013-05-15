@@ -43,7 +43,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 	
 	public ArrayList<Bestellung> search(Bestellung b) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT id,tischnummer,produktid,preis,rechnungid,status FROM bestellung WHERE (id=? OR ?=-1)  AND (tischnummer=? OR ?=-1) AND (status like ? or  ?='-1')");
+			PreparedStatement ps=c.prepareStatement("SELECT b.id,b.tischnummer,b.produktid,p.name,b.preis,b.rechnungid,b.status FROM bestellung b, produkt p WHERE (id=? OR ?=-1)  AND (tischnummer=? OR ?=-1) AND (status like ? or  ?='-1') and b.produktid=p.id");
 			ps.setInt(1,b.getId());
 			ps.setInt(2,b.getId());
 			ps.setInt(3,b.getTisch());
@@ -54,7 +54,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			ResultSet rs=ps.executeQuery();
 			ArrayList<Bestellung> al=new ArrayList<Bestellung>();
 			while(rs.next()) {
-				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getInt("preis"),rs.getInt("rechnungid"),rs.getString("status")));
+				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getInt("preis"),rs.getInt("rechnungid"),rs.getString("status"), rs.getString("name")));
 				
 			}
 			return al;
