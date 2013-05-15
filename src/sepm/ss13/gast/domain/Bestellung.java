@@ -7,6 +7,7 @@ public class Bestellung {
 	private int preis;
 	private int rechnung;
 	private String status;
+	private boolean deleted;
 	private String pname;
 	
 	/**
@@ -17,6 +18,17 @@ public class Bestellung {
 		this(-1, -1, 0, 0, 0, "-1", "-1");
 	}
 	
+	public Bestellung(int id, int tisch, int produkt, int preis, int rechnung, String status, String pname, boolean deleted) {
+		this.setId(id);
+		this.setTisch(tisch);
+		this.setProdukt(produkt);
+		this.setPreis(preis);
+		this.setRechnung(rechnung);
+		this.setStatus(status);
+		this.setDeleted(deleted);
+		this.setPname(pname);
+	}
+	
 	public Bestellung(int id, int tisch, int produkt, int preis, int rechnung, String status, String pname) {
 		this.setId(id);
 		this.setTisch(tisch);
@@ -25,6 +37,7 @@ public class Bestellung {
 		this.setRechnung(rechnung);
 		this.setStatus(status);
 		this.setPname(pname);
+		this.setDeleted(false);
 	}
 
 	public int getId() {
@@ -83,6 +96,12 @@ public class Bestellung {
 		this.pname = pname;
 	}
 	
+	public void setDeleted(boolean deleted){
+		this.deleted = deleted;
+	}
 	
+	public boolean getDeleted(){
+		return this.deleted;
+	}
 
 }
