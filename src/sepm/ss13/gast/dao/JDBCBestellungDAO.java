@@ -21,12 +21,24 @@ public class JDBCBestellungDAO implements BestellungDAO {
 	
 	public Bestellung create(Bestellung b) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,preis,rechnungid,status) VALUES (NULL,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
-			ps.setInt(1,b.getTisch());
-			ps.setInt(2, b.getProdukt());
-			ps.setInt(3,b.getPreis());
-			ps.setInt(4, b.getRechnung());
-			ps.setString(5, b.getStatus());
+			PreparedStatement ps = null;
+			if(b.getRechnung() == -1 && !("bezahlt".equalsIgnoreCase(b.getStatus()))){
+				ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,preis,rechnungid,status,deleted) VALUES (NULL,?,?,?,NULL,?,?)",Statement.RETURN_GENERATED_KEYS);
+				ps.setInt(1,b.getTisch());
+				ps.setInt(2, b.getProdukt());
+				ps.setInt(3,b.getPreis());
+				//ps.setInt(4, b.getRechnung());
+				ps.setString(4, b.getStatus());
+				ps.setBoolean(5,b.getDeleted());
+			}else{
+				ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,preis,rechnungid,status,deleted) VALUES (NULL,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+				ps.setInt(1,b.getTisch());
+				ps.setInt(2, b.getProdukt());
+				ps.setInt(3,b.getPreis());
+				ps.setInt(4, b.getRechnung());
+				ps.setString(5, b.getStatus());
+				ps.setBoolean(6,b.getDeleted());
+			}
 			ps.executeUpdate();
 			
 			ResultSet rs = ps.getGeneratedKeys();
@@ -43,7 +55,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 	
 	public ArrayList<Bestellung> search(Bestellung b) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT b.id,b.tischnummer,b.produktid,p.name,b.preis,b.rechnungid,b.status FROM bestellung b, produkt p WHERE (id=? OR ?=-1)  AND (tischnummer=? OR ?=-1) AND (status like ? or  ?='-1') and b.produktid=p.id");
+			PreparedStatement ps=c.prepareStatement("SELECT b.id,b.tischnummer,b.produktid,p.name,b.preis,b.rechnungid,b.status,b.deleted FROM bestellung b, produkt p WHERE (id=? OR ?=-1)  AND (tischnummer=? OR ?=-1) AND (status like ? or  ?='-1') and b.produktid=p.id");
 			ps.setInt(1,b.getId());
 			ps.setInt(2,b.getId());
 			ps.setInt(3,b.getTisch());
@@ -54,7 +66,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			ResultSet rs=ps.executeQuery();
 			ArrayList<Bestellung> al=new ArrayList<Bestellung>();
 			while(rs.next()) {
-				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getInt("preis"),rs.getInt("rechnungid"),rs.getString("status"), rs.getString("name")));
+				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getInt("preis"),rs.getInt("rechnungid"),rs.getString("status"), rs.getString("name"), rs.getBoolean("deleted")));
 				
 			}
 			return al;
@@ -68,11 +80,11 @@ public class JDBCBestellungDAO implements BestellungDAO {
 	
 	public void delete(Bestellung b) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("DELETE FROM bestellung WHERE id=?");
+			PreparedStatement ps=c.prepareStatement("update bestellung set deleted = true where id=?");
 			ps.setInt(1,b.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			throw new DAOException("ERROR: failed to delete order from DB!");
+			throw new DAOException("ERROR: failed to update order from DB!");
 		}
 		catch (NullPointerException e) {
 			throw new IllegalArgumentException();
