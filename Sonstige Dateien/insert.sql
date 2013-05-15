@@ -52,14 +52,14 @@ INSERT INTO rechnung (datum, trinkgeld) VALUES (NOW(), 20)
 
 INSERT INTO rechnung (datum, trinkgeld) VALUES (NOW(), 0)
 
-INSERT INTO bestellung (tischnummer, produktid, preis, rechnungid, status) VALUES (1, 2, 500, 0, 'bestellt')
+INSERT INTO bestellung (tischnummer, produktid, preis, rechnungid, status) VALUES (1, 2, 500, 1, 'bestellt')
 
-INSERT INTO bestellung (tischnummer, produktid, preis, rechnungid, status) VALUES (1, 4, 200, 0, 'bestellt')
+INSERT INTO bestellung (tischnummer, produktid, preis, rechnungid, status) VALUES (1, 4, 200, 1, 'bestellt')
 
-INSERT INTO bestellung (tischnummer, produktid, preis, rechnungid, status) VALUES (1, 12, 900, 0, 'bestellt')
+INSERT INTO bestellung (tischnummer, produktid, preis, rechnungid, status) VALUES (1, 12, 900, 1, 'bestellt')
 
-INSERT INTO bestellung (tischnummer, produktid, preis, rechnungid, status) VALUES (12, 6, 300, 1, 'geliefert')
+INSERT INTO bestellung (tischnummer, produktid, preis, rechnungid, status) VALUES (12, 6, 300, 2, 'geliefert')
 
-INSERT INTO bestellung (tischnummer, produktid, preis, rechnungid, status) VALUES (5, 5, 200, 2, 'bestellt')
+INSERT INTO bestellung (tischnummer, produktid, preis, rechnungid, status) VALUES (5, 5, 200, 3, 'bestellt')
 
-INSERT INTO bestellung (tischnummer, produktid, preis, rechnungid, status) VALUES (5, 9, 400, 3, 'bestellt')
+INSERT INTO bestellung (tischnummer, produktid, preis, rechnungid, status) VALUES (5, 9, 400, 4, 'bestellt')
