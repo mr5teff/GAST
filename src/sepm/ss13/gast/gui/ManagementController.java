@@ -7,10 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class ManagementController extends Controller {
-	 @FXML private SpeisekarteController speisekarteContentController;
-	 	 
 	 public void initialize(URL location, ResourceBundle resources) {
-		 speisekarteContentController.setParentController(this);
 	 }
 	 
 	 @FXML

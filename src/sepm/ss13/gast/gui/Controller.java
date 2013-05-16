@@ -3,12 +3,16 @@ package sepm.ss13.gast.gui;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.stage.Stage;
 
 public abstract class Controller implements Initializable {
 	private Stage s;
 	private Controller pc;
+	
+	@FXML protected Parent root;
 	
 	protected void setStage(Stage s) {
 		this.s=s;
@@ -16,7 +20,7 @@ public abstract class Controller implements Initializable {
 	
 	protected Stage getStage() {
 		if(s!=null) return s;
-		else if(pc!=null) return pc.getStage();
+		else if(root!=null) return (Stage) root.getScene().getWindow();
 		else return null;
 	}
 	
