@@ -1,7 +1,6 @@
 package sepm.ss13.gast.gui;
 
 import javafx.scene.control.ListCell;
-import javafx.scene.control.Tooltip;
 import sepm.ss13.gast.domain.Produkt;
 
 public class ProduktCell extends ListCell<Produkt> {
@@ -16,8 +15,6 @@ public class ProduktCell extends ListCell<Produkt> {
         //	tooltip.setText(item.);
            // setTooltip(tooltip);
         }
-        
-        
 	}
 
 }

@@ -3,18 +3,13 @@ package sepm.ss13.gast.gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.service.Service;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class ProduktKategorieDialogController extends Controller {
 	 private ProduktKategorie pk;
@@ -22,12 +17,10 @@ public class ProduktKategorieDialogController extends Controller {
 	 @FXML private TextField kurzbezeichnung;
 	 @FXML private TextField bezeichnung;
 	 
-	 private ApplicationContext ac;
 	 private Service s;
 	 
 	public void initialize(URL location, ResourceBundle resources) {
-		ac = new ClassPathXmlApplicationContext("spring-config.xml");
-   	 	s = (Service) ac.getBean("GASTService");
+		s = (Service) this.getApplicationContext().getBean("GASTService");
    	 	
    	 	this.pk=null;
 	}

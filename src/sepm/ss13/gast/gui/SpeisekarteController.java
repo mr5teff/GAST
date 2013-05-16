@@ -10,19 +10,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import name.antonsmirnov.javafx.dialog.Dialog;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Produkt;
@@ -30,9 +23,7 @@ import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.service.Service;
 
 public class SpeisekarteController extends Controller {
-	
-	private ApplicationContext ac;
-	 private Service s;
+	private Service s;
 	 
 	 private ArrayList<ProduktKategorie> DAOkategorien;
 	 private ArrayList<Produkt> DAOprodukte;
@@ -45,8 +36,7 @@ public class SpeisekarteController extends Controller {
 	 @FXML private ListView<Produkt> produktListView;
 	 
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		ac = new ClassPathXmlApplicationContext("spring-config.xml");
-		s = (Service) ac.getBean("GASTService");
+		s = (Service) this.getApplicationContext().getBean("GASTService");
 		 
 		 initListView();
 	}

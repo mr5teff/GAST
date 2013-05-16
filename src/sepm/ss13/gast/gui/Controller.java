@@ -1,5 +1,8 @@
 package sepm.ss13.gast.gui;
 
+import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 
@@ -23,5 +26,13 @@ public abstract class Controller implements Initializable {
 	
 	protected Controller getParentController() {
 		return pc;
+	}
+	
+	protected ApplicationContext getApplicationContext() {
+		return GAST.getApplicationContext();
+	}
+	
+	protected Logger getLogger() {
+		return Logger.getLogger(this.getClass());
 	}
 }

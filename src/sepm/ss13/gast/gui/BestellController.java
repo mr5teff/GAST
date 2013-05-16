@@ -4,10 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.domain.Konfiguration;
@@ -15,27 +11,20 @@ import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.service.Service;
 
-import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
 public class BestellController extends Controller {
-	
-	private ApplicationContext ac;
-	private static Logger log = Logger.getLogger(Application.class);
-	
 	private Service s;
 	private ObservableList<Bestellung> bestellungen;
 	private ObservableList<Integer> tischnummern;
@@ -57,11 +46,7 @@ public class BestellController extends Controller {
 	@FXML private TextField anzahl;
 
 	 public void initialize(URL arg0, ResourceBundle arg1) {
-			// TODO Auto-generated method stub
-			
-			ac = new ClassPathXmlApplicationContext("spring-config.xml");
-
-			s = (Service) ac.getBean("GASTService");
+			s = (Service) this.getApplicationContext().getBean("GASTService");
 			
 			nameCol.setCellValueFactory(new PropertyValueFactory<Bestellung,String>("pname"));
 			preisCol.setCellValueFactory(new PropertyValueFactory<Bestellung,Integer>("preis"));

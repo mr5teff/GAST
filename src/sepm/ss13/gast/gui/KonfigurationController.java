@@ -1,6 +1,5 @@
 package sepm.ss13.gast.gui;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,32 +10,18 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
-import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import sepm.ss13.gast.dao.DAOException;
-import sepm.ss13.gast.dao.DBConnector;
 import sepm.ss13.gast.domain.Konfiguration;
-import sepm.ss13.gast.service.GASTService;
 import sepm.ss13.gast.service.Service;
 
-import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class KonfigurationController extends Controller {
-
-	private ApplicationContext ac;
-	private static Logger log = Logger.getLogger(Application.class);
-	 
 	private Service s;
 	private BufferedImage image;
 	 
@@ -47,8 +32,7 @@ public class KonfigurationController extends Controller {
 	 @FXML private TextField tischanzahl;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		ac = new ClassPathXmlApplicationContext("spring-config.xml");
-		s = (Service) ac.getBean("GASTService");
+		s = (Service) this.getApplicationContext().getBean("GASTService");
 		loadKonfiguration();	
 	}
 		
