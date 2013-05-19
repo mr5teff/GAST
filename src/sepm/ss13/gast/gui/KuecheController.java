@@ -56,16 +56,17 @@ public class KuecheController extends Controller
 		 
 		try 
 		{
-			Bestellung bestellung = new Bestellung();
+			Bestellung bestellungStatus = new Bestellung();
 			 		
-			bestellung.setStatus("bestellt");
+			bestellungStatus.setStatus("bestellt");
 			
-			liste = s.searchBestellung(bestellung);
-			 
+			liste = s.searchBestellung(bestellungStatus);
+			
+			bestellungStatus.setStatus("wirdGekocht");
+			
+			liste.addAll(s.searchBestellung(bestellungStatus));
+
 			bestellungen.addAll(liste);
-		
-			//System.out.println(liste.get(3).getTisch());
-			//System.out.println(bestellungen.get(3).getTisch());
 		}
 		catch(IllegalArgumentException e) 
 		{
@@ -79,7 +80,19 @@ public class KuecheController extends Controller
 		}
 		kuecheBestellungTableView.setItems(bestellungen);
 	}
+	
+	@FXML
+	public void clickOnChangeStatusToWirdGekocht(ActionEvent event) 
+	{
 	 
+	}	
+	
+	@FXML
+	public void clickOnChangeStatusToFertigGekocht(ActionEvent event) 
+	{
+	 
+	}	
+		 
 	// Zum einfacheren Wechseln der Anzeige (aus Testgründen)
 	@FXML
 	public void clickOnManagement(ActionEvent event) {
