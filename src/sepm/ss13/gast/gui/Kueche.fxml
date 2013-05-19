@@ -14,17 +14,18 @@
           <children>
             <TableView fx:id="kuecheBestellungTableView" layoutX="14.0" layoutY="73.0" prefHeight="439.0" prefWidth="770.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="ID" fx:id="idCol"/>
-                <TableColumn prefWidth="75.0" text="Tischnummer" fx:id="tischnummerCol"/>
-                <TableColumn prefWidth="75.0" text="ProduktID" fx:id="produktIdCol"/>
-                <TableColumn prefWidth="75.0" text="Produktname" fx:id="produktNameCol"/>
-                <TableColumn prefWidth="75.0" text="Preis" fx:id="preisCol"/>
-                <TableColumn prefWidth="75.0" text="RechnungID" fx:id="rechnungIdCol"/>
-                <TableColumn prefWidth="75.0" text="Status" fx:id="statusCol"/>
+                <TableColumn prefWidth="75.0" text="ID" fx:id="idCol" />
+                <TableColumn prefWidth="75.0" text="Tischnummer" fx:id="tischnummerCol" />
+                <TableColumn prefWidth="75.0" text="ProduktID" fx:id="produktIdCol" />
+                <TableColumn prefWidth="75.0" text="Produktname" fx:id="produktNameCol" />
+                <TableColumn prefWidth="75.0" text="Preis" fx:id="preisCol" />
+                <TableColumn prefWidth="75.0" text="RechnungID" fx:id="rechnungIdCol" />
+                <TableColumn prefWidth="75.0" text="Status" fx:id="statusCol" />
               </columns>
             </TableView>
             <Label layoutX="14.0" layoutY="41.0" text="Offene Bestellungen" />
-            <Button layoutX="192.0" layoutY="528.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="434.0" text="Status der ausgewählten Bestellung bearbeiten" />
+            <Button layoutX="439.0" layoutY="522.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="296.0" text="Ausgewählte Bestellung ist zubereitet" />
+            <Button layoutX="103.0" layoutY="522.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="254.0" text="Ausgewählte Bestellung wird zubereitet" />
           </children>
         </AnchorPane>
       </content>
