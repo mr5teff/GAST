@@ -12,13 +12,19 @@
       <content>
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
           <children>
-            <TableView layoutX="14.0" layoutY="73.0" prefHeight="487.0" prefWidth="395.0">
+            <TableView fx:id="kuecheBestellungTableView" layoutX="14.0" layoutY="73.0" prefHeight="439.0" prefWidth="770.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Column X" />
-                <TableColumn prefWidth="75.0" text="Column X" />
+                <TableColumn prefWidth="75.0" text="ID" fx:id="idCol"/>
+                <TableColumn prefWidth="75.0" text="Tischnummer" fx:id="tischnummerCol"/>
+                <TableColumn prefWidth="75.0" text="ProduktID" fx:id="produktIdCol"/>
+                <TableColumn prefWidth="75.0" text="Produktname" fx:id="produktNameCol"/>
+                <TableColumn prefWidth="75.0" text="Preis" fx:id="preisCol"/>
+                <TableColumn prefWidth="75.0" text="RechnungID" fx:id="rechnungIdCol"/>
+                <TableColumn prefWidth="75.0" text="Status" fx:id="statusCol"/>
               </columns>
             </TableView>
             <Label layoutX="14.0" layoutY="41.0" text="Offene Bestellungen" />
+            <Button layoutX="192.0" layoutY="528.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="434.0" text="Status der ausgewählten Bestellung bearbeiten" />
           </children>
         </AnchorPane>
       </content>
@@ -27,8 +33,8 @@
           <menus>
             <Menu disable="false" mnemonicParsing="true" text="Anzeige" visible="true">
               <items>
-                <MenuItem onAction="#clickOnManagement" mnemonicParsing="false" text="Management" />
-                <MenuItem onAction="#clickOnKassa" mnemonicParsing="false" text="Kassa" />
+                <MenuItem mnemonicParsing="false" onAction="#clickOnManagement" text="Management" />
+                <MenuItem mnemonicParsing="false" onAction="#clickOnKassa" text="Kassa" />
               </items>
             </Menu>
           </menus>
