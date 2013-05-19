@@ -39,11 +39,11 @@ public class KuecheController extends Controller
 		s = (Service) this.getApplicationContext().getBean("GASTService");
 		 
 		idCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("id"));
-		tischnummerCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("tischnummer"));
-		produktIdCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("produktid"));
+		tischnummerCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("tisch"));
+		produktIdCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("produkt"));
 		produktNameCol.setCellValueFactory(new PropertyValueFactory<Bestellung, String>("pname"));
 		preisCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("preis"));
-		rechnungIdCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("rechnungid"));
+		rechnungIdCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("rechnung"));
 		statusCol.setCellValueFactory(new PropertyValueFactory<Bestellung, String>("status"));
 		
 		listBestellungen();
@@ -63,7 +63,9 @@ public class KuecheController extends Controller
 			liste = s.searchBestellung(bestellung);
 			 
 			bestellungen.addAll(liste);
+		
 			//System.out.println(liste.get(3).getTisch());
+			//System.out.println(bestellungen.get(3).getTisch());
 		}
 		catch(IllegalArgumentException e) 
 		{
