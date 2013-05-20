@@ -15,28 +15,28 @@ public class Bestellung {
 	 */
 	public Bestellung()
 	{
-		this(-1, -1, 0, 0, 0, "-1", "-1");
+		this(-1, -1, 0, "-1", 0, 0, "-1");
 	}
 	
-	public Bestellung(int id, int tisch, int produkt, int preis, int rechnung, String status, String pname, boolean deleted) {
+	public Bestellung(int id, int tisch, int produkt, String pname, int preis, int rechnung, String status, boolean deleted) {
 		this.setId(id);
 		this.setTisch(tisch);
 		this.setProdukt(produkt);
+		this.setPname(pname);
 		this.setPreis(preis);
 		this.setRechnung(rechnung);
 		this.setStatus(status);
 		this.setDeleted(deleted);
-		this.setPname(pname);
 	}
 	
-	public Bestellung(int id, int tisch, int produkt, int preis, int rechnung, String status, String pname) {
+	public Bestellung(int id, int tisch, int produkt, String pname, int preis, int rechnung, String status) {
 		this.setId(id);
 		this.setTisch(tisch);
 		this.setProdukt(produkt);
+		this.setPname(pname);
 		this.setPreis(preis);
 		this.setRechnung(rechnung);
 		this.setStatus(status);
-		this.setPname(pname);
 		this.setDeleted(false);
 	}
 
@@ -64,6 +64,14 @@ public class Bestellung {
 		this.produkt = produkt;
 	}
 
+	public String getPname() {
+		return pname;
+	}
+
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+
 	public int getPreis() {
 		return preis;
 	}
@@ -86,14 +94,6 @@ public class Bestellung {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public String getPname() {
-		return pname;
-	}
-
-	public void setPname(String pname) {
-		this.pname = pname;
 	}
 	
 	public void setDeleted(boolean deleted){

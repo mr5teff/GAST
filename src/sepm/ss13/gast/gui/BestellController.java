@@ -156,8 +156,11 @@ public class BestellController extends Controller {
 				 Bestellung bestellung=new Bestellung();
 				 bestellung.setTisch(tisch.getValue());
 				 bestellung.setProdukt(p.get(produkt.getSelectionModel().getSelectedIndex()).getId());
-				 bestellung.setStatus("bestellt");
+				 bestellung.setPname(p.get(produkt.getSelectionModel().getSelectedIndex()).getName());
 				 bestellung.setPreis(p.get(produkt.getSelectionModel().getSelectedIndex()).getPreis());
+				 //bestellung.setRechnung(4);
+				 bestellung.setStatus("bestellt");
+				 bestellung.setDeleted(false);
 				 try {
 					s.createBestellung(bestellung);
 				} catch (IllegalArgumentException e) {

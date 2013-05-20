@@ -23,22 +23,25 @@ public class JDBCBestellungDAO implements BestellungDAO {
 	public Bestellung create(Bestellung b) throws DAOException {
 		try {
 			PreparedStatement ps = null;
+			
 			if(b.getRechnung() == -1 && !("bezahlt".equalsIgnoreCase(b.getStatus()))){
-				ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,preis,rechnungid,status,deleted) VALUES (NULL,?,?,?,NULL,?,?)",Statement.RETURN_GENERATED_KEYS);
+				ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,produktname,preis,rechnungid,status,deleted) VALUES (NULL,?,?,?,?,NULL,?,?)",Statement.RETURN_GENERATED_KEYS);
 				ps.setInt(1,b.getTisch());
 				ps.setInt(2, b.getProdukt());
-				ps.setInt(3,b.getPreis());
-				//ps.setInt(4, b.getRechnung());
-				ps.setString(4, b.getStatus());
-				ps.setBoolean(5,b.getDeleted());
-			}else{
-				ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,preis,rechnungid,status,deleted) VALUES (NULL,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
-				ps.setInt(1,b.getTisch());
-				ps.setInt(2, b.getProdukt());
-				ps.setInt(3,b.getPreis());
-				ps.setInt(4, b.getRechnung());
+				ps.setString(3, b.getPname());
+				ps.setInt(4,b.getPreis());
+				//ps.setInt(5, b.getRechnung());
 				ps.setString(5, b.getStatus());
 				ps.setBoolean(6,b.getDeleted());
+			}else{
+				ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,produktname,preis,rechnungid,status,deleted) VALUES (NULL,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+				ps.setInt(1, b.getTisch());
+				ps.setInt(2, b.getProdukt());
+				ps.setString(3, b.getPname());
+				ps.setInt(4, b.getPreis());
+				ps.setInt(5, b.getRechnung());
+				ps.setString(6, b.getStatus());
+				ps.setBoolean(7,b.getDeleted());
 			}
 			ps.executeUpdate();
 			
@@ -56,7 +59,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 	
 	public ArrayList<Bestellung> search(Bestellung b) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT b.id,b.tischnummer,b.produktid,p.name,b.preis,b.rechnungid,b.status,b.deleted FROM bestellung b, produkt p WHERE (id=? OR ?=-1)  AND (tischnummer=? OR ?=-1) AND (status like ? or  ?='-1') and b.produktid=p.id");
+			PreparedStatement ps=c.prepareStatement("SELECT b.id,b.tischnummer,b.produktid,b.produktname,b.preis,b.rechnungid,b.status,b.deleted FROM bestellung b WHERE (id=? OR ?=-1)  AND (tischnummer=? OR ?=-1) AND (status like ? or  ?='-1')");
 			ps.setInt(1,b.getId());
 			ps.setInt(2,b.getId());
 			ps.setInt(3,b.getTisch());
@@ -67,7 +70,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			ResultSet rs=ps.executeQuery();
 			ArrayList<Bestellung> al=new ArrayList<Bestellung>();
 			while(rs.next()) {
-				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getInt("preis"),rs.getInt("rechnungid"),rs.getString("status"), rs.getString("name"), rs.getBoolean("deleted")));
+				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getString("produktname"),rs.getInt("preis"),rs.getInt("rechnungid"),rs.getString("status"), rs.getBoolean("deleted")));
 				
 			}
 			return al;
@@ -83,15 +86,16 @@ public class JDBCBestellungDAO implements BestellungDAO {
 	{	
 		try
 		{
-			PreparedStatement ps = c.prepareStatement("UPDATE bestellung SET tischnummer=?, produktid=?, preis=?, rechnungid=?, status=?, deleted=? WHERE id=?");
+			PreparedStatement ps = c.prepareStatement("UPDATE bestellung SET tischnummer=?, produktid=?, produktname=?, preis=?, rechnungid=?, status=?, deleted=? WHERE id=?");
 			
 			ps.setInt(1,b.getTisch());
 			ps.setInt(2,b.getProdukt());
-			ps.setInt(3,b.getPreis());
-			ps.setInt(4,b.getRechnung());
-			ps.setString(5,b.getStatus());
-			ps.setBoolean(6,b.getDeleted());
-			ps.setInt(7,b.getId());
+			ps.setString(3, b.getPname());
+			ps.setInt(4,b.getPreis());
+			ps.setInt(5,b.getRechnung());
+			ps.setString(6,b.getStatus());
+			ps.setBoolean(7,b.getDeleted());
+			ps.setInt(8,b.getId());
 						
 			int updatedRows = ps.executeUpdate();
 			
