@@ -1,11 +1,11 @@
 package sepm.ss13.gast.domain;
 
 public class Bestellung {
-	private int id;
-	private int tisch;
-	private int produkt;
+	private Integer id;
+	private Integer tisch;
+	private Integer produkt;
 	private int preis;
-	private int rechnung;
+	private Integer rechnung;
 	private String status;
 	private boolean deleted;
 	private String pname;
@@ -15,10 +15,10 @@ public class Bestellung {
 	 */
 	public Bestellung()
 	{
-		this(-1, -1, 0, "-1", 0, 0, "-1");
+		this(null,null,null,null,0,null,null,false);
 	}
 	
-	public Bestellung(int id, int tisch, int produkt, String pname, int preis, int rechnung, String status, boolean deleted) {
+	public Bestellung(Integer id, Integer tisch, Integer produkt, String pname, int preis, Integer rechnung, String status, boolean deleted) {
 		this.setId(id);
 		this.setTisch(tisch);
 		this.setProdukt(produkt);
@@ -29,38 +29,31 @@ public class Bestellung {
 		this.setDeleted(deleted);
 	}
 	
-	public Bestellung(int id, int tisch, int produkt, String pname, int preis, int rechnung, String status) {
-		this.setId(id);
-		this.setTisch(tisch);
-		this.setProdukt(produkt);
-		this.setPname(pname);
-		this.setPreis(preis);
-		this.setRechnung(rechnung);
-		this.setStatus(status);
-		this.setDeleted(false);
+	public Bestellung(Integer id, Integer tisch, Integer produkt, String pname, int preis, Integer rechnung, String status) {
+		this(id,tisch,produkt,pname,preis,rechnung,status,false);
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public int getTisch() {
+	public Integer getTisch() {
 		return tisch;
 	}
 
-	public void setTisch(int tisch) {
+	public void setTisch(Integer tisch) {
 		this.tisch = tisch;
 	}
 
-	public int getProdukt() {
+	public Integer getProdukt() {
 		return produkt;
 	}
 
-	public void setProdukt(int produkt) {
+	public void setProdukt(Integer produkt) {
 		this.produkt = produkt;
 	}
 
@@ -80,11 +73,11 @@ public class Bestellung {
 		this.preis = preis;
 	}
 
-	public int getRechnung() {
+	public Integer getRechnung() {
 		return rechnung;
 	}
 
-	public void setRechnung(int rechnung) {
+	public void setRechnung(Integer rechnung) {
 		this.rechnung = rechnung;
 	}
 

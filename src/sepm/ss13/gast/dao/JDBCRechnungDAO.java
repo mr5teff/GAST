@@ -1,7 +1,6 @@
 package sepm.ss13.gast.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,9 +54,9 @@ public class JDBCRechnungDAO implements RechnungDAO {
 			ps.setDate(3,dt);
 			ps.setDate(4,dt);
 			*/
-			PreparedStatement ps=c.prepareStatement("SELECT id,datum,trinkgeld FROM rechnung WHERE (id=? OR ?=-1)");
-			ps.setInt(1,r.getId());
-			ps.setInt(2,r.getId());
+			PreparedStatement ps=c.prepareStatement("SELECT id,datum,trinkgeld FROM rechnung WHERE (id=? OR ? IS NULL)");
+			ps.setObject(1,r.getId());
+			ps.setObject(2,r.getId());
 			
 			ResultSet rs=ps.executeQuery();
 			ArrayList<Rechnung> al=new ArrayList<Rechnung>();

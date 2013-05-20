@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import sepm.ss13.gast.domain.Bestellung;
-import sepm.ss13.gast.domain.Produkt;
 
 /**
  * 
@@ -59,11 +58,11 @@ public class JDBCBestellungDAO implements BestellungDAO {
 	
 	public ArrayList<Bestellung> search(Bestellung b) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT b.id,b.tischnummer,b.produktid,b.produktname,b.preis,b.rechnungid,b.status,b.deleted FROM bestellung b WHERE (id=? OR ?=-1)  AND (tischnummer=? OR ?=-1) AND (status like ? or  ?='-1')");
-			ps.setInt(1,b.getId());
-			ps.setInt(2,b.getId());
-			ps.setInt(3,b.getTisch());
-			ps.setInt(4,b.getTisch());
+			PreparedStatement ps=c.prepareStatement("SELECT b.id,b.tischnummer,b.produktid,b.produktname,b.preis,b.rechnungid,b.status,b.deleted FROM bestellung b WHERE (id=? OR ? IS NULL)  AND (tischnummer=? OR ? IS NULL) AND (status like ? OR ? IS NULL)");
+			ps.setObject(1,b.getId());
+			ps.setObject(2,b.getId());
+			ps.setObject(3,b.getTisch());
+			ps.setObject(4,b.getTisch());
 			ps.setString(5,b.getStatus());
 			ps.setString(6,b.getStatus());
 			

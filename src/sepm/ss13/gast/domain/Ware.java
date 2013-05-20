@@ -1,10 +1,8 @@
 package sepm.ss13.gast.domain;
 
-import java.sql.Date;
-
 public class Ware {
 	
-	private int id;
+	private Integer id;
 	private String bezeichnung;
 	private int lagerstand;
 	
@@ -13,22 +11,22 @@ public class Ware {
 	 */
 	public Ware()
 	{
-		this(-1, "", 0);
+		this(null, "", 0);
 	}
 	
-	public Ware(int id, String bezeichnung, int lagerstand) {
+	public Ware(Integer id, String bezeichnung, int lagerstand) {
 		
 		this.id = id;
 		this.bezeichnung = bezeichnung;
 		this.lagerstand = lagerstand;
 	}
 	
-	public int getId(){
+	public Integer getId(){
 		
 		return id;
 	}
 	
-	public void setId(int id){
+	public void setId(Integer id){
 		
 		this.id = id;
 	}

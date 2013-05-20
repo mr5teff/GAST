@@ -3,7 +3,7 @@ package sepm.ss13.gast.domain;
 import java.util.Date;
 
 public class Rechnung {
-	private int id;
+	private Integer id;
 	private Date datum;
 	private int trinkgeld;
 	
@@ -13,20 +13,20 @@ public class Rechnung {
 	 */
 	public Rechnung()
 	{
-		this(-1, new Date(0), 0);
+		this(null, new Date(0), 0);
 	}
 	
-	public Rechnung(int id, Date datum, int trinkgeld) {
+	public Rechnung(Integer id, Date datum, int trinkgeld) {
 		this.setId(id);
 		this.setDatum(datum);
 		this.setTrinkgeld(trinkgeld);
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

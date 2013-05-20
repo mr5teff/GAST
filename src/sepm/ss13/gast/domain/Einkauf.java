@@ -4,8 +4,8 @@ import java.sql.Date;
 
 public class Einkauf {
 	
-	private int id;
-	private int warenId;
+	private Integer id;
+	private Integer warenId;
 	private int menge;
 	private Date datum;
 	private int preis;
@@ -16,10 +16,10 @@ public class Einkauf {
 	 */
 	public Einkauf()
 	{
-		this(-1, 0, 0, new Date(0), 0);
+		this(null,null, 0, new Date(0), 0);
 	}
 	
-	public Einkauf(int id, int warenId, int menge, Date datum, int preis) {
+	public Einkauf(Integer id, Integer warenId, int menge, Date datum, int preis) {
 		
 		this.id = id;
 		this.warenId = warenId;
@@ -28,22 +28,22 @@ public class Einkauf {
 		this.preis = preis;
 	}
 	
-	public int getId(){
+	public Integer getId(){
 		
 		return id;
 	}
 	
-	public void setId(int id){
+	public void setId(Integer id){
 		
 		this.id = id;
 	}
 	
-	public int getWarenId(){
+	public Integer getWarenId(){
 		
 		return warenId;
 	}
 	
-	public void setWarenId(int warenId){
+	public void setWarenId(Integer warenId){
 		
 		this.warenId = warenId;
 	}

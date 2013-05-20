@@ -45,9 +45,9 @@ public class JDBCProduktKategorieDAO implements ProduktKategorieDAO {
 	
 	public ArrayList<ProduktKategorie> search(ProduktKategorie p) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT id,bezeichnung,kurzbezeichnung FROM produkttyp WHERE (id=? OR ?=-1)");
-			ps.setInt(1,p.getId());
-			ps.setInt(2,p.getId());
+			PreparedStatement ps=c.prepareStatement("SELECT id,bezeichnung,kurzbezeichnung FROM produkttyp WHERE (id=? OR ? IS NULL)");
+			ps.setObject(1,p.getId());
+			ps.setObject(2,p.getId());
 			
 			ResultSet rs=ps.executeQuery();
 			ArrayList<ProduktKategorie> al=new ArrayList<ProduktKategorie>();

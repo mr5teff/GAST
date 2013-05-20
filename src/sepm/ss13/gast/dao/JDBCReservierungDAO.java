@@ -52,16 +52,16 @@ public class JDBCReservierungDAO implements ReservierungDAO{
 	{
 		try 
 		{
-			PreparedStatement ps = c.prepareStatement("SELECT id, datum, dauer, personen, tischnummer, name, telefonnummer FROM reservierung WHERE (id=? OR ?=-1) AND datum LIKE ? AND (dauer=? OR ?=-1) AND (personen=? OR ?=-1) AND (tischnummer=? OR ?=-1) AND name LIKE ? AND telefonnummer LIKE ?");
-			ps.setInt(1, r.getId());
-			ps.setInt(2, r.getId());
+			PreparedStatement ps = c.prepareStatement("SELECT id, datum, dauer, personen, tischnummer, name, telefonnummer FROM reservierung WHERE (id=? OR ? IS NULL) AND datum LIKE ? AND (dauer=? OR ? IS NULL) AND (personen=? OR ? IS NULL) AND (tischnummer=? OR ? IS NULL) AND name LIKE ? AND telefonnummer LIKE ?");
+			ps.setObject(1, r.getId());
+			ps.setObject(2, r.getId());
 			ps.setDate(3, r.getDatum());
 			ps.setInt(4, r.getDauer());
 			ps.setInt(5, r.getDauer());
 			ps.setInt(6, r.getPersonen());
 			ps.setInt(7, r.getPersonen());
-			ps.setInt(8, r.getTischnummer());
-			ps.setInt(9, r.getTischnummer());
+			ps.setObject(8, r.getTischnummer());
+			ps.setObject(9, r.getTischnummer());
 			ps.setString(10, r.getName());
 			ps.setString(11, r.getTelefonnummer());
 			

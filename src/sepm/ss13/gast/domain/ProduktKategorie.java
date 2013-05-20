@@ -1,7 +1,7 @@
 package sepm.ss13.gast.domain;
 
 public class ProduktKategorie {
-	private int id;
+	private Integer id;
 	private String bezeichnung;
 	private String kurzbezeichnung;
 
@@ -11,20 +11,20 @@ public class ProduktKategorie {
 	 */
 	public ProduktKategorie()
 	{
-		this(-1, "", "");
+		this(null, "", "");
 	}
 	
-	public ProduktKategorie(int id, String bezeichnung, String kurzbezeichnung) {
+	public ProduktKategorie(Integer id, String bezeichnung, String kurzbezeichnung) {
 		this.setId(id);
 		this.setBezeichnung(bezeichnung);
 		this.setKurzbezeichnung(kurzbezeichnung);
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

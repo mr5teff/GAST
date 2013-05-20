@@ -1,7 +1,5 @@
 package sepm.ss13.gast.domain;
 
-import java.sql.Date;
-
 public class Konfiguration {
 	private String name;
 	private String adresse;

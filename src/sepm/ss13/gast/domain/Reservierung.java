@@ -4,11 +4,11 @@ import java.sql.Date;
 
 public class Reservierung {
 
-	private int id;
+	private Integer id;
 	private Date datum;
 	private int dauer;
 	private int personen;
-	private int tischnummer;
+	private Integer tischnummer;
 	private String name;
 	private String telefonnummer;
 	
@@ -17,10 +17,10 @@ public class Reservierung {
 	 */
 	public Reservierung()
 	{
-		this(-1, new Date(0), 0, 0 ,0 , "", "");
+		this(null, new Date(0), 0, 0 ,null, "", "");
 	}
 	
-	public Reservierung(int id, Date datum, int dauer, int personen, int tischnummer, String name, String telefonnummer) {
+	public Reservierung(Integer id, Date datum, int dauer, int personen, Integer tischnummer, String name, String telefonnummer) {
 		
 		this.id = id;
 		this.datum = datum;
@@ -31,12 +31,12 @@ public class Reservierung {
 		this.telefonnummer = telefonnummer;
 	}
 	
-	public int getId(){
+	public Integer getId(){
 		
 		return id;
 	}
 	
-	public void setId(int id){
+	public void setId(Integer id){
 		
 		this.id = id;
 	}
@@ -71,12 +71,12 @@ public class Reservierung {
 		this.personen = personen;
 	}
 	
-	public int getTischnummer(){
+	public Integer getTischnummer(){
 		
 		return tischnummer;
 	}
 	
-	public void setTischnummer(int tischnummer){
+	public void setTischnummer(Integer tischnummer){
 		
 		this.tischnummer = tischnummer;
 	}

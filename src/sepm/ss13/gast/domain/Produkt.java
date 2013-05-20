@@ -1,9 +1,9 @@
 package sepm.ss13.gast.domain;
 
 public class Produkt {
-	private int id;
+	private Integer id;
 	private String name;
-	private int kategorie;
+	private Integer kategorie;
 	private int preis;
 	private boolean deleted;
 	
@@ -12,18 +12,14 @@ public class Produkt {
 	 */
 	public Produkt()
 	{
-		this(-1, "", -1, 0,false);
+		this(null, "", null, 0,false);
 	}
 	
-	public Produkt(int id, String name, int kategorie, int preis) {
-		this.setId(id);
-		this.setName(name);
-		this.setKategorie(kategorie);
-		this.setPreis(preis);
-		this.setDeleted(false);
+	public Produkt(Integer id, String name, Integer kategorie, int preis) {
+		this(id,name,kategorie,preis,false);
 	}
 	
-	public Produkt(int id, String name, int kategorie, int preis,boolean deleted) {
+	public Produkt(Integer id, String name, Integer kategorie, int preis,boolean deleted) {
 		this.setId(id);
 		this.setName(name);
 		this.setKategorie(kategorie);
@@ -31,11 +27,11 @@ public class Produkt {
 		this.setDeleted(deleted);
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -47,11 +43,11 @@ public class Produkt {
 		this.name = name;
 	}
 
-	public int getKategorie() {
+	public Integer getKategorie() {
 		return kategorie;
 	}
 
-	public void setKategorie(int kategorie) {
+	public void setKategorie(Integer kategorie) {
 		this.kategorie = kategorie;
 	}
 

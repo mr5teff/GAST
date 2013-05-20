@@ -52,11 +52,11 @@ public class JDBCEinkaufDAO implements EinkaufDAO
 	{
 		try 
 		{
-			PreparedStatement ps = c.prepareStatement("SELECT id, warenid, menge, datum, preis FROM einkauf WHERE (id=? OR ?=-1) AND (warenid=? OR ?=-1) AND (menge=? OR ?=-1) AND datum LIKE ? AND (preis=? OR ?=-1)");
-			ps.setInt(1, ek.getId());
-			ps.setInt(2, ek.getId());
-			ps.setInt(3, ek.getWarenId());
-			ps.setInt(4, ek.getWarenId());
+			PreparedStatement ps = c.prepareStatement("SELECT id, warenid, menge, datum, preis FROM einkauf WHERE (id=? OR ? IS NULL) AND (warenid=? OR ? IS NULL) AND (menge=? OR ? IS NULL) AND datum LIKE ? AND (preis=? OR ? IS NULL)");
+			ps.setObject(1, ek.getId());
+			ps.setObject(2, ek.getId());
+			ps.setObject(3, ek.getWarenId());
+			ps.setObject(4, ek.getWarenId());
 			ps.setInt(5, ek.getMenge());
 			ps.setInt(6, ek.getMenge());
 			ps.setDate(7, ek.getDatum());

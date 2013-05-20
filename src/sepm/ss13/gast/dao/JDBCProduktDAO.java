@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import sepm.ss13.gast.domain.Produkt;
-import sepm.ss13.gast.domain.ProduktKategorie;
 
 /**
  * 
@@ -48,12 +47,12 @@ public class JDBCProduktDAO implements ProduktDAO {
 	
 	public ArrayList<Produkt> search(Produkt p) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT id,name,typid,preis,deleted FROM produkt WHERE (id=? OR ?=-1) AND name LIKE ? AND (typid=? OR ?=-1)");
-			ps.setInt(1,p.getId());
-			ps.setInt(2,p.getId());
+			PreparedStatement ps=c.prepareStatement("SELECT id,name,typid,preis,deleted FROM produkt WHERE (id=? OR ? IS NULL) AND name LIKE ? AND (typid=? OR ? IS NULL)");
+			ps.setObject(1,p.getId());
+			ps.setObject(2,p.getId());
 			ps.setString(3,"%"+p.getName()+"%");
-			ps.setInt(4,p.getKategorie());
-			ps.setInt(5,p.getKategorie());
+			ps.setObject(4,p.getKategorie());
+			ps.setObject(5,p.getKategorie());
 			
 			ResultSet rs=ps.executeQuery();
 			ArrayList<Produkt> al=new ArrayList<Produkt>();
