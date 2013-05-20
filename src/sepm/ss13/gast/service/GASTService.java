@@ -66,6 +66,11 @@ public class GASTService implements Service{
 		if(b==null) throw new IllegalArgumentException();
 		return bestellungDAO.search(b);
 	}
+	
+	public void updateBestellung(Bestellung b) throws DAOException, IllegalArgumentException {
+		if(b==null) throw new IllegalArgumentException();
+		bestellungDAO.update(b);
+	}
 
 	public void deleteBestellung(Bestellung b) throws DAOException, IllegalArgumentException {
 		if(b==null) throw new IllegalArgumentException();

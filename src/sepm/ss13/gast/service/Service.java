@@ -22,6 +22,8 @@ public interface Service {
 	
 	public ArrayList<Bestellung> searchBestellung(Bestellung b) throws DAOException, IllegalArgumentException;
 	
+	public void updateBestellung(Bestellung b) throws DAOException, IllegalArgumentException;
+	
 	public void deleteBestellung(Bestellung b) throws DAOException, IllegalArgumentException;
 	
 	/*

@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import sepm.ss13.gast.domain.Bestellung;
+import sepm.ss13.gast.domain.Produkt;
 
 /**
  * 
@@ -72,6 +73,33 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			return al;
 		} catch (SQLException e) {
 			throw new DAOException("ERROR: failed to search DB for orders!");
+		}
+		catch (NullPointerException e) {
+			throw new IllegalArgumentException();
+		}
+	}
+	
+	public void update(Bestellung b) throws DAOException 
+	{	
+		try
+		{
+			PreparedStatement ps = c.prepareStatement("UPDATE bestellung SET tischnummer=?, produktid=?, preis=?, rechnungid=?, status=?, deleted=? WHERE id=?");
+			
+			ps.setInt(1,b.getTisch());
+			ps.setInt(2,b.getProdukt());
+			ps.setInt(3,b.getPreis());
+			ps.setInt(4,b.getRechnung());
+			ps.setString(5,b.getStatus());
+			ps.setBoolean(6,b.getDeleted());
+			ps.setInt(7,b.getId());
+						
+			int updatedRows = ps.executeUpdate();
+			
+			if(updatedRows == 0)
+				throw new DAOException("Bestellung id not found in DB!");				
+		}
+		catch(SQLException e) {
+			throw new DAOException("ERROR: failed to update Bestellung in DB!");
 		}
 		catch (NullPointerException e) {
 			throw new IllegalArgumentException();

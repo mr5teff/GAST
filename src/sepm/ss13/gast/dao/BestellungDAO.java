@@ -10,6 +10,8 @@ public interface BestellungDAO {
 
 	public ArrayList<Bestellung> search(Bestellung b) throws DAOException;
 
+	public void update(Bestellung b) throws DAOException;
+	
 	public void delete(Bestellung b) throws DAOException;
 
 }

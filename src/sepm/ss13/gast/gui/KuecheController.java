@@ -81,16 +81,62 @@ public class KuecheController extends Controller
 		kuecheBestellungTableView.setItems(bestellungen);
 	}
 	
+	// todo: Die für die Speise laut Rezept notwendigen Waren aus dem Lager entfernen.
 	@FXML
 	public void clickOnChangeStatusToWirdGekocht(ActionEvent event) 
 	{
-	 
+		try 
+		{	
+			Bestellung changeBestellungStatus = new Bestellung();
+					
+			changeBestellungStatus = (kuecheBestellungTableView.getSelectionModel().getSelectedItem());
+			
+			changeBestellungStatus.setStatus("wirdGekocht");	
+			 
+			// System.out.println(changeBestellungStatus.getId() + " " + changeBestellungStatus.getTisch() + " " + changeBestellungStatus.getProdukt() + " " + changeBestellungStatus.getPreis() + " " + changeBestellungStatus.getRechnung() + " " + changeBestellungStatus.getStatus() + " " + changeBestellungStatus.getDeleted());
+			s.updateBestellung(changeBestellungStatus);
+		} 
+		catch(IllegalArgumentException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		catch(DAOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		listBestellungen(); 
 	}	
 	
 	@FXML
 	public void clickOnChangeStatusToFertigGekocht(ActionEvent event) 
 	{
-	 
+		try 
+		{	
+			Bestellung changeBestellungStatus = new Bestellung();
+					
+			changeBestellungStatus = (kuecheBestellungTableView.getSelectionModel().getSelectedItem());
+			
+			changeBestellungStatus.setStatus("fertigGekocht");	
+			 
+			s.updateBestellung(changeBestellungStatus);
+		} 
+		catch(IllegalArgumentException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		catch(DAOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		listBestellungen(); 
 	}	
 		 
 	// Zum einfacheren Wechseln der Anzeige (aus Testgründen)
