@@ -10,6 +10,8 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
+import name.antonsmirnov.javafx.dialog.Dialog;
+
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Konfiguration;
 import sepm.ss13.gast.service.Service;
@@ -66,8 +68,21 @@ public class KonfigurationController extends Controller {
 	 @FXML
 	 public void saveKonfiguration(ActionEvent e) {
 		
-		 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		 try {
+		int anzahl=0;
+		try {
+			anzahl=Integer.parseInt(tischanzahl.getText());
+			if(anzahl<1) throw new NumberFormatException();
+		}
+		catch(NumberFormatException e1) {
+			Dialog.showInfo("Konfiguration speichern", "Keine gültige Tischanzahl!", null); //this.getStage().getScene().getWindow());
+			return;
+		}
+		if(name.getText().isEmpty()||adresse.getText().isEmpty()||tel.getText().isEmpty()){
+			Dialog.showInfo("Konfiguration speichern", "Es wurden nicht alle Felder befüllt!", null); //this.getStage().getScene().getWindow());
+			return;
+		}
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try {
 			ImageIO.write( image, "jpg", baos );
 			baos.flush();
 		} catch (IOException e2) {
@@ -77,7 +92,7 @@ public class KonfigurationController extends Controller {
 		 
 		 byte[] logo = baos.toByteArray();
 
-		 Konfiguration k = new Konfiguration(name.getText(),adresse.getText(),tel.getText(),logo,Integer.parseInt(tischanzahl.getText()));
+		 Konfiguration k = new Konfiguration(name.getText(),adresse.getText(),tel.getText(),logo,anzahl);
 		
 		try {
 			s.saveKonfiguration(k);
