@@ -86,6 +86,11 @@ public class SpeisekarteController extends Controller implements EventHandler<Ac
 		    	{
 		    		System.out.println("Selected item: " + newValue.getBezeichnung());
 		    		produktListeBefuellen(newValue);
+		    		selectedPK = newValue;
+		    	}
+		    	else
+		    	{
+		    		selectedPK = null;
 		    	}
 		    }
 		 });
@@ -118,7 +123,7 @@ public class SpeisekarteController extends Controller implements EventHandler<Ac
 		 kategorieListView.setItems(kategorieItems);
 	}
 	
-	private void produktListeBefuellen(ProduktKategorie pk)
+	public void produktListeBefuellen(ProduktKategorie pk)
 	{
 		Produkt searchP = new Produkt();
 		searchP.setKategorie(pk.getId());
@@ -147,11 +152,13 @@ public class SpeisekarteController extends Controller implements EventHandler<Ac
 	 
 	 @FXML
 	 public void clickOnKategorieBearbeiten(ActionEvent event) {
+		 if(selectedPK == null)
+			 return;
+		 
 		 Stage stage = GUITools.openDialog("Produktkategorie bearbeiten",this.getStage());
-		 ProduktKategorie pk = kategorieListView.getSelectionModel().getSelectedItem();
 		 ProduktKategorieDialogController pkdc = (ProduktKategorieDialogController) GUITools.loadFXML("NeueKategorieDialog.fxml", stage, this);
 		 
-		 pkdc.setPK(pk);
+		 pkdc.setPK(selectedPK);
 		 stage.show();
 	 }
 	 
@@ -167,19 +174,34 @@ public class SpeisekarteController extends Controller implements EventHandler<Ac
 		 }
 		 
 		 deleteDialog.show();
-		 	
 	 }
+	 
 	 
 	 @FXML
 	 public void clickOnNeuesProdukt(ActionEvent event) {
+		 if(selectedPK == null)
+			 return;
 		 
-		System.out.println("GEEEHT");
+		 Stage stage = GUITools.openDialog("Produkt erstellen", this.getStage());
+		 ProduktDialogController pdc = (ProduktDialogController) GUITools.loadFXML("NeuesProduktDialog.fxml", stage, this);
+		 pdc.setPK(selectedPK);
+		 stage.show();
 	 }
+	 
 	 @FXML
 	 public void clickOnProduktBearbeiten(ActionEvent event) {
 		 
-		System.out.println("GEEEHT");
+		 Produkt p = produktListView.getSelectionModel().getSelectedItem();
+		 if(p == null || selectedPK == null)
+			 return;
+		 
+		 Stage stage = GUITools.openDialog("Produkt erstellen", this.getStage());
+		 ProduktDialogController pdc = (ProduktDialogController) GUITools.loadFXML("NeuesProduktDialog.fxml", stage, this);
+		 pdc.setPK(selectedPK);
+		 pdc.setProdukt(p);
+		 stage.show();
 	 }
+	 
 	 @FXML
 	 public void clickOnProduktLoeschen(ActionEvent event) {
 		 
