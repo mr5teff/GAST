@@ -111,6 +111,7 @@ public class GASTService implements Service{
 
 	public void saveKonfiguration(Konfiguration k) throws DAOException, IllegalArgumentException {
 		if(k==null) throw new IllegalArgumentException();
+		if(k.getAdresse().equals("")||k.getName().equals("")||k.getTel().equals("")||k.getTischanzahl()<0) throw new IllegalArgumentException();
 		konfigurationDAO.save(k);
 	}
 
@@ -131,6 +132,11 @@ public class GASTService implements Service{
 	public void updateProdukt(Produkt p) throws DAOException, IllegalArgumentException {
 		if(p==null) throw new IllegalArgumentException();
 		produktDAO.update(p);
+	}
+	
+	public void deleteProdukt(Produkt p) throws DAOException, IllegalArgumentException {
+		if(p==null) throw new IllegalArgumentException();
+		produktDAO.delete(p);
 	}
 
 

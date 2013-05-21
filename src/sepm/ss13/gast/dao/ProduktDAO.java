@@ -13,4 +13,5 @@ public interface ProduktDAO {
 
 	public void update(Produkt p) throws DAOException;
 
+	public void delete(Produkt p) throws DAOException;
 }

@@ -56,6 +56,8 @@ public interface Service {
 
 	public void updateProdukt(Produkt p) throws DAOException, IllegalArgumentException;
 	
+	public void deleteProdukt(Produkt p) throws DAOException, IllegalArgumentException;
+	
 	/*
 	 * Services für ProduktKategorie
 	 */
