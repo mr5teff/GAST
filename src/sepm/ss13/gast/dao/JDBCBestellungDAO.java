@@ -23,25 +23,15 @@ public class JDBCBestellungDAO implements BestellungDAO {
 		try {
 			PreparedStatement ps = null;
 			
-			if(b.getRechnung() == -1 && !("bezahlt".equalsIgnoreCase(b.getStatus()))){
-				ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,produktname,preis,rechnungid,status,deleted) VALUES (NULL,?,?,?,?,NULL,?,?)",Statement.RETURN_GENERATED_KEYS);
-				ps.setInt(1,b.getTisch());
-				ps.setInt(2, b.getProdukt());
-				ps.setString(3, b.getPname());
-				ps.setInt(4,b.getPreis());
-				//ps.setInt(5, b.getRechnung());
-				ps.setString(5, b.getStatus());
-				ps.setBoolean(6,b.getDeleted());
-			}else{
-				ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,produktname,preis,rechnungid,status,deleted) VALUES (NULL,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
-				ps.setInt(1, b.getTisch());
-				ps.setInt(2, b.getProdukt());
-				ps.setString(3, b.getPname());
-				ps.setInt(4, b.getPreis());
-				ps.setInt(5, b.getRechnung());
-				ps.setString(6, b.getStatus());
-				ps.setBoolean(7,b.getDeleted());
-			}
+			ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,produktname,preis,rechnungid,status,deleted) VALUES (NULL,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, b.getTisch());
+			ps.setInt(2, b.getProdukt());
+			ps.setString(3, b.getPname());
+			ps.setInt(4, b.getPreis());
+			ps.setObject(5, b.getRechnung());
+			ps.setString(6, b.getStatus());
+			ps.setBoolean(7,b.getDeleted());
+			
 			ps.executeUpdate();
 			
 			ResultSet rs = ps.getGeneratedKeys();
