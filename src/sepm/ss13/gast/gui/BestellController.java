@@ -30,7 +30,7 @@ public class BestellController extends Controller {
 	private ObservableList<Integer> tischnummern;
 	private ObservableList<String> kategorien;
 	private ObservableList<String> produkte;
-	private ArrayList<Bestellung> liste;
+	private ArrayList<Bestellung> bestellungenListe;
 	private ArrayList<ProduktKategorie> pk;
 	private ArrayList<Produkt> p;
 
@@ -116,8 +116,8 @@ public class BestellController extends Controller {
 					if(alleBestellungen.isSelected()==false) {
 						bestellung.setTisch(tisch.getValue());
 					}
-					liste=s.searchBestellung(bestellung);
-					bestellungen.addAll(liste);
+					bestellungenListe=s.searchBestellung(bestellung);
+					bestellungen.addAll(bestellungenListe);
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -136,7 +136,7 @@ public class BestellController extends Controller {
 		 protected void storniereBestellung(ActionEvent event) {
 			 try {
 				 Bestellung b= new Bestellung();
-				 b.setId(liste.get(tisch.getSelectionModel().getSelectedIndex()-1).getId());
+				 b.setId(bestellungenListe.get(bestellungTableView.getSelectionModel().getSelectedIndex()).getId());
 				 System.out.println(b.getId());
 				 s.deleteBestellung(b);
 				 
@@ -152,27 +152,38 @@ public class BestellController extends Controller {
 		
 		 @FXML
 		 public void clickOnAddBestellung(ActionEvent event) {
-			 for(int i=0; i<Integer.parseInt(anzahl.getText());i++) {
-				 Bestellung bestellung=new Bestellung();
-				 bestellung.setTisch(tisch.getValue());
-				 bestellung.setProdukt(p.get(produkt.getSelectionModel().getSelectedIndex()).getId());
-				 bestellung.setPname(p.get(produkt.getSelectionModel().getSelectedIndex()).getName());
-				 bestellung.setPreis(p.get(produkt.getSelectionModel().getSelectedIndex()).getPreis());
-				 //bestellung.setRechnung(4);
-				 bestellung.setStatus("bestellt");
-				 bestellung.setDeleted(false);
-				 try {
-					s.createBestellung(bestellung);
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DAOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			 int n=0;
+			 try {
+				 n= Integer.parseInt(anzahl.getText());
 			 }
-		     listBestellungen();
-		     anzahl.setText("");
+			 catch(NumberFormatException e) {
+			 }
+			 if((n!=0)&&(produkt.getSelectionModel().isEmpty()==false)) {
+				 for(int i=0; i<n;i++) {
+					 Bestellung bestellung=new Bestellung();
+					 bestellung.setTisch(tisch.getValue());
+					 bestellung.setProdukt(p.get(produkt.getSelectionModel().getSelectedIndex()).getId());
+					 bestellung.setPname(p.get(produkt.getSelectionModel().getSelectedIndex()).getName());
+					 bestellung.setPreis(p.get(produkt.getSelectionModel().getSelectedIndex()).getPreis());
+					 bestellung.setStatus("bestellt");
+					 bestellung.setDeleted(false);
+					 try {
+						 s.createBestellung(bestellung);
+					 } catch (IllegalArgumentException e) {
+						 // TODO Auto-generated catch block
+						 e.printStackTrace();
+					 } catch (DAOException e) {
+						 // TODO Auto-generated catch block
+						 e.printStackTrace();
+					 }
+				 }
+				 listBestellungen();
+				 anzahl.setText("");
+			 }
+			 else {
+				 System.out.println("Keine gültige Eingabe!");
+			 }
+			 
 		 }
 
 }
