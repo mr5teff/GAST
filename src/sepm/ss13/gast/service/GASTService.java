@@ -57,8 +57,14 @@ public class GASTService implements Service{
 	/*
 	 * Services für Bestellung
 	 */
-	public Bestellung createBestellung(Bestellung b) throws DAOException,IllegalArgumentException{
+	
+	public void verifyBestellung(Bestellung b) throws DAOException, IllegalArgumentException{
 		if(b==null) throw new IllegalArgumentException();
+		if(b.getPname().equals("")||b.getPreis()<0||b.getProdukt()<0||b.getTisch()<0) throw new IllegalArgumentException();
+	}
+	
+	public Bestellung createBestellung(Bestellung b) throws DAOException,IllegalArgumentException{
+		verifyBestellung(b);
 		return bestellungDAO.create(b);
 	}
 
@@ -68,12 +74,14 @@ public class GASTService implements Service{
 	}
 	
 	public void updateBestellung(Bestellung b) throws DAOException, IllegalArgumentException {
-		if(b==null) throw new IllegalArgumentException();
+		verifyBestellung(b);
+		if(b.getId()<0) throw new IllegalArgumentException();
 		bestellungDAO.update(b);
 	}
 
 	public void deleteBestellung(Bestellung b) throws DAOException, IllegalArgumentException {
 		if(b==null) throw new IllegalArgumentException();
+		if(b.getId()<0) throw new IllegalArgumentException();
 		bestellungDAO.delete(b);
 		
 	}
@@ -119,8 +127,13 @@ public class GASTService implements Service{
 	 * Services für Produkt
 	 */
 	
-	public Produkt createProdukt(Produkt p) throws DAOException, IllegalArgumentException {
+	public void verifyProdukt(Produkt p) throws DAOException, IllegalArgumentException{
 		if(p==null) throw new IllegalArgumentException();
+		if(p.getKategorie()<0||p.getName().equals("")||p.getPreis()<0) throw new IllegalArgumentException();
+	}
+	
+	public Produkt createProdukt(Produkt p) throws DAOException, IllegalArgumentException {
+		verifyProdukt(p);
 		return produktDAO.create(p);
 	}
 
@@ -130,12 +143,13 @@ public class GASTService implements Service{
 	}
 
 	public void updateProdukt(Produkt p) throws DAOException, IllegalArgumentException {
-		if(p==null) throw new IllegalArgumentException();
+		verifyProdukt(p);
 		produktDAO.update(p);
 	}
 	
 	public void deleteProdukt(Produkt p) throws DAOException, IllegalArgumentException {
 		if(p==null) throw new IllegalArgumentException();
+		if(p.getId()<0) throw new IllegalArgumentException();
 		produktDAO.delete(p);
 	}
 
@@ -144,8 +158,13 @@ public class GASTService implements Service{
 	 * Services für ProduktKategorie
 	 */
 	
-	public ProduktKategorie createProduktKategorie(ProduktKategorie p) throws DAOException, IllegalArgumentException {
+	public void verifyProduktKategorie(ProduktKategorie p) throws DAOException, IllegalArgumentException{
 		if(p==null) throw new IllegalArgumentException();
+		if(p.getBezeichnung().equals("")||p.getId()<0||p.getKurzbezeichnung().equals("")) throw new IllegalArgumentException();
+	}
+	
+	public ProduktKategorie createProduktKategorie(ProduktKategorie p) throws DAOException, IllegalArgumentException {
+		verifyProduktKategorie(p);
 		return produktKategorieDAO.create(p);
 	}
 
@@ -155,12 +174,13 @@ public class GASTService implements Service{
 	}
 
 	public void updateProduktKategorie(ProduktKategorie p) throws DAOException, IllegalArgumentException {
-		if(p==null) throw new IllegalArgumentException();
+		verifyProduktKategorie(p);
 		produktKategorieDAO.update(p);
 	}
 
 	public void deleteProduktKategorie(ProduktKategorie p) throws DAOException, IllegalArgumentException {
 		if(p==null) throw new IllegalArgumentException();
+		if(p.getId()<0) throw new IllegalArgumentException();
 		produktKategorieDAO.delete(p);
 	}
 
