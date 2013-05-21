@@ -59,7 +59,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			ResultSet rs=ps.executeQuery();
 			ArrayList<Bestellung> al=new ArrayList<Bestellung>();
 			while(rs.next()) {
-				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getString("produktname"),rs.getInt("preis"),rs.getInt("rechnungid"),rs.getString("status"), rs.getBoolean("deleted")));
+				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getString("produktname"),rs.getInt("preis"),(Integer)rs.getObject("rechnungid"),rs.getString("status"), rs.getBoolean("deleted")));
 				
 			}
 			return al;
@@ -81,7 +81,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			ps.setInt(2,b.getProdukt());
 			ps.setString(3, b.getPname());
 			ps.setInt(4,b.getPreis());
-			ps.setInt(5,b.getRechnung());
+			ps.setObject(5,b.getRechnung());
 			ps.setString(6,b.getStatus());
 			ps.setBoolean(7,b.getDeleted());
 			ps.setInt(8,b.getId());
