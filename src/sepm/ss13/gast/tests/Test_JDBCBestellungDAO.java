@@ -122,15 +122,16 @@ public class Test_JDBCBestellungDAO {
 		p2_rechnung.setId(p_temp_rechnung.getId());
 		mykeys_Rechnung.add(p_temp_rechnung.getId());
 		
+
 		//Bestellung(int id, int tisch, int produkt, int preis, int rechnung, String status)
-		p1 = new Bestellung(-1,1, p1_produkt.getId(),  p1_produkt.getPreis(), -1, "bestellt",p1_produkt.getName());
-		p2 = new Bestellung(-1,1, p1_produkt.getId(),  p1_produkt.getPreis(), p1_rechnung.getId(), "bezahlt",p1_produkt.getName());
-		p3 = new Bestellung(-1,1, p2_produkt.getId(),  p2_produkt.getPreis(), 0, "bezahlt",p2_produkt.getName());
+		p1 = new Bestellung(-1,1, p1_produkt.getId(), p1_produkt.getName(), p1_produkt.getPreis(), null, "bestellt");
+		p2 = new Bestellung(-1,1, p1_produkt.getId(), p1_produkt.getName(),  p1_produkt.getPreis(), p1_rechnung.getId(), "bezahlt");
+		p3 = new Bestellung(-1,1, p2_produkt.getId(), p2_produkt.getName(),  p2_produkt.getPreis(), 0, "bezahlt");
 		
-		p4 = new Bestellung(-1,-200, p1_produkt.getId(),  p1_produkt.getPreis(), -1, "bestellt",p1_produkt.getName());
-		p5 = new Bestellung(-1,-300, p1_produkt.getId(),  p1_produkt.getPreis(), -1, "wirdGekocht",p1_produkt.getName());
-		p6 = new Bestellung(-1,-400, p2_produkt.getId(),  p2_produkt.getPreis(), -1, "fertigGekocht",p2_produkt.getName());
-		p7 = new Bestellung(-1,-500, p2_produkt.getId(),  p2_produkt.getPreis(), -1, "geliefert",p2_produkt.getName());
+		p4 = new Bestellung(-1,-200, p1_produkt.getId(), p1_produkt.getName(),  p1_produkt.getPreis(), null, "bestellt");
+		p5 = new Bestellung(-1,-300, p1_produkt.getId(), p1_produkt.getName(),  p1_produkt.getPreis(), null, "wirdGekocht");
+		p6 = new Bestellung(-1,-400, p2_produkt.getId(), p2_produkt.getName(),  p2_produkt.getPreis(), null, "fertigGekocht");
+		p7 = new Bestellung(-1,-500, p2_produkt.getId(), p2_produkt.getName(),  p2_produkt.getPreis(), null, "geliefert");
 		
 		Bestellung p_temp = null;
 		p_temp = test.create(p4);
@@ -146,8 +147,8 @@ public class Test_JDBCBestellungDAO {
 		p7.setId(p_temp.getId());
 		mykeys.add(p_temp.getId());	
 
-		p8 = new Bestellung(-1,1, p2_produkt.getId(),  p2_produkt.getPreis(), -1, "bestellt",p2_produkt.getName());
-		p9 = new Bestellung(-1,1, p2_produkt.getId(),  p2_produkt.getPreis(), p2_rechnung.getId(), "bezahlt",p2_produkt.getName());
+		p8 = new Bestellung(-1,1, p2_produkt.getId(), p2_produkt.getName() ,  p2_produkt.getPreis(), null, "bestellt");
+		p9 = new Bestellung(-1,1, p2_produkt.getId(), p2_produkt.getName(),  p2_produkt.getPreis(), p2_rechnung.getId(), "bezahlt");
 		
 	}
 
@@ -348,7 +349,7 @@ public class Test_JDBCBestellungDAO {
 	public void testSearch_1() throws DAOException,IllegalArgumentException {
 		
 		//Bestellung(int id, int tisch, int produkt, int preis, int rechnung, String status)
-		Bestellung toSearch = new Bestellung(-1,-200,-1,-1,-1,"-1","");
+		Bestellung toSearch = new Bestellung(-1,-200,-1,"",-1,null,"-1");
 		ArrayList<Bestellung> p_test = new ArrayList<Bestellung>();
 		p_test = test.search(toSearch);
 	
@@ -357,12 +358,12 @@ public class Test_JDBCBestellungDAO {
 			assertThat(p_test.get(i).getTisch(), equalTo(p4.getTisch()));
 			assertThat(p_test.get(i).getProdukt(), equalTo(p4.getProdukt()));
 			assertThat(p_test.get(i).getPreis(), equalTo(p4.getPreis()));
-			assertThat(p_test.get(i).getRechnung(), equalTo(0));
+			assertThat(p_test.get(i).getRechnung(), equalTo(null));
 			assertThat(p_test.get(i).getStatus(), equalTo(p4.getStatus()));
 			assertThat(p_test.get(i).getDeleted(), equalTo(p4.getDeleted()));
 		}
 
-		toSearch = new Bestellung(-1,-300,-1,-1,-1,"wirdGekocht","");
+		toSearch = new Bestellung(-1,-300,-1,"",-1,null,"wirdGekocht");
 		p_test = new ArrayList<Bestellung>();
 		p_test = test.search(toSearch);
 	
@@ -371,12 +372,12 @@ public class Test_JDBCBestellungDAO {
 			assertThat(p_test.get(i).getTisch(), equalTo(p5.getTisch()));
 			assertThat(p_test.get(i).getProdukt(), equalTo(p5.getProdukt()));
 			assertThat(p_test.get(i).getPreis(), equalTo(p5.getPreis()));
-			assertThat(p_test.get(i).getRechnung(), equalTo(0));
+			assertThat(p_test.get(i).getRechnung(), equalTo(null));
 			assertThat(p_test.get(i).getStatus(), equalTo(p5.getStatus()));
 			assertThat(p_test.get(i).getDeleted(), equalTo(p5.getDeleted()));
 		}
 		
-		toSearch = new Bestellung(p6.getId(),-1,-1,-1,-1,"-1","");
+		toSearch = new Bestellung(p6.getId(),-1,-1,"",-1,null,"-1");
 		p_test = new ArrayList<Bestellung>();
 		p_test = test.search(toSearch);
 	
@@ -385,12 +386,12 @@ public class Test_JDBCBestellungDAO {
 			assertThat(p_test.get(i).getTisch(), equalTo(p6.getTisch()));
 			assertThat(p_test.get(i).getProdukt(), equalTo(p6.getProdukt()));
 			assertThat(p_test.get(i).getPreis(), equalTo(p6.getPreis()));
-			assertThat(p_test.get(i).getRechnung(), equalTo(0));
+			assertThat(p_test.get(i).getRechnung(), equalTo(null));
 			assertThat(p_test.get(i).getStatus(), equalTo(p6.getStatus()));
 			assertThat(p_test.get(i).getDeleted(), equalTo(p6.getDeleted()));
 		}
 		
-		toSearch = new Bestellung(p7.getId(),-500,-1,-1,-1,"geliefert","");
+		toSearch = new Bestellung(p7.getId(),-500,-1,"",-1,null,"geliefert");
 		p_test = new ArrayList<Bestellung>();
 		p_test = test.search(toSearch);
 	
@@ -399,7 +400,7 @@ public class Test_JDBCBestellungDAO {
 			assertThat(p_test.get(i).getTisch(), equalTo(p7.getTisch()));
 			assertThat(p_test.get(i).getProdukt(), equalTo(p7.getProdukt()));
 			assertThat(p_test.get(i).getPreis(), equalTo(p7.getPreis()));
-			assertThat(p_test.get(i).getRechnung(), equalTo(0));
+			assertThat(p_test.get(i).getRechnung(), equalTo(null));
 			assertThat(p_test.get(i).getStatus(), equalTo(p7.getStatus()));
 			assertThat(p_test.get(i).getDeleted(), equalTo(p7.getDeleted()));
 		}
@@ -422,7 +423,7 @@ public class Test_JDBCBestellungDAO {
 	@Test
 	public void testSearch_3() throws DAOException,IllegalArgumentException {
 		
-		Bestellung toSearch = new Bestellung(-1,-500,-1,-1,-1,null,"");
+		Bestellung toSearch = new Bestellung(-1,-500,-1,"",-1,null,null);
 		ArrayList<Bestellung> p_test = new ArrayList<Bestellung>();
 		p_test = test.search(toSearch);
 
