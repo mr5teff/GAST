@@ -23,9 +23,10 @@ public class JDBCRechnungDAO implements RechnungDAO {
 		try {
 			long t = r.getDatum().getTime();
 			java.sql.Date dt = new java.sql.Date(t);
-			PreparedStatement ps=c.prepareStatement("INSERT INTO rechnung (id,datum,trinkgeld) VALUES (NULL,?,?)",Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps=c.prepareStatement("INSERT INTO rechnung (id,datum,trinkgeld,pdf) VALUES (NULL,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setDate(1,dt);
 			ps.setInt(2, r.getTrinkgeld());
+			ps.setBytes(3,r.getPdf());
 			ps.executeUpdate();
 			
 			ResultSet rs = ps.getGeneratedKeys();
@@ -54,14 +55,14 @@ public class JDBCRechnungDAO implements RechnungDAO {
 			ps.setDate(3,dt);
 			ps.setDate(4,dt);
 			*/
-			PreparedStatement ps=c.prepareStatement("SELECT id,datum,trinkgeld FROM rechnung WHERE (id=? OR ? IS NULL)");
+			PreparedStatement ps=c.prepareStatement("SELECT id,datum,trinkgeld,pdf FROM rechnung WHERE (id=? OR ? IS NULL)");
 			ps.setObject(1,r.getId());
 			ps.setObject(2,r.getId());
 			
 			ResultSet rs=ps.executeQuery();
 			ArrayList<Rechnung> al=new ArrayList<Rechnung>();
 			while(rs.next()) {
-				al.add(new Rechnung(rs.getInt("id"),rs.getDate("datum"),rs.getInt("trinkgeld")));
+				al.add(new Rechnung(rs.getInt("id"),rs.getDate("datum"),rs.getInt("trinkgeld"),rs.getBytes("pdf")));
 				
 			}
 			return al;
