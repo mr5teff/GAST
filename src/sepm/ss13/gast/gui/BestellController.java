@@ -212,7 +212,6 @@ public class BestellController extends Controller {
 					bestellung.setTisch(tisch.getValue());
 				}
 				bestellungenListe=s.searchBestellung(bestellung);
-				bestellungen.addAll(bestellungenListe);
 			 } catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -221,7 +220,7 @@ public class BestellController extends Controller {
 				e.printStackTrace();
 			 }
 			
-			 Rechnung r = new Rechnung();
+			 Rechnung r = new Rechnung(bestellungenListe);
 		 }
 
 }
