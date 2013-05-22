@@ -2,6 +2,7 @@ package sepm.ss13.gast.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Date;
 
 import sepm.ss13.gast.dao.BestellungDAO;
 import sepm.ss13.gast.dao.DAOException;
@@ -29,6 +30,7 @@ import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.domain.Rechnung;
 import sepm.ss13.gast.domain.Reservierung;
 import sepm.ss13.gast.domain.Ware;
+import sepm.ss13.gast.gui.GAST;
 
 public class GASTService implements Service{
 	
@@ -188,11 +190,22 @@ public class GASTService implements Service{
 	 * Services f�r RechnungDAO
 	 */
 	
-	public Rechnung createRechung(Rechnung r) throws DAOException, IllegalArgumentException {
-		if(r==null) throw new IllegalArgumentException();
-		PdfService pdfS = new PdfService(r);
-		pdfS.createPDF();
-		return rechnungDAO.create(r);
+	public Rechnung createRechung(ArrayList<Bestellung> al, int trinkgeld) throws DAOException, IllegalArgumentException {
+		if(al==null) throw new IllegalArgumentException();
+		
+		Rechnung r = new Rechnung();
+		r.setDatum(new Date());
+		r.setTrinkgeld(trinkgeld);
+		r=rechnungDAO.create(r);
+		
+		for(Bestellung b:al) {
+			b.setRechnung(r.getId());
+		}
+		
+		PdfService pdfS = (PdfService) GAST.getApplicationContext().getBean("PdfService");
+		pdfS.createPDF(r);
+		
+		return r;
 	}
 
 	public ArrayList<Rechnung> searchRechung(Rechnung r) throws DAOException, IllegalArgumentException {

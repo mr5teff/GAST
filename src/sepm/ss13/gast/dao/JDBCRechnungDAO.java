@@ -23,7 +23,7 @@ public class JDBCRechnungDAO implements RechnungDAO {
 		try {
 			long t = r.getDatum().getTime();
 			java.sql.Date dt = new java.sql.Date(t);
-			PreparedStatement ps=c.prepareStatement("INSERT INTO rechnung (id,datum,trinkgeld,pdf) VALUES (NULL,?,?)",Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps=c.prepareStatement("INSERT INTO rechnung (id,datum,trinkgeld,pdf) VALUES (NULL,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setDate(1,dt);
 			ps.setInt(2, r.getTrinkgeld());
 			ps.setBytes(3,r.getPdf());
@@ -32,10 +32,10 @@ public class JDBCRechnungDAO implements RechnungDAO {
 			ResultSet rs = ps.getGeneratedKeys();
 			if(rs.next()) r.setId(rs.getInt(1));
 		} catch (SQLException e) {
-			throw new DAOException("ERROR: failed to save bill to DB!");
+			throw new DAOException("ERROR: failed to save bill to DB!",e);
 		}
 		catch (NullPointerException e) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(e);
 		}
 		
 		return r;

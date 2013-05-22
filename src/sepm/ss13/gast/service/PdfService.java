@@ -1,6 +1,8 @@
 package sepm.ss13.gast.service;
 
 import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.util.ArrayList;
 
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
@@ -19,11 +21,22 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import sepm.ss13.gast.dao.BestellungDAO;
+import sepm.ss13.gast.dao.DAOException;
+import sepm.ss13.gast.dao.DBConnector;
+import sepm.ss13.gast.dao.JDBCBestellungDAO;
+import sepm.ss13.gast.dao.JDBCRechnungDAO;
+import sepm.ss13.gast.dao.RechnungDAO;
+import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.domain.Rechnung;
 
 public class PdfService {
 	
+	private BestellungDAO bestellungDAO;
+	private RechnungDAO rechnungDAO;
+	
 	private Rechnung r;
+	private ArrayList<Bestellung> bestellungen;
 	
 	private static String FILE = "bill.pdf";
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,	Font.BOLD);
@@ -31,11 +44,18 @@ public class PdfService {
 	private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 10);
 	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 	
-	public PdfService(Rechnung r) {
-		this.r = r;
+	public PdfService(DBConnector dbCon) {
+		Connection con = dbCon.getConnection();
+		this.bestellungDAO = new JDBCBestellungDAO(con);
+		this.rechnungDAO = new JDBCRechnungDAO(con);
 	}
 
-	public void createPDF() {
+	public void createPDF(Rechnung r) throws DAOException {
+		this.r = r;
+		Bestellung bSearch = new Bestellung();
+		bSearch.setRechnung(r.getId());
+		this.bestellungen=bestellungDAO.search(bSearch);
+		
 			try {
 				Document document = new Document();
 				PdfWriter.getInstance(document, new FileOutputStream(FILE));
@@ -78,10 +98,10 @@ public class PdfService {
 			c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(c1);
 	
-			for (String s : r.getBestellungen()) {
-				String[] t = s.split(",");
-				table.addCell(t[0]);
-				PdfPCell c = new PdfPCell(new Phrase(t[1]));
+			for (Bestellung b : bestellungen) {
+				//String[] t = s.split(",");
+				table.addCell(b.getPname());
+				PdfPCell c = new PdfPCell(new Phrase(b.getPreis()));
 				c.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				table.addCell(c);
 			}
@@ -90,9 +110,9 @@ public class PdfService {
 			Paragraph summe = new Paragraph();
 			addEmptyLine(summe, 2);
 			summe.setAlignment(Element.ALIGN_RIGHT);
-			summe.add(new Paragraph("Summe brutto: " + r.getSummeBrt()));
-			summe.add(new Paragraph("davon MWST: " + (r.getSummeBrt() - r.getSummeNet()), subFont));
-			summe.add(new Paragraph("Summe netto: " + r.getSummeNet(), subFont));
+			//summe.add(new Paragraph("Summe brutto: " + r.getSummeBrt()));
+			//summe.add(new Paragraph("davon MWST: " + (r.getSummeBrt() - r.getSummeNet()), subFont));
+			//summe.add(new Paragraph("Summe netto: " + r.getSummeNet(), subFont));
 			document.add(summe);
 			
 			Paragraph gruss = new Paragraph();

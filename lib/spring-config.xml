@@ -13,14 +13,8 @@
     <bean name="GASTService" class="sepm.ss13.gast.service.GASTService" scope="singleton">
         <constructor-arg name="dbCon" ref="databaseManager" />
     </bean>
-<!--  
-    <bean name="productService" class="at.ac.tuwien.sepm.service.ProductService" scope="singleton">
-        <property name="productDAO" ref="productDAO" />
+    
+    <bean name="PdfService" class="sepm.ss13.gast.service.PdfService" scope="singleton">
+        <constructor-arg name="dbCon" ref="databaseManager" />
     </bean>
-
-    <bean name="mainFrame" class="at.ac.tuwien.sepm.ui.MainFrame" scope="prototype">
-        <constructor-arg name="databaseManager" ref="databaseManager" />
-        <constructor-arg name="productService" ref="productService" />
-    </bean>-->
-
 </beans>

@@ -21,5 +21,10 @@ public class DAOException extends Exception{
 		super(message);
 		Logger.getLogger (DAOException.class).fatal(message);
 	}
+	
+	public DAOException(String message, Exception e) {
+		super(message,e);
+		Logger.getLogger (DAOException.class).fatal(message);
+	}
 
 }

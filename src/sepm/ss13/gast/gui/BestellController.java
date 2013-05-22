@@ -14,7 +14,6 @@ import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.domain.Konfiguration;
 import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
-import sepm.ss13.gast.domain.Rechnung;
 import sepm.ss13.gast.service.Service;
 
 import javafx.beans.value.ChangeListener;
@@ -224,7 +223,7 @@ public class BestellController extends Controller {
 			 }
 			
 			 try {
-				s.createRechung(new Rechnung(bestellungenListe));
+				s.createRechung(bestellungenListe,0); //TODO 0 steht fuer Trinkgeld
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
