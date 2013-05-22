@@ -329,8 +329,8 @@ public class Dialog extends Stage {
          * @param actionHandler action handler
          * @return 
          */
-        public Builder addYesButton(EventHandler actionHandler) {
-            return addConfirmationButton("Yes", actionHandler);
+        public Builder addYesButton(String label, EventHandler actionHandler) {
+            return addConfirmationButton(label, actionHandler);
         }
         
         /**
@@ -339,8 +339,8 @@ public class Dialog extends Stage {
          * @param actionHandler action handler
          * @return 
          */
-        public Builder addNoButton(EventHandler actionHandler) {
-            return addConfirmationButton("No", actionHandler);
+        public Builder addNoButton(String label, EventHandler actionHandler) {
+            return addConfirmationButton(label, actionHandler);
         }
         
         /**
@@ -349,8 +349,8 @@ public class Dialog extends Stage {
          * @param actionHandler action handler
          * @return 
          */
-        public Builder addCancelButton(EventHandler actionHandler) {
-            return addConfirmationButton("Cancel", actionHandler);
+        public Builder addCancelButton(String label, EventHandler actionHandler) {
+            return addConfirmationButton(label, actionHandler);
         }
         
         /**

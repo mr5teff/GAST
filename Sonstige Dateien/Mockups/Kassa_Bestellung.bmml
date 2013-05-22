@@ -1,0 +1,73 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1492" measuredH="718" mockupW="1210" mockupH="665">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TitleWindow" x="282" y="53" w="1210" h="665" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Kassa</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="__group__" x="285" y="94" w="1198" h="595" measuredW="1198" measuredH="595" zOrder="1" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::TabBar" x="0" y="0" w="1198" h="595" measuredW="328" measuredH="100" zOrder="0" locked="false" isInGroup="2">
+          <controlProperties>
+            <borderStyle>square</borderStyle>
+            <hrefs>Kassa_Bestellung%26bm%3BKassa_Bestellung.bmml%26bm%3BKassa_Bestellung.bmml%26bm%3BKassa_Bestellung.bmml%2C%2C%2C</hrefs>
+            <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2223%2C41%2C112%2C68%22%20href%3D%22Kassa_Bestellung.bmml%22%20alt%3D%22Kassa_Bestellung%22%20id%3D%220%22/%3E%0A</map>
+            <markup>true</markup>
+            <selectedIndex>0</selectedIndex>
+            <tabVPosition>top</tabVPosition>
+            <text>Bestellungen%2C%20Reservierungen%2C%20Three%2C%20Four</text>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::ComboBox" x="116" y="67" w="-1" h="-1" measuredW="108" measuredH="24" zOrder="1" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Tischauswahl</text>
+          </controlProperties>
+        </control>
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::Label" x="86" y="118" w="-1" h="-1" measuredW="120" measuredH="21" zOrder="2" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Produkte%20ausw%E4hlen</text>
+          </controlProperties>
+        </control>
+        <control controlID="11" controlTypeID="com.balsamiq.mockups::ComboBox" x="116" y="199" w="-1" h="-1" measuredW="153" measuredH="24" zOrder="3" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Kategorie%20ausw%E4hlen</text>
+          </controlProperties>
+        </control>
+        <control controlID="12" controlTypeID="com.balsamiq.mockups::ComboBox" x="116" y="269" w="-1" h="-1" measuredW="142" measuredH="24" zOrder="4" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Produkt%20ausw%E4hlen</text>
+          </controlProperties>
+        </control>
+        <control controlID="13" controlTypeID="com.balsamiq.mockups::Button" x="116" y="336" w="-1" h="-1" measuredW="154" measuredH="27" zOrder="5" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Bestellung%20hinzuf%FCgen</text>
+          </controlProperties>
+        </control>
+        <control controlID="14" controlTypeID="com.balsamiq.mockups::VRule" x="522" y="39" w="-1" h="533" measuredW="10" measuredH="100" zOrder="6" locked="false" isInGroup="2"/>
+        <control controlID="15" controlTypeID="com.balsamiq.mockups::Label" x="547" y="69" w="-1" h="-1" measuredW="216" measuredH="21" zOrder="7" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Bestellungen%20des%20gew%E4hlten%20Tisches</text>
+          </controlProperties>
+        </control>
+        <control controlID="16" controlTypeID="com.balsamiq.mockups::DataGrid" x="577" y="118" w="414" h="321" measuredW="191" measuredH="81" zOrder="8" locked="false" isInGroup="2">
+          <controlProperties>
+            <hLines>false</hLines>
+            <selectedIndex>-1</selectedIndex>
+            <text>Produktname%2C%20Preis%2C%20Status%0ABier%2C%203%5C%2C50%2C%20bestellt%0A%20%0A%7B30L%2C%2010R%7D</text>
+            <vLines>true</vLines>
+          </controlProperties>
+        </control>
+        <control controlID="19" controlTypeID="com.balsamiq.mockups::Button" x="576" y="495" w="-1" h="-1" measuredW="84" measuredH="27" zOrder="9" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Stornieren</text>
+          </controlProperties>
+        </control>
+        <control controlID="20" controlTypeID="com.balsamiq.mockups::Button" x="688" y="495" w="-1" h="-1" measuredW="132" measuredH="27" zOrder="10" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Rechnung%20drucken</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+  </controls>
+</mockup>

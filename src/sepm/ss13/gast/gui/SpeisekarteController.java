@@ -1,5 +1,6 @@
 package sepm.ss13.gast.gui;
 
+import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -9,8 +10,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -22,7 +26,7 @@ import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.service.Service;
 
-public class SpeisekarteController extends Controller {
+public class SpeisekarteController extends Controller implements EventHandler<ActionEvent>{
 	private Service s;
 	 
 	 private ArrayList<ProduktKategorie> DAOkategorien;
@@ -31,14 +35,29 @@ public class SpeisekarteController extends Controller {
 	 private ObservableList<Produkt> produktItems;
 	 
 	 private static final ProduktKategorie kategorieBlank = new ProduktKategorie();
+	 private ProduktKategorie selectedPK;
+	 
+	 private Dialog deleteDialog;
 	 
 	 @FXML private ListView<ProduktKategorie> kategorieListView;
 	 @FXML private ListView<Produkt> produktListView;
 	 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		s = (Service) this.getApplicationContext().getBean("GASTService");
+		
+		initConfirmationDialog();
 		 
-		 initListView();
+		initListView();
+	}
+	
+	private void initConfirmationDialog()
+	{
+		Dialog.Builder db = Dialog.buildConfirmation("Produktkategorie löschen", "Wollen Sie wirklich die ausgewählte Produktkategorie löschen?");
+		db.addYesButton("Ja", this);
+		db.addNoButton("Nein", this);
+		db.addCancelButton("Abbrechen", this);
+		
+		deleteDialog = db.build();
 	}
 	
 	private void initListView()
@@ -67,6 +86,11 @@ public class SpeisekarteController extends Controller {
 		    	{
 		    		System.out.println("Selected item: " + newValue.getBezeichnung());
 		    		produktListeBefuellen(newValue);
+		    		selectedPK = newValue;
+		    	}
+		    	else
+		    	{
+		    		selectedPK = null;
 		    	}
 		    }
 		 });
@@ -99,7 +123,7 @@ public class SpeisekarteController extends Controller {
 		 kategorieListView.setItems(kategorieItems);
 	}
 	
-	private void produktListeBefuellen(ProduktKategorie pk)
+	public void produktListeBefuellen(ProduktKategorie pk)
 	{
 		Produkt searchP = new Produkt();
 		searchP.setKategorie(pk.getId());
@@ -122,65 +146,104 @@ public class SpeisekarteController extends Controller {
 	 @FXML
 	 public void clickOnNeueKategorie(ActionEvent event) {
 		 Stage stage = GUITools.openDialog("Produktkategorie anlegen",this.getStage());
-		 GUITools.loadFXML("NeueKategorieDialog.fxml", stage,this);
+		 GUITools.loadFXML("NeueKategorieDialog.fxml", stage, this);
 		 stage.show();
 	 }
 	 
 	 @FXML
 	 public void clickOnKategorieBearbeiten(ActionEvent event) {
-		 Stage stage = GUITools.openDialog("Produktkategorie bearbeiten",this.getStage());
-		 ProduktKategorie pk = kategorieListView.getSelectionModel().getSelectedItem();
-		 ProduktKategorieDialogController pkdc = null;
-		 pkdc=(ProduktKategorieDialogController) GUITools.loadFXML("NeueKategorieDialog.fxml", stage,this);
+		 if(selectedPK == null)
+			 return;
 		 
-		 pkdc.setPK(pk);
+		 Stage stage = GUITools.openDialog("Produktkategorie bearbeiten",this.getStage());
+		 ProduktKategorieDialogController pkdc = (ProduktKategorieDialogController) GUITools.loadFXML("NeueKategorieDialog.fxml", stage, this);
+		 
+		 pkdc.setPK(selectedPK);
 		 stage.show();
 	 }
 	 
 	 @FXML
 	 public void clickOnKategorieLoeschen(ActionEvent event) {
 		 
-		 ProduktKategorie pk = kategorieListView.getSelectionModel().getSelectedItem();
+		 selectedPK = kategorieListView.getSelectionModel().getSelectedItem();
 		 
-		 if(pk == null)
+		 if(selectedPK == null)
 		 {
 			Dialog.showInfo("Produktkategorie löschen", "Bitte wählen Sie eine Kategorie die Sie löschen wollen aus.", this.getStage().getScene().getWindow());
 			return;
 		 }
 		 
-		 Dialog.Builder db = Dialog.buildConfirmation("Produktkategorie löschen", "Wollen Sie wirklich löschen?", this.getStage().getScene().getWindow());
-		 db.addYesButton(null);
-		 db.addNoButton(null);
-		 db.addCancelButton(null);
-		 
-		 db.build().show();
-		 
-		 try {
-			 s.deleteProduktKategorie(pk);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		 
-		 refreshKategorieListView();
-		
+		 deleteDialog.show();
 	 }
+	 
+	 
 	 @FXML
 	 public void clickOnNeuesProdukt(ActionEvent event) {
+		 if(selectedPK == null)
+			 return;
 		 
-		System.out.println("GEEEHT");
+		 Stage stage = GUITools.openDialog("Produkt erstellen", this.getStage());
+		 ProduktDialogController pdc = (ProduktDialogController) GUITools.loadFXML("NeuesProduktDialog.fxml", stage, this);
+		 pdc.setPK(selectedPK);
+		 stage.show();
 	 }
+	 
 	 @FXML
 	 public void clickOnProduktBearbeiten(ActionEvent event) {
 		 
-		System.out.println("GEEEHT");
+		 Produkt p = produktListView.getSelectionModel().getSelectedItem();
+		 if(p == null || selectedPK == null)
+			 return;
+		 
+		 Stage stage = GUITools.openDialog("Produkt erstellen", this.getStage());
+		 ProduktDialogController pdc = (ProduktDialogController) GUITools.loadFXML("NeuesProduktDialog.fxml", stage, this);
+		 pdc.setPK(selectedPK);
+		 pdc.setProdukt(p);
+		 stage.show();
 	 }
+	 
 	 @FXML
 	 public void clickOnProduktLoeschen(ActionEvent event) {
 		 
 		System.out.println("GEEEHT");
 	 }
+
+	 
+	 
+	 
+	 
+	 //EventHandler
+
+	public void handle(ActionEvent e) {
+		// TODO Auto-generated method stub
+
+		if(e.getSource().getClass() == Button.class)
+		{
+			Button b = (Button) e.getSource();
+			
+			if(b.getText() == "Ja" )
+			{
+				 try {
+					 s.deleteProduktKategorie(selectedPK);
+				} catch (IllegalArgumentException ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				} catch (DAOException ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				} 	 
+				selectedPK = null;
+				
+				refreshKategorieListView();
+			}
+			else if(b.getText() == "Nein")
+			{
+				System.out.println("Nein");
+			}
+			else if(b.getText() == "Abbrechen")
+			{
+				System.out.println("Abbrechen");
+			}
+		}
+	}
 }

@@ -12,12 +12,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 public class ProduktKategorieDialogController extends Controller {
+	
 	 private ProduktKategorie pk;
 	
-	 @FXML private TextField kurzbezeichnung;
-	 @FXML private TextField bezeichnung;
+	@FXML private TextField kurzbezeichnung;
+	@FXML private TextField bezeichnung;
 	 
-	 private Service s;
+	private Service s;
 	 
 	public void initialize(URL location, ResourceBundle resources) {
 		s = (Service) this.getApplicationContext().getBean("GASTService");
@@ -64,11 +65,11 @@ public class ProduktKategorieDialogController extends Controller {
 		 
 		 this.getStage().hide();
 		 SpeisekarteController skc = (SpeisekarteController) this.getParentController();
-		 skc.refreshKategorieListView(); //TODO funktioniert, liefert aber exceptions
+		 skc.refreshKategorieListView();
 	 }
 	 
 	 @FXML
-	 public void clickOnAbbort(ActionEvent event) {
+	 public void clickOnAbort(ActionEvent event) {
 		 this.getStage().hide();
 	 }
 }

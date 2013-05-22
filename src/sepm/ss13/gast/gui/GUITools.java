@@ -32,7 +32,7 @@ public class GUITools {
 	}
 	
 	public static Controller loadFXML(String fxml, Stage stage, Controller pc) {
-		Controller c = loadFXML(fxml,stage);
+		Controller c = loadFXML(fxml, stage);
 		c.setParentController(pc);
 		return c;
 	}

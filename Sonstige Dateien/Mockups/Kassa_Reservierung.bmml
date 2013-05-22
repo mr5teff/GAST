@@ -1,0 +1,91 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1492" measuredH="718" mockupW="1213" mockupH="665">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TitleWindow" x="282" y="53" w="1210" h="665" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Kassa</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="__group__" x="279" y="95" w="1198" h="595" measuredW="1198" measuredH="595" zOrder="1" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::TabBar" x="0" y="0" w="1198" h="595" measuredW="328" measuredH="100" zOrder="0" locked="false" isInGroup="2">
+          <controlProperties>
+            <borderStyle>square</borderStyle>
+            <hrefs>Kassa_Bestellung%26bm%3BKassa_Bestellung.bmml%26bm%3BKassa_Bestellung.bmml%26bm%3BKassa_Bestellung.bmml%2CKassa_Reservierung%26bm%3BKassa_Reservierung.bmml%26bm%3BKassa_Reservierung.bmml%26bm%3BKassa_Reservierung.bmml%2C%2C</hrefs>
+            <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2220%2C42%2C109%2C69%22%20href%3D%22Kassa_Bestellung.bmml%22%20alt%3D%22Kassa_Bestellung%22%20id%3D%220%22/%3E%0A%3Carea%20shape%3D%22rect%22%20coords%3D%22109%2C42%2C216%2C69%22%20href%3D%22Kassa_Reservierung.bmml%22%20alt%3D%22Kassa_Reservierung%22%20id%3D%220%22/%3E%0A</map>
+            <markup>true</markup>
+            <selectedIndex>1</selectedIndex>
+            <tabVPosition>top</tabVPosition>
+            <text>Bestellungen%2C%20Reservierungen%2C%20Three%2C%20Four</text>
+          </controlProperties>
+        </control>
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::Calendar" x="44" y="110" w="323" h="234" measuredW="96" measuredH="96" zOrder="1" locked="false" isInGroup="2"/>
+        <control controlID="3" controlTypeID="com.balsamiq.mockups::Label" x="44" y="62" w="-1" h="-1" measuredW="329" measuredH="21" zOrder="2" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Hier%20k%F6nnen%20Sie%20Reservierungen%20Ihrer%20Tische%20verwalten</text>
+          </controlProperties>
+        </control>
+        <control controlID="4" controlTypeID="com.balsamiq.mockups::NumericStepper" x="684" y="211" w="-1" h="-1" measuredW="41" measuredH="24" zOrder="3" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>3</text>
+          </controlProperties>
+        </control>
+        <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="505" y="121" w="-1" h="-1" measuredW="143" measuredH="21" zOrder="4" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Reservierung%20auf%20Name</text>
+          </controlProperties>
+        </control>
+        <control controlID="6" controlTypeID="com.balsamiq.mockups::TextInput" x="684" y="118" w="222" h="-1" measuredW="79" measuredH="26" zOrder="5" locked="false" isInGroup="2">
+          <controlProperties>
+            <text/>
+          </controlProperties>
+        </control>
+        <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="505" y="213" w="-1" h="-1" measuredW="123" measuredH="21" zOrder="6" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Anzahl%20der%20Personen</text>
+          </controlProperties>
+        </control>
+        <control controlID="8" controlTypeID="com.balsamiq.mockups::RadioButton" x="505" y="257" w="-1" h="-1" measuredW="108" measuredH="22" zOrder="7" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Raucherbereich</text>
+          </controlProperties>
+        </control>
+        <control controlID="9" controlTypeID="com.balsamiq.mockups::RadioButton" x="505" y="292" w="-1" h="-1" measuredW="142" measuredH="22" zOrder="8" locked="false" isInGroup="2">
+          <controlProperties>
+            <state>selected</state>
+            <text>Nicht%20Raucherbereich</text>
+          </controlProperties>
+        </control>
+        <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="505" y="165" w="-1" h="-1" measuredW="63" measuredH="21" zOrder="9" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Ab%20Uhrzeit</text>
+          </controlProperties>
+        </control>
+        <control controlID="11" controlTypeID="com.balsamiq.mockups::TextInput" x="684" y="165" w="222" h="-1" measuredW="79" measuredH="26" zOrder="10" locked="false" isInGroup="2">
+          <controlProperties>
+            <text/>
+          </controlProperties>
+        </control>
+        <control controlID="12" controlTypeID="com.balsamiq.mockups::DataGrid" x="505" y="373" w="251" h="149" measuredW="251" measuredH="111" zOrder="11" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Tischnummer%2C%20Max%20Personen%2C%20Raucher%0A2%2C4%2C%20Nein%0A3%2C%205%2C%20Nein%0A7%2C%204%2C%20Nein%0A%7B65%2C%200%2C%2035%7D</text>
+          </controlProperties>
+        </control>
+        <control controlID="13" controlTypeID="com.balsamiq.mockups::Label" x="505" y="344" w="-1" h="-1" measuredW="95" measuredH="21" zOrder="12" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>M%F6gliche%20Tische</text>
+          </controlProperties>
+        </control>
+        <control controlID="14" controlTypeID="com.balsamiq.mockups::Button" x="813" y="380" w="-1" h="-1" measuredW="164" measuredH="27" zOrder="13" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Reservierung%20speichern</text>
+          </controlProperties>
+        </control>
+        <control controlID="15" controlTypeID="com.balsamiq.mockups::Button" x="813" y="434" w="-1" h="-1" measuredW="105" measuredH="27" zOrder="14" locked="false" isInGroup="2">
+          <controlProperties>
+            <text>Zur%FCcksetzen</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+  </controls>
+</mockup>

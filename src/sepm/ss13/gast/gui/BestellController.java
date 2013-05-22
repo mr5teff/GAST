@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import name.antonsmirnov.javafx.dialog.Dialog;
+
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.domain.Konfiguration;
@@ -20,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -31,7 +34,7 @@ public class BestellController extends Controller {
 	private ObservableList<Integer> tischnummern;
 	private ObservableList<String> kategorien;
 	private ObservableList<String> produkte;
-	private ArrayList<Bestellung> liste;
+	private ArrayList<Bestellung> bestellungenListe;
 	private ArrayList<ProduktKategorie> pk;
 	private ArrayList<Produkt> p;
 
@@ -49,10 +52,10 @@ public class BestellController extends Controller {
 	 public void initialize(URL arg0, ResourceBundle arg1) {
 			s = (Service) this.getApplicationContext().getBean("GASTService");
 			
+			bestellungTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 			nameCol.setCellValueFactory(new PropertyValueFactory<Bestellung,String>("pname"));
 			preisCol.setCellValueFactory(new PropertyValueFactory<Bestellung,Integer>("preis"));
 			statusCol.setCellValueFactory(new PropertyValueFactory<Bestellung,String>("status"));
-			
 			tischnummern = FXCollections.observableArrayList();
 			try {
 				Konfiguration k=s.loadKonfiguration();
@@ -117,8 +120,8 @@ public class BestellController extends Controller {
 					if(alleBestellungen.isSelected()==false) {
 						bestellung.setTisch(tisch.getValue());
 					}
-					liste=s.searchBestellung(bestellung);
-					bestellungen.addAll(liste);
+					bestellungenListe=s.searchBestellung(bestellung);
+					bestellungen.addAll(bestellungenListe);
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -135,11 +138,19 @@ public class BestellController extends Controller {
 		 
 		 @FXML
 		 protected void storniereBestellung(ActionEvent event) {
+			 int gewaehlt=bestellungTableView.getSelectionModel().getSelectedItems().size();
+			 if(gewaehlt==0)
+			 {
+				 Dialog.showInfo("Bestellung stornieren", "Keine Bestellung ausgewählt!", null); //this.getStage().getScene().getWindow());
+				 return;
+			 }
 			 try {
-				 Bestellung b= new Bestellung();
-				 b.setId(liste.get(tisch.getSelectionModel().getSelectedIndex()-1).getId());
-				 System.out.println(b.getId());
-				 s.deleteBestellung(b);
+				 ObservableList<Bestellung> gewaehlteBestellungen=bestellungTableView.getSelectionModel().getSelectedItems();
+				 for(int i=0;i<gewaehlt;i++) {
+					Bestellung b= new Bestellung();
+				 	b.setId(gewaehlteBestellungen.get(i).getId());
+				 	s.deleteBestellung(b);
+				 }
 				 
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
@@ -153,27 +164,43 @@ public class BestellController extends Controller {
 		
 		 @FXML
 		 public void clickOnAddBestellung(ActionEvent event) {
-			 for(int i=0; i<Integer.parseInt(anzahl.getText());i++) {
-				 Bestellung bestellung=new Bestellung();
-				 bestellung.setTisch(tisch.getValue());
-				 bestellung.setProdukt(p.get(produkt.getSelectionModel().getSelectedIndex()).getId());
-				 bestellung.setPname(p.get(produkt.getSelectionModel().getSelectedIndex()).getName());
-				 bestellung.setPreis(p.get(produkt.getSelectionModel().getSelectedIndex()).getPreis());
-				 //bestellung.setRechnung(4);
-				 bestellung.setStatus("bestellt");
-				 bestellung.setDeleted(false);
-				 try {
-					s.createBestellung(bestellung);
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DAOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			 int n=0;
+			 String message="";
+			 try {
+				 n= Integer.parseInt(anzahl.getText());
 			 }
-		     listBestellungen();
-		     anzahl.setText("");
+			 catch(NumberFormatException e) {
+				 message+="Keine gültige Anzahl ausgewählt!\n";
+				 }
+			 if((n!=0)&&(produkt.getSelectionModel().isEmpty()==false)) {
+				 for(int i=0; i<n;i++) {
+					 Bestellung bestellung=new Bestellung();
+					 bestellung.setTisch(tisch.getValue());
+					 bestellung.setProdukt(p.get(produkt.getSelectionModel().getSelectedIndex()).getId());
+					 bestellung.setPname(p.get(produkt.getSelectionModel().getSelectedIndex()).getName());
+					 bestellung.setPreis(p.get(produkt.getSelectionModel().getSelectedIndex()).getPreis());
+					 bestellung.setStatus("bestellt");
+					 bestellung.setDeleted(false);
+					 try {
+						 s.createBestellung(bestellung);
+					 } catch (IllegalArgumentException e) {
+						 // TODO Auto-generated catch block
+						 e.printStackTrace();
+					 } catch (DAOException e) {
+						 // TODO Auto-generated catch block
+						 e.printStackTrace();
+					 }
+				 }
+				 listBestellungen();
+				 anzahl.setText("");
+			 }
+			 else{
+				 if(produkt.getSelectionModel().isEmpty()) {
+					 message+="Kein Produkt ausgewählt!";
+				 }
+				 Dialog.showInfo("Bestellung hinzufügen", message, null); //this.getStage().getScene().getWindow());
+			 }
+			 
 		 }
 		 
 		 @FXML
