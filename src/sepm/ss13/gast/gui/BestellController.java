@@ -220,7 +220,15 @@ public class BestellController extends Controller {
 				e.printStackTrace();
 			 }
 			
-			 Rechnung r = new Rechnung(bestellungenListe);
+			 try {
+				s.createRechung(new Rechnung(bestellungenListe));
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		 }
 
 }

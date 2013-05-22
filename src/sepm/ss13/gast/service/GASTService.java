@@ -41,7 +41,7 @@ public class GASTService implements Service{
 	private ReservierungDAO reservierungDAO;
 	private WareDAO wareDAO;
 	
-	public GASTService(DBConnector dbCon) {	//Die Zuweisung hier sollte man glaub ich über spring machen
+	public GASTService(DBConnector dbCon) {	//Die Zuweisung hier sollte man glaub ich ï¿½ber spring machen
 		
 		Connection con = dbCon.getConnection();
 		this.bestellungDAO = new JDBCBestellungDAO(con);
@@ -55,7 +55,7 @@ public class GASTService implements Service{
 	}
 	
 	/*
-	 * Services für Bestellung
+	 * Services fï¿½r Bestellung
 	 */
 	
 	public void verifyBestellung(Bestellung b) throws DAOException, IllegalArgumentException{
@@ -87,7 +87,7 @@ public class GASTService implements Service{
 	}
 
 	/*
-	 * Services für Einkauf
+	 * Services fï¿½r Einkauf
 	 */
 	
 	public Einkauf createEinkauf(Einkauf ek) throws DAOException, IllegalArgumentException {
@@ -111,7 +111,7 @@ public class GASTService implements Service{
 	}
 
 	/*
-	 * Services für Konfiguration
+	 * Services fï¿½r Konfiguration
 	 */
 	public Konfiguration loadKonfiguration() throws DAOException {
 		return konfigurationDAO.load();
@@ -124,7 +124,7 @@ public class GASTService implements Service{
 	}
 
 	/*
-	 * Services für Produkt
+	 * Services fï¿½r Produkt
 	 */
 	
 	public void verifyProdukt(Produkt p) throws DAOException, IllegalArgumentException{
@@ -155,7 +155,7 @@ public class GASTService implements Service{
 
 
 	/*
-	 * Services für ProduktKategorie
+	 * Services fï¿½r ProduktKategorie
 	 */
 	
 	public void verifyProduktKategorie(ProduktKategorie p) throws DAOException, IllegalArgumentException{
@@ -185,11 +185,13 @@ public class GASTService implements Service{
 	}
 
 	/*
-	 * Services für RechnungDAO
+	 * Services fï¿½r RechnungDAO
 	 */
 	
 	public Rechnung createRechung(Rechnung r) throws DAOException, IllegalArgumentException {
 		if(r==null) throw new IllegalArgumentException();
+		PdfService pdfS = new PdfService(r);
+		pdfS.createPDF();
 		return rechnungDAO.create(r);
 	}
 
@@ -199,7 +201,7 @@ public class GASTService implements Service{
 	}
 
 	/*
-	 * Services für Reservierung
+	 * Services fï¿½r Reservierung
 	 */
 	
 	public Reservierung createReservierung(Reservierung r) throws DAOException, IllegalArgumentException {
@@ -223,7 +225,7 @@ public class GASTService implements Service{
 	}
 	
 	/*
-	 * Services für Ware
+	 * Services fï¿½r Ware
 	 */
 	
 	public Ware createWare(Ware w) throws DAOException, IllegalArgumentException {
