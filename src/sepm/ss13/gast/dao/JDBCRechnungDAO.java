@@ -73,4 +73,26 @@ public class JDBCRechnungDAO implements RechnungDAO {
 			throw new IllegalArgumentException();
 		}
 	}
+	
+	public void update(Rechnung r) throws DAOException 
+	{	
+		try
+		{
+			PreparedStatement ps = c.prepareStatement("UPDATE rechnung SET pdf=? WHERE id=?");
+			
+			ps.setBytes(1,r.getPdf());
+			ps.setInt(2,r.getId());
+						
+			int updatedRows = ps.executeUpdate();
+			
+			if(updatedRows == 0)
+				throw new DAOException("Rechnung-ID not found in DB!");				
+		}
+		catch(SQLException e) {
+			throw new DAOException("ERROR: failed to update Rechnung in DB!");
+		}
+		catch (NullPointerException e) {
+			throw new IllegalArgumentException();
+		}
+	}
 }

@@ -1,6 +1,10 @@
 package sepm.ss13.gast.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -38,7 +42,6 @@ public class PdfService {
 	private Rechnung r;
 	private ArrayList<Bestellung> bestellungen;
 	
-	private static String FILE = "bill.pdf";
 	private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,	Font.BOLD);
 	private static Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12,	Font.NORMAL, BaseColor.RED);
 	private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 10);
@@ -50,6 +53,26 @@ public class PdfService {
 		this.rechnungDAO = new JDBCRechnungDAO(con);
 	}
 
+	public File getFile(Rechnung r) throws DAOException {
+		byte[] pdf = rechnungDAO.search(r).get(0).getPdf();
+		File f = null;
+		
+		try {
+			f = File.createTempFile("gast",".pdf");
+			FileOutputStream fos = new FileOutputStream(f);
+			fos.write(pdf);
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return f;
+	}
+	
 	public void createPDF(Rechnung r) throws DAOException {
 		this.r = r;
 		Bestellung bSearch = new Bestellung();
@@ -58,11 +81,16 @@ public class PdfService {
 		
 			try {
 				Document document = new Document();
-				PdfWriter.getInstance(document, new FileOutputStream(FILE));
+				//PdfWriter.getInstance(document, new FileOutputStream(FILE));
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				PdfWriter.getInstance(document,baos);
 				document.open();
 				addMetaData(document); 
 				addContent(document);
 				document.close();
+				
+				r.setPdf(baos.toByteArray());
+				rechnungDAO.update(r);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

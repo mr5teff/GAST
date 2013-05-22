@@ -7,6 +7,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import org.springframework.beans.BeansException;
+
 import name.antonsmirnov.javafx.dialog.Dialog;
 
 import sepm.ss13.gast.dao.DAOException;
@@ -14,6 +16,8 @@ import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.domain.Konfiguration;
 import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
+import sepm.ss13.gast.domain.Rechnung;
+import sepm.ss13.gast.service.PdfService;
 import sepm.ss13.gast.service.Service;
 
 import javafx.beans.value.ChangeListener;
@@ -222,8 +226,10 @@ public class BestellController extends Controller {
 				e.printStackTrace();
 			 }
 			
+			 Rechnung r = null;
+			 
 			 try {
-				s.createRechung(bestellungenListe,0); //TODO 0 steht fuer Trinkgeld
+				r=s.createRechung(bestellungenListe,0); //TODO 0 steht fuer Trinkgeld
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -233,8 +239,14 @@ public class BestellController extends Controller {
 			}
 			 
 			 try {
-				Desktop.getDesktop().open(new File("bill.pdf"));
+				Desktop.getDesktop().open(((PdfService)this.getApplicationContext().getBean("PdfService")).getFile(r));
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BeansException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DAOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

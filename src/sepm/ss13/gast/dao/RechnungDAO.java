@@ -9,5 +9,6 @@ public interface RechnungDAO {
 	public Rechnung create(Rechnung r) throws DAOException;
 
 	public ArrayList<Rechnung> search(Rechnung r) throws DAOException;
+	public void update(Rechnung r) throws DAOException;
 
 }
