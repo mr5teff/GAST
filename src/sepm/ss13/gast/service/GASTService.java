@@ -200,6 +200,7 @@ public class GASTService implements Service{
 		
 		for(Bestellung b:al) {
 			b.setRechnung(r.getId());
+			bestellungDAO.update(b);
 		}
 		
 		PdfService pdfS = (PdfService) GAST.getApplicationContext().getBean("PdfService");
