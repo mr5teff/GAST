@@ -1,5 +1,8 @@
 package sepm.ss13.gast.gui;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -226,6 +229,13 @@ public class BestellController extends Controller {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 
+			 try {
+				Desktop.getDesktop().open(new File("bill.pdf"));
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
