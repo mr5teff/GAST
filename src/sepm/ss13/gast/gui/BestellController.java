@@ -141,7 +141,7 @@ public class BestellController extends Controller {
 			 int gewaehlt=bestellungTableView.getSelectionModel().getSelectedItems().size();
 			 if(gewaehlt==0)
 			 {
-				 Dialog.showInfo("Bestellung stornieren", "Keine Bestellung ausgewählt!", null); //this.getStage().getScene().getWindow());
+				 Dialog.showInfo("Bestellung stornieren", "Keine Bestellung ausgewï¿½hlt!", null); //this.getStage().getScene().getWindow());
 				 return;
 			 }
 			 try {
@@ -170,7 +170,7 @@ public class BestellController extends Controller {
 				 n= Integer.parseInt(anzahl.getText());
 			 }
 			 catch(NumberFormatException e) {
-				 message+="Keine gültige Anzahl ausgewählt!\n";
+				 message+="Keine gï¿½ltige Anzahl ausgewï¿½hlt!\n";
 				 }
 			 if((n!=0)&&(produkt.getSelectionModel().isEmpty()==false)) {
 				 for(int i=0; i<n;i++) {
@@ -196,9 +196,9 @@ public class BestellController extends Controller {
 			 }
 			 else{
 				 if(produkt.getSelectionModel().isEmpty()) {
-					 message+="Kein Produkt ausgewählt!";
+					 message+="Kein Produkt ausgewï¿½hlt!";
 				 }
-				 Dialog.showInfo("Bestellung hinzufügen", message, null); //this.getStage().getScene().getWindow());
+				 Dialog.showInfo("Bestellung hinzufï¿½gen", message, null); //this.getStage().getScene().getWindow());
 			 }
 			 
 		 }
@@ -211,8 +211,8 @@ public class BestellController extends Controller {
 				if(alleBestellungen.isSelected()==false) {
 					bestellung.setTisch(tisch.getValue());
 				}
-				liste=s.searchBestellung(bestellung);
-				bestellungen.addAll(liste);
+				bestellungenListe=s.searchBestellung(bestellung);
+				bestellungen.addAll(bestellungenListe);
 			 } catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
