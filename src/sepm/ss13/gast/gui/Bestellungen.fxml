@@ -45,7 +45,7 @@
             </TableView>
             <CheckBox fx:id="alleBestellungen" layoutX="14.0" layoutY="418.0" mnemonicParsing="false" onAction="#listBestellungen" text="Alle Bestellungen anzeigen" />
             <Button layoutX="14.0" layoutY="458.0" mnemonicParsing="false" onAction="#storniereBestellung" text="Stornieren" />
-            <Button layoutX="115.0" layoutY="458.0" mnemonicParsing="false" text="Rechnung drucken" />
+            <Button layoutX="115.0" layoutY="458.0" mnemonicParsing="false" onAction="#clickOnDruckeRechnung" text="Rechnung drucken" />
           </children>
         </AnchorPane>
       </items>
