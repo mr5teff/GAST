@@ -9,6 +9,7 @@ import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.domain.Konfiguration;
 import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
+import sepm.ss13.gast.domain.Rechnung;
 import sepm.ss13.gast.service.Service;
 
 import javafx.beans.value.ChangeListener;
@@ -173,6 +174,27 @@ public class BestellController extends Controller {
 			 }
 		     listBestellungen();
 		     anzahl.setText("");
+		 }
+		 
+		 @FXML
+		 public void clickOnDruckeRechnung(ActionEvent event) {
+			 bestellungen = FXCollections.observableArrayList();
+			 try {
+				Bestellung bestellung=new Bestellung();
+				if(alleBestellungen.isSelected()==false) {
+					bestellung.setTisch(tisch.getValue());
+				}
+				liste=s.searchBestellung(bestellung);
+				bestellungen.addAll(liste);
+			 } catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			 } catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			 }
+			
+			 Rechnung r = new Rechnung();
 		 }
 
 }
