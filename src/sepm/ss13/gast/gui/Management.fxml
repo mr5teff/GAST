@@ -11,6 +11,7 @@
   <fx:define>
   	 <fx:include fx:id="konfigContent" source="Konfiguration.fxml"/>
   	  <fx:include fx:id="speisekarteContent" source="Speisekarte.fxml"/>
+  	  <fx:include fx:id="warenContent" source="Waren.fxml"/>
   </fx:define>
  
   <children>
@@ -21,7 +22,8 @@
             <TabPane prefHeight="374.0" prefWidth="596.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <tabs>
               	<Tab text="Konfiguration" fx:id="konfigTab" content="$konfigContent" closable="false" />               	
-                <Tab text="Speisekarte verwalten" fx:id="speisekarteTab" content="$speisekarteContent" closable="false" />                
+                <Tab text="Speisekarte verwalten" fx:id="speisekarteTab" content="$speisekarteContent" closable="false" />    	
+                <Tab text="Waren verwalten" fx:id="warenTab" content="$warenContent" closable="false" />              
               </tabs>
             </TabPane>
           </children>

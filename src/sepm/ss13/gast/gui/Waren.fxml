@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.WarenController">
+  <children>
+    <Button fx:id="saveWare" onAction="#saveWare" layoutX="17.0" layoutY="127.0" mnemonicParsing="false" prefWidth="148.0" text="Ware speichern" />
+    <Label layoutX="17.0" layoutY="14.0" prefWidth="148.0" text="neue Ware anlegen" />
+    <ChoiceBox fx:id="einheit" layoutX="17.0" layoutY="86.0" prefWidth="148.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="Item 1" />
+          <String fx:value="Item 2" />
+          <String fx:value="Item 3" />
+        </FXCollections>
+      </items>
+    </ChoiceBox>
+    <TextField fx:id="name" layoutX="17.0" layoutY="47.0" prefWidth="148.0" promptText="Warenname eingeben" />
+  </children>
+</AnchorPane>
