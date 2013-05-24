@@ -1,7 +1,6 @@
 package sepm.ss13.gast.gui;
 
 import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -147,7 +146,7 @@ public class BestellController extends Controller {
 			 int gewaehlt=bestellungTableView.getSelectionModel().getSelectedItems().size();
 			 if(gewaehlt==0)
 			 {
-				 Dialog.showInfo("Bestellung stornieren", "Keine Bestellung ausgew�hlt!", null); //this.getStage().getScene().getWindow());
+				 Dialog.showInfo("Bestellung stornieren", "Keine Bestellung ausgewaehlt!", null); //this.getStage().getScene().getWindow());
 				 return;
 			 }
 			 try {
@@ -176,7 +175,7 @@ public class BestellController extends Controller {
 				 n= Integer.parseInt(anzahl.getText());
 			 }
 			 catch(NumberFormatException e) {
-				 message+="Keine g�ltige Anzahl ausgew�hlt!\n";
+				 message+="Keine gueltige Anzahl ausgewaehlt!\n";
 				 }
 			 if((n!=0)&&(produkt.getSelectionModel().isEmpty()==false)) {
 				 for(int i=0; i<n;i++) {
@@ -202,9 +201,9 @@ public class BestellController extends Controller {
 			 }
 			 else{
 				 if(produkt.getSelectionModel().isEmpty()) {
-					 message+="Kein Produkt ausgew�hlt!";
+					 message+="Kein Produkt ausgewaehlt!";
 				 }
-				 Dialog.showInfo("Bestellung hinzuf�gen", message, null); //this.getStage().getScene().getWindow());
+				 Dialog.showInfo("Bestellung hinzufuegen", message, null); //this.getStage().getScene().getWindow());
 			 }
 			 
 		 }

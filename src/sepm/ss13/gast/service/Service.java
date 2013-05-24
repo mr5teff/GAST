@@ -10,6 +10,7 @@ import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.domain.Rechnung;
 import sepm.ss13.gast.domain.Reservierung;
+import sepm.ss13.gast.domain.Tisch;
 import sepm.ss13.gast.domain.Ware;
 
 public interface Service {
@@ -101,4 +102,16 @@ public interface Service {
 	public void updateWare(Ware ek) throws DAOException, IllegalArgumentException;
 	
 	public void deleteWare(Ware ek) throws DAOException, IllegalArgumentException;
+	
+	/*
+	 * Services fuer Tisch
+	 */
+	
+	public Tisch createTisch(Tisch t) throws DAOException, IllegalArgumentException;
+	
+	public ArrayList<Tisch> searchTisch(Tisch t) throws DAOException, IllegalArgumentException;
+	
+	public void updateTisch(Tisch t) throws DAOException, IllegalArgumentException;
+	
+	public void deleteTisch(Tisch t) throws DAOException, IllegalArgumentException;
 }

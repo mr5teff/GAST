@@ -9,11 +9,11 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.ManagementController">
   <fx:define>
-  	 <fx:include fx:id="konfigContent" source="Konfiguration.fxml"/>
-  	  <fx:include fx:id="speisekarteContent" source="Speisekarte.fxml"/>
-  	  <fx:include fx:id="warenContent" source="Waren.fxml"/>
+    <fx:include fx:id="konfigContent" source="Konfiguration.fxml" />
+    <fx:include fx:id="speisekarteContent" source="Speisekarte.fxml" />
+    <fx:include fx:id="warenContent" source="Waren.fxml" />
+    <fx:include fx:id="tischeContent" source="Tische.fxml" prefHeight="517.0" prefWidth="796.9998779296875" />
   </fx:define>
- 
   <children>
     <TitledPane animated="false" collapsible="false" contentDisplay="RIGHT" prefHeight="400.0" prefWidth="1000.0" text="Management" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <content>
@@ -21,9 +21,10 @@
           <children>
             <TabPane prefHeight="374.0" prefWidth="596.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <tabs>
-              	<Tab text="Konfiguration" fx:id="konfigTab" content="$konfigContent" closable="false" />               	
-                <Tab text="Speisekarte verwalten" fx:id="speisekarteTab" content="$speisekarteContent" closable="false" />    	
-                <Tab text="Waren verwalten" fx:id="warenTab" content="$warenContent" closable="false" />              
+                <Tab closable="false" content="$konfigContent" text="Konfiguration" />
+                <Tab closable="false" content="$speisekarteContent" text="Speisekarte verwalten" />
+                <Tab closable="false" content="$warenContent" text="Waren verwalten" />
+                <Tab closable="false" content="$tischeContent" text="Tische verwalten" />
               </tabs>
             </TabPane>
           </children>

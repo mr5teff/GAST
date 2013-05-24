@@ -15,12 +15,14 @@ import sepm.ss13.gast.dao.JDBCProduktDAO;
 import sepm.ss13.gast.dao.JDBCProduktKategorieDAO;
 import sepm.ss13.gast.dao.JDBCRechnungDAO;
 import sepm.ss13.gast.dao.JDBCReservierungDAO;
+import sepm.ss13.gast.dao.JDBCTischDAO;
 import sepm.ss13.gast.dao.JDBCWareDAO;
 import sepm.ss13.gast.dao.KonfigurationDAO;
 import sepm.ss13.gast.dao.ProduktDAO;
 import sepm.ss13.gast.dao.ProduktKategorieDAO;
 import sepm.ss13.gast.dao.RechnungDAO;
 import sepm.ss13.gast.dao.ReservierungDAO;
+import sepm.ss13.gast.dao.TischDAO;
 import sepm.ss13.gast.dao.WareDAO;
 import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.domain.Einkauf;
@@ -29,6 +31,7 @@ import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.domain.Rechnung;
 import sepm.ss13.gast.domain.Reservierung;
+import sepm.ss13.gast.domain.Tisch;
 import sepm.ss13.gast.domain.Ware;
 import sepm.ss13.gast.gui.GAST;
 
@@ -42,8 +45,9 @@ public class GASTService implements Service{
 	private RechnungDAO rechnungDAO;
 	private ReservierungDAO reservierungDAO;
 	private WareDAO wareDAO;
+	private TischDAO tischDAO;
 	
-	public GASTService(DBConnector dbCon) {	//Die Zuweisung hier sollte man glaub ich �ber spring machen
+	public GASTService(DBConnector dbCon) {	//Die Zuweisung hier sollte man glaub ich ueber spring machen
 		
 		Connection con = dbCon.getConnection();
 		this.bestellungDAO = new JDBCBestellungDAO(con);
@@ -54,10 +58,11 @@ public class GASTService implements Service{
 		this.rechnungDAO = new JDBCRechnungDAO(con);
 		this.reservierungDAO = new JDBCReservierungDAO(con);
 		this.wareDAO = new JDBCWareDAO(con);
+		this.tischDAO= new JDBCTischDAO(con);
 	}
 	
 	/*
-	 * Services f�r Bestellung
+	 * Services fuer Bestellung
 	 */
 	
 	public void verifyBestellung(Bestellung b) throws DAOException, IllegalArgumentException{
@@ -89,7 +94,7 @@ public class GASTService implements Service{
 	}
 
 	/*
-	 * Services f�r Einkauf
+	 * Services fuer Einkauf
 	 */
 	
 	public Einkauf createEinkauf(Einkauf ek) throws DAOException, IllegalArgumentException {
@@ -113,7 +118,7 @@ public class GASTService implements Service{
 	}
 
 	/*
-	 * Services f�r Konfiguration
+	 * Services fuer Konfiguration
 	 */
 	public Konfiguration loadKonfiguration() throws DAOException {
 		return konfigurationDAO.load();
@@ -126,7 +131,7 @@ public class GASTService implements Service{
 	}
 
 	/*
-	 * Services f�r Produkt
+	 * Services fuer Produkt
 	 */
 	
 	public void verifyProdukt(Produkt p) throws DAOException, IllegalArgumentException{
@@ -157,7 +162,7 @@ public class GASTService implements Service{
 
 
 	/*
-	 * Services f�r ProduktKategorie
+	 * Services fuer ProduktKategorie
 	 */
 	
 	public void verifyProduktKategorie(ProduktKategorie p) throws DAOException, IllegalArgumentException{
@@ -187,7 +192,7 @@ public class GASTService implements Service{
 	}
 
 	/*
-	 * Services f�r RechnungDAO
+	 * Services fuer RechnungDAO
 	 */
 	
 	public Rechnung createRechung(ArrayList<Bestellung> al, int trinkgeld) throws DAOException, IllegalArgumentException {
@@ -215,7 +220,7 @@ public class GASTService implements Service{
 	}
 
 	/*
-	 * Services f�r Reservierung
+	 * Services fuer Reservierung
 	 */
 	
 	public Reservierung createReservierung(Reservierung r) throws DAOException, IllegalArgumentException {
@@ -239,7 +244,7 @@ public class GASTService implements Service{
 	}
 	
 	/*
-	 * Services f�r Ware
+	 * Services fuer Ware
 	 */
 	
 	public Ware createWare(Ware w) throws DAOException, IllegalArgumentException {
@@ -260,6 +265,29 @@ public class GASTService implements Service{
 	public void deleteWare(Ware ek) throws DAOException, IllegalArgumentException {
 		if(ek==null) throw new IllegalArgumentException();
 		wareDAO.delete(ek);
-	}	
+	}
+	/*
+	 * Services fuer Tisch
+	 */
+	
+	public Tisch createTisch(Tisch t) throws DAOException, IllegalArgumentException {
+		if(t==null) throw new IllegalArgumentException();
+		return tischDAO.create(t);
+	}
+
+	public ArrayList<Tisch> searchTisch(Tisch t) throws DAOException, IllegalArgumentException {
+		if(t==null) throw new IllegalArgumentException();
+		return tischDAO.search(t);
+	}
+
+	public void updateTisch(Tisch t) throws DAOException, IllegalArgumentException {
+		if(t==null) throw new IllegalArgumentException();
+		tischDAO.update(t);
+	}
+
+	public void deleteTisch(Tisch t) throws DAOException, IllegalArgumentException {
+		if(t==null) throw new IllegalArgumentException();
+		tischDAO.delete(t);
+	}
 	
 }
