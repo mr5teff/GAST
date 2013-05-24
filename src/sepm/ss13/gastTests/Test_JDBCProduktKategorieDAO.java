@@ -1,4 +1,4 @@
-package sepm.ss13.gast.tests;
+package sepm.ss13.gastTests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
