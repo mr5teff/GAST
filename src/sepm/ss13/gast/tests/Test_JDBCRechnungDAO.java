@@ -11,7 +11,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -57,13 +56,13 @@ public class Test_JDBCRechnungDAO {
 		test = new JDBCRechnungDAO(dbc.getConnection());
 		
 		
-		r1 = new Rechnung(-1, new Date(),10);
-		r2 = new Rechnung(-1, null,20);
+		r1 = new Rechnung(-1, new Date(),10,null);
+		r2 = new Rechnung(-1, null,20,null);
 		
 		
-		r3 = new Rechnung(-1, new Date(), 30);
-		r4 = new Rechnung(-1, new Date(), 40);
-		r5 = new Rechnung(-1, new Date(), 40);
+		r3 = new Rechnung(-1, new Date(), 30,null);
+		r4 = new Rechnung(-1, new Date(), 40,null);
+		r5 = new Rechnung(-1, new Date(), 40,null);
 		
 		Rechnung r_temp = null;
 		r_temp = test.create(r3);

@@ -111,8 +111,8 @@ public class Test_JDBCBestellungDAO {
 		mykeys_Produkt.add(p_temp_produkt.getId());	
 		
 		
-		p1_rechnung = new Rechnung(-1, new Date(),10);
-		p2_rechnung = new Rechnung(-1, new Date(),20);
+		p1_rechnung = new Rechnung(-1, new Date(),10,null);
+		p2_rechnung = new Rechnung(-1, new Date(),20,null);
 		
 		Rechnung p_temp_rechnung = null;
 		p_temp_rechnung = testRechnung.create(p1_rechnung);
