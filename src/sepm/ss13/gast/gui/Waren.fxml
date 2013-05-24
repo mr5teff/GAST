@@ -9,9 +9,9 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.WarenController">
   <children>
-    <Button fx:id="saveWare" onAction="#saveWare" layoutX="17.0" layoutY="127.0" mnemonicParsing="false" prefWidth="148.0" text="Ware speichern" />
+    <Button fx:id="saveWare" layoutX="17.0" layoutY="127.0" mnemonicParsing="false" onAction="#saveWare" prefWidth="148.0" text="Ware speichern" />
     <Label layoutX="17.0" layoutY="14.0" prefWidth="148.0" text="neue Ware anlegen" />
-    <ChoiceBox fx:id="einheit" layoutX="17.0" layoutY="86.0" prefWidth="148.0">
+    <ComboBox fx:id="einheit" layoutX="17.0" layoutY="86.0" prefWidth="148.0">
       <items>
         <FXCollections fx:factory="observableArrayList">
           <String fx:value="Item 1" />
@@ -19,7 +19,10 @@
           <String fx:value="Item 3" />
         </FXCollections>
       </items>
-    </ChoiceBox>
+    </ComboBox>
     <TextField fx:id="name" layoutX="17.0" layoutY="47.0" prefWidth="148.0" promptText="Warenname eingeben" />
+    <ListView layoutX="278.0" layoutY="30.0" prefHeight="200.0" prefWidth="182.0" />
+    <Label layoutX="278.0" layoutY="14.0" text="Waren bearbeiten" />
+    <Button layoutX="278.0" layoutY="241.0" mnemonicParsing="false" prefWidth="182.0" text="gewählte Ware löschen" />
   </children>
 </AnchorPane>

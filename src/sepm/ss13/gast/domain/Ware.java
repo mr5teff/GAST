@@ -4,6 +4,7 @@ public class Ware {
 	
 	private Integer id;
 	private String bezeichnung;
+	private String einheit;
 	private int lagerstand;
 	
 	/**
@@ -11,13 +12,14 @@ public class Ware {
 	 */
 	public Ware()
 	{
-		this(null, "", 0);
+		this(null, "","prozent", 0);
 	}
 	
-	public Ware(Integer id, String bezeichnung, int lagerstand) {
+	public Ware(Integer id, String bezeichnung, String einheit, int lagerstand) {
 		
 		this.id = id;
 		this.bezeichnung = bezeichnung;
+		this.einheit = einheit;
 		this.lagerstand = lagerstand;
 	}
 	
@@ -39,6 +41,14 @@ public class Ware {
 	public void setBezeichnung(String bezeichnung){
 		
 		this.bezeichnung = bezeichnung;
+	}
+	
+	public String getEinheit(){
+		return this.einheit;
+	}
+	
+	public void setEinheit(String einheit){
+		this.einheit = einheit;
 	}
 	
 	public int getLagerstand(){
