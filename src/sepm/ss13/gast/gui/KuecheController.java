@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 import sepm.ss13.gast.dao.DAOException;
@@ -56,7 +58,16 @@ public class KuecheController extends Controller
 		bestelldatumCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Date>("bestelldatum"));
 		bearbeitungszeitCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("bearbeitungszeit"));
 		
-		listBestellungen();	
+		listBestellungen();
+		
+		Timer t = new Timer();
+		t.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				clickOnBearbeitungszeitAktualisieren();
+			}
+		}, 0, 10*1000);
+		
 	}
 		
 	@FXML
@@ -144,8 +155,10 @@ public class KuecheController extends Controller
 	}	
 	
 	@FXML
-	public void clickOnBearbeitungszeitAktualisieren(ActionEvent event) 
+	public void clickOnBearbeitungszeitAktualisieren() 
 	{
+		this.getLogger().info("refreshing view...");
+		
 		try 
 		{
 			s.aktualisiereBearbeitungszeit();
