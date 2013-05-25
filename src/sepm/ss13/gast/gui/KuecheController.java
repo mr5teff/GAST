@@ -60,6 +60,7 @@ public class KuecheController extends Controller
 		
 		listBestellungen();
 		
+		/*
 		Timer t = new Timer();
 		t.schedule(new TimerTask() {
 			@Override
@@ -67,7 +68,8 @@ public class KuecheController extends Controller
 				clickOnBearbeitungszeitAktualisieren();
 			}
 		}, 0, 10*1000);
-		
+		*/
+		s.startAutoRefresh(this);
 	}
 		
 	@FXML

@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import sepm.ss13.gast.service.Service;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -19,7 +21,11 @@ public class GAST extends Application {
 		log.info("Start Application");
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		
+		Service service = (Service) ac.getBean("GASTService");
+		
 		Application.launch(GAST.class, args);
+		
+		service.close();
 	}
 	
 	@Override

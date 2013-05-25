@@ -34,6 +34,7 @@ import sepm.ss13.gast.domain.Reservierung;
 import sepm.ss13.gast.domain.Tisch;
 import sepm.ss13.gast.domain.Ware;
 import sepm.ss13.gast.gui.GAST;
+import sepm.ss13.gast.gui.KuecheController;
 
 public class GASTService implements Service{
 	
@@ -46,6 +47,7 @@ public class GASTService implements Service{
 	private ReservierungDAO reservierungDAO;
 	private WareDAO wareDAO;
 	private TischDAO tischDAO;
+	private Thread autoRefreshThread;
 	
 	public GASTService(DBConnector dbCon) {	//Die Zuweisung hier sollte man glaub ich ueber spring machen
 		
@@ -59,6 +61,11 @@ public class GASTService implements Service{
 		this.reservierungDAO = new JDBCReservierungDAO(con);
 		this.wareDAO = new JDBCWareDAO(con);
 		this.tischDAO= new JDBCTischDAO(con);
+	}
+	
+	public void close()
+	{
+		stopAutoRefresh();
 	}
 	
 	/*
@@ -290,26 +297,38 @@ public class GASTService implements Service{
 		tischDAO.delete(t);
 	}
 	
+	
+	//Hier könnte man auch andere controller autorefreshen lassen
+	public void startAutoRefresh(KuecheController kuecheController)
+	{
+		AutoRefresh autoRefresh = new AutoRefresh(kuecheController);
+		autoRefreshThread = new Thread(autoRefresh);
+		autoRefreshThread.start();
+	}
+	
+	public void stopAutoRefresh()
+	{
+		if(autoRefreshThread != null)
+		{
+			if(autoRefreshThread.isAlive())
+				autoRefreshThread.interrupt();
+		}
+	}
+	
 
 	/*
 	 * Services fuer Küche
 	 */
 	public void aktualisiereBearbeitungszeit() throws DAOException, IllegalArgumentException 
 	{
-		Date now = new Date();
-		
-		Bestellung bestellungStatus = new Bestellung();
- 		
+		Date now = new Date();	
+		Bestellung bestellungStatus = new Bestellung();	
 		bestellungStatus.setStatus("bestellt");
-		
-		ArrayList<Bestellung> liste = searchBestellung(bestellungStatus);
-		
-		bestellungStatus.setStatus("wirdGekocht");
-		
+		ArrayList<Bestellung> liste = searchBestellung(bestellungStatus);	
+		bestellungStatus.setStatus("wirdGekocht");	
 		liste.addAll(searchBestellung(bestellungStatus));
-
 		int anzahlBestellungen = liste.size();
-	
+		
 		for(int i = 0; i < anzahlBestellungen; i++)
 		{			
 			if(liste.get(i).getBestelldatum() != null)
