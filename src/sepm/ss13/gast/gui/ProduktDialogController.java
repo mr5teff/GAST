@@ -3,10 +3,10 @@ package sepm.ss13.gast.gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import name.antonsmirnov.javafx.dialog.Dialog;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Dialogs;
 import javafx.scene.control.TextField;
 
 import sepm.ss13.gast.dao.DAOException;
@@ -111,7 +111,7 @@ public class ProduktDialogController extends Controller {
 		}
 		catch(NumberFormatException ex)
 		{
-			Dialog.showInfo("Produkt erstellen", "Bitte geben Sie den Preis als ganzzahligen Centbetrag an.", this.getStage().getScene().getWindow());
+			Dialogs.showInformationDialog(this.getStage(), "Bitte geben Sie den Preis als ganzzahligen Centbetrag an.", "Produkt erstellen", "Information");
 			return -1;
 		}
 		
