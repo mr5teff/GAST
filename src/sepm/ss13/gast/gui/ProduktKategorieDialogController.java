@@ -9,6 +9,7 @@ import sepm.ss13.gast.service.Service;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Dialogs;
 import javafx.scene.control.TextField;
 
 public class ProduktKategorieDialogController extends Controller {
@@ -37,16 +38,21 @@ public class ProduktKategorieDialogController extends Controller {
 	
 	 @FXML
 	 public void clickOnSave(ActionEvent event) {
+		 
 		 if(pk == null) {
 			 pk = new ProduktKategorie(0, bezeichnung.getText(), kurzbezeichnung.getText());
 			 try {
 				s.createProduktKategorie(pk);
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} 
+			catch (IllegalArgumentException e) {
+				Dialogs.showInformationDialog(this.getStage(), "Bitte geben Sie gültige Paramter an.\n" +
+										 "Bezeichnung und Kurzbezeichnung müssen jeweils mindestens ein Zeichen beinhalten.",
+										 "Ungültige Eingabe", "Produktkategorie anlegen");
+				pk = null;
+				return;
+			} 
+			catch (DAOException e) {
+				Dialogs.showInformationDialog(this.getStage(), "Produktkategorie konnte nicht angelegt werden", "Speicherfehler", "Produktkategorie anlegen");
 			}
 		 }
 		 else {
@@ -55,11 +61,13 @@ public class ProduktKategorieDialogController extends Controller {
 			 try {
 				s.updateProduktKategorie(pk);
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+				Dialogs.showInformationDialog(this.getStage(), "Bitte geben Sie gültige Paramter an.\n" +
+						 "Bezeichnung und Kurzbezeichnung müssen jeweils mindestens ein Zeichen beinhalten.",
+						 "Ungültige Eingabe", "Produktkategorie bearbeiten");
+				return;
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showInformationDialog(this.getStage(), "Produktkategorie konnte nicht bearbeitet werden", "Speicherfehler", "Produktkategorie bearbeiten");
 			}
 		 }
 		 

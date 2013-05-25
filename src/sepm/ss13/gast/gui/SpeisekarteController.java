@@ -169,14 +169,13 @@ public class SpeisekarteController extends Controller{
 		 
 		 if(drp.equals(DialogResponse.YES))
 		 {
+			 //TO DO: Produktkategorien die Produkte enthalten können derzeit überhaupt nicht gelöscht werden!!!
 			 try {
 				 s.deleteProduktKategorie(selectedPK);
 			} catch (IllegalArgumentException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
+				Dialogs.showInformationDialog(this.getStage(), "Produktkategorie konnte nicht gelöscht werden.", "Produktkategorie löschen", "Information");
 			} catch (DAOException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
+				Dialogs.showInformationDialog(this.getStage(), "Produktkategorie konnte nicht gelöscht werden.", "Speicherfehler", "Information");
 			} 	 
 			 
 			 refreshKategorieListView();
@@ -187,8 +186,11 @@ public class SpeisekarteController extends Controller{
 	 @FXML
 	 public void clickOnNeuesProdukt(ActionEvent event) {
 		 if(selectedPK == null)
+		 {
+			 Dialogs.showInformationDialog(this.getStage(), "Bitte wählen Sie zunächst eine Produktkategorie aus, zur der Sie das Produkt hinzufügen möchten.", "Produkt erstellen", "Information");
 			 return;
-		 
+		 }
+			 
 		 Stage stage = GUITools.openDialog("Produkt erstellen", this.getStage());
 		 ProduktDialogController pdc = (ProduktDialogController) GUITools.loadFXML("NeuesProduktDialog.fxml", stage, this);
 		 pdc.setPK(selectedPK);
@@ -200,9 +202,13 @@ public class SpeisekarteController extends Controller{
 		 
 		 Produkt p = produktListView.getSelectionModel().getSelectedItem();
 		 if(p == null || selectedPK == null)
+		 {
+			 Dialogs.showInformationDialog(this.getStage(), "Bitte wählen Sie zunächst ein Produkt aus, welches Sie bearbeiten möchten.", "Produkt bearbeiten", "Information");
 			 return;
+		 }
+			 
 		 
-		 Stage stage = GUITools.openDialog("Produkt erstellen", this.getStage());
+		 Stage stage = GUITools.openDialog("Produkt bearbeiten", this.getStage());
 		 ProduktDialogController pdc = (ProduktDialogController) GUITools.loadFXML("NeuesProduktDialog.fxml", stage, this);
 		 pdc.setPK(selectedPK);
 		 pdc.setProdukt(p);
@@ -227,11 +233,9 @@ public class SpeisekarteController extends Controller{
 			 try {
 				 s.deleteProdukt(selectedProdukt);
 			} catch (IllegalArgumentException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
+				Dialogs.showInformationDialog(this.getStage(), "Produkt konnte nicht gelöscht werden.", "Produktkategorie löschen", "Information");
 			} catch (DAOException ex) {
-				// TODO Auto-generated catch block
-				ex.printStackTrace();
+				Dialogs.showInformationDialog(this.getStage(), "Produkt konnte nicht gelöscht werden.", "Speicherfehler", "Information");
 			} 	 
 			 
 			 produktListeBefuellen(selectedPK);

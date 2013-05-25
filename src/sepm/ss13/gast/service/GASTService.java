@@ -63,6 +63,9 @@ public class GASTService implements Service{
 		this.tischDAO= new JDBCTischDAO(con);
 	}
 	
+	/**
+	 * Es werden alle laufenden Dienste geschlossen.
+	 */
 	public void close()
 	{
 		stopAutoRefresh();

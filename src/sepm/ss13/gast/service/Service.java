@@ -20,6 +20,9 @@ public interface Service {
 	 * Allgemeine Funktionen
 	 */
 	
+	/**
+	 * Es werden alle laufenden Dienste geschlossen.
+	 */
 	public void close();
 
 	/*

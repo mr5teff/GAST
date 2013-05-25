@@ -68,11 +68,13 @@ public class ProduktDialogController extends Controller {
 			try {
 				s.createProdukt(p);
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showInformationDialog(this.getStage(), "Bitte geben Sie gültige Paramter an.\n" +
+						 "Name muss mindestens ein Zeichen beinhalten und der Preis muss ein positiver ganzzahliger Centbetrag sein.",
+						 "Ungültige Eingabe", "Produkt anlegen");
+				produkt = null;
+				return;
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showInformationDialog(this.getStage(), "Produkt konnte nicht erstellet werden", "Speicherfehler", "Produkt erstellen");
 			}
 			
 		}
@@ -89,11 +91,12 @@ public class ProduktDialogController extends Controller {
 			 try {
 				s.updateProdukt(produkt);
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showInformationDialog(this.getStage(), "Bitte geben Sie gültige Paramter an.\n" +
+						 "Name muss mindestens ein Zeichen beinhalten und der Preis muss ein positiver ganzzahliger Centbetrag sein.",
+						 "Ungültige Eingabe", "Produkt bearbeiten");
+				return;
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showInformationDialog(this.getStage(), "Produkt konnte nicht bearbeitet werden", "Speicherfehler", "Produkt bearbeiten");
 			}
 		}
 		
