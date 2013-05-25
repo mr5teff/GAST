@@ -10,11 +10,9 @@ public class AutoRefresh implements Runnable{
 	public AutoRefresh(KuecheController kuecheController)
 	{
 		this.kuecheController = kuecheController;
-		
 	}
 	
 	public void run() {
-		
 
 		while(!isStopped())
         {	

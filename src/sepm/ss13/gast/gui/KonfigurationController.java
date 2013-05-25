@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
-import name.antonsmirnov.javafx.dialog.Dialog;
 
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Konfiguration;
@@ -19,6 +18,7 @@ import sepm.ss13.gast.service.Service;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Dialogs;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -74,11 +74,11 @@ public class KonfigurationController extends Controller {
 			if(anzahl<1) throw new NumberFormatException();
 		}
 		catch(NumberFormatException e1) {
-			Dialog.showInfo("Konfiguration speichern", "Keine gültige Tischanzahl!", null); //this.getStage().getScene().getWindow());
+			Dialogs.showInformationDialog(this.getStage(), "Keine gültige Tischanzahl!", "Konfiguration speichern", "Information");
 			return;
 		}
 		if(name.getText().isEmpty()||adresse.getText().isEmpty()||tel.getText().isEmpty()){
-			Dialog.showInfo("Konfiguration speichern", "Es wurden nicht alle Felder befüllt!", null); //this.getStage().getScene().getWindow());
+			Dialogs.showInformationDialog(this.getStage(), "Es wurden nicht alle Felder befüllt!", "Konfiguration speichern", "Information");
 			return;
 		}
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
