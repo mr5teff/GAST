@@ -8,10 +8,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialogs;
 import javafx.scene.control.TextField;
-
-
-import name.antonsmirnov.javafx.dialog.Dialog;
 
 
 import sepm.ss13.gast.dao.DAOException;
@@ -39,7 +37,7 @@ public class WarenController extends Controller {
 	 public void saveWare(ActionEvent e) {
 
 		if(name.getText().isEmpty()){
-			Dialog.showInfo("Ware speichern", "Es wurden nicht alle Felder befüllt!", null); //this.getStage().getScene().getWindow());
+			Dialogs.showInformationDialog(this.getStage(), "Es wurden nicht alle Felder befüllt!", "Ware speichern", "Information");
 			return;
 		}
 		String n_save = name.getText();

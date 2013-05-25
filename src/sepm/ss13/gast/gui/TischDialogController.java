@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import sepm.ss13.gast.dao.DAOException;
-import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.domain.Tisch;
 import sepm.ss13.gast.service.Service;
 
