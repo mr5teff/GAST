@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 
 public class GUITools {
 	public static Stage openDialog(String title, Stage ownerStage) {
+		if(ownerStage==null) throw new IllegalArgumentException("invalid/no parent stage specified!");
+		
 		Stage s = new Stage();
 		s.initOwner(ownerStage.getScene().getWindow());
 		s.initModality(Modality.WINDOW_MODAL);

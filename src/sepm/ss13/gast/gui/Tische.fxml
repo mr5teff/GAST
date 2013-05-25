@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="795.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.TischeController">
+<AnchorPane fx:id="root" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="795.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.TischeController">
   <children>
     <TableView fx:id="tischeTableView" layoutX="42.0" layoutY="57.0" prefHeight="368.0" prefWidth="700.0">
       <columns>
@@ -17,7 +17,7 @@
       </columns>
     </TableView>
     <Button layoutX="59.0" layoutY="453.0" mnemonicParsing="false" onAction="#addTisch" text="Tisch hinzufügen" />
-    <Button layoutX="339.0" layoutY="453.0" mnemonicParsing="false" text="Tisch bearbeiten" />
+    <Button layoutX="339.0" layoutY="453.0" mnemonicParsing="false" onAction="#updateTisch" text="Tisch bearbeiten" />
     <Button layoutX="562.0" layoutY="453.0" mnemonicParsing="false" onAction="#deleteTisch" text="Tisch löschen" />
   </children>
 </AnchorPane>

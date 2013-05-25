@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -73,6 +74,20 @@ public class TischeController extends Controller {
 		}
 		listTische();
 	}
+	
+	@FXML
+	 public void updateTisch(ActionEvent event) {
+		Tisch t = tischeTableView.getSelectionModel().getSelectedItem();
+		 
+		if(t == null) return;
+		
+		Stage stage = GUITools.openDialog("Tisch anlegen/bearbeiten",this.getStage());
+		//TischDialogController tdc = (TischDialogController) GUITools.loadFXML("TischDialog.fxml", stage, this);
+		//tdc.setTisch(t);
+		GUITools.loadFXML("TischDialog.fxml", stage, this);
+		stage.show();
+	 }
+	
 	@FXML
 	 public void deleteTisch() {
 		Tisch tisch = tischeTableView.getSelectionModel().getSelectedItem();
