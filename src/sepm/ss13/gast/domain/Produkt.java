@@ -19,7 +19,7 @@ public class Produkt {
 		this(id,name,kategorie,preis,false);
 	}
 	
-	public Produkt(Integer id, String name, Integer kategorie, int preis,boolean deleted) {
+	public Produkt(Integer id, String name, Integer kategorie, int preis, boolean deleted) {
 		this.setId(id);
 		this.setName(name);
 		this.setKategorie(kategorie);
