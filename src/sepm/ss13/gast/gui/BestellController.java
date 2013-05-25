@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 
 import org.springframework.beans.BeansException;
 
-import name.antonsmirnov.javafx.dialog.Dialog;
 
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Bestellung;
@@ -27,6 +26,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialogs;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -146,7 +146,7 @@ public class BestellController extends Controller {
 			 int gewaehlt=bestellungTableView.getSelectionModel().getSelectedItems().size();
 			 if(gewaehlt==0)
 			 {
-				 Dialog.showInfo("Bestellung stornieren", "Keine Bestellung ausgewaehlt!", null); //this.getStage().getScene().getWindow());
+				 Dialogs.showInformationDialog(this.getStage(), "Keine Bestellung ausgewählt!", "Bestellung stornieren", "Information");
 				 return;
 			 }
 			 try {
@@ -203,7 +203,7 @@ public class BestellController extends Controller {
 				 if(produkt.getSelectionModel().isEmpty()) {
 					 message+="Kein Produkt ausgewaehlt!";
 				 }
-				 Dialog.showInfo("Bestellung hinzufuegen", message, null); //this.getStage().getScene().getWindow());
+				 Dialogs.showInformationDialog(this.getStage(), message , "Bestellung hinzufügen", "Information");
 			 }
 			 
 		 }

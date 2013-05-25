@@ -107,7 +107,15 @@
 			<artifactId>itextpdf</artifactId>
 			<version>5.0.6</version>
 		</dependency>
-                     
+
+       <dependency>
+  			<groupId>dialogs</groupId>
+  			<artifactId>javafx-dialogs</artifactId>
+  			<version>1.0</version>
+  			<systemPath>${project.basedir}/lib/javafx-dialogs-0.0.3.jar</systemPath>
+  			<scope>system</scope>
+		</dependency>
+		
     </dependencies>
     
 </project>
