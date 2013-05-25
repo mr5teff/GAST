@@ -9,22 +9,22 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Dialogs;
+import javafx.scene.control.Dialogs.DialogOptions;
+import javafx.scene.control.Dialogs.DialogResponse;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import name.antonsmirnov.javafx.dialog.Dialog;
 
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.service.Service;
 
-public class SpeisekarteController extends Controller implements EventHandler<ActionEvent>{
+public class SpeisekarteController extends Controller{
 	private Service s;
 	 
 	 private ArrayList<ProduktKategorie> DAOkategorien;
@@ -33,30 +33,20 @@ public class SpeisekarteController extends Controller implements EventHandler<Ac
 	 private ObservableList<Produkt> produktItems;
 	 
 	 private static final ProduktKategorie kategorieBlank = new ProduktKategorie();
-	 private ProduktKategorie selectedPK;
+	 private ProduktKategorie selectedPK = null;
 	 
-	 private Dialog deleteDialog;
+	 private Produkt selectedProdukt = null;
+	 
 	 
 	 @FXML private ListView<ProduktKategorie> kategorieListView;
 	 @FXML private ListView<Produkt> produktListView;
 	 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		s = (Service) this.getApplicationContext().getBean("GASTService");
-		
-		initConfirmationDialog();
-		 
+			 
 		initListView();
 	}
 	
-	private void initConfirmationDialog()
-	{
-		Dialog.Builder db = Dialog.buildConfirmation("Produktkategorie löschen", "Wollen Sie wirklich die ausgewählte Produktkategorie löschen?");
-		db.addYesButton("Ja", this);
-		db.addNoButton("Nein", this);
-		db.addCancelButton("Abbrechen", this);
-		
-		deleteDialog = db.build();
-	}
 	
 	private void initListView()
 	{
@@ -123,8 +113,12 @@ public class SpeisekarteController extends Controller implements EventHandler<Ac
 	
 	public void produktListeBefuellen(ProduktKategorie pk)
 	{
+		if(pk == null)
+			return;
+		
 		Produkt searchP = new Produkt();
 		searchP.setKategorie(pk.getId());
+		searchP.setDeleted(false);
 		//Lade alle Produkte einer bestimmten Kategorie
 		 try {
 			 DAOprodukte = s.searchProdukt(searchP);
@@ -167,11 +161,26 @@ public class SpeisekarteController extends Controller implements EventHandler<Ac
 		 
 		 if(selectedPK == null)
 		 {
-			Dialog.showInfo("Produktkategorie löschen", "Bitte wählen Sie eine Kategorie die Sie löschen wollen aus.", this.getStage().getScene().getWindow());
+			Dialogs.showInformationDialog(this.getStage(), "Bitte wählen Sie eine Kategorie die Sie löschen wollen aus.", "Produktkategorie löschen", "Information");
 			return;
 		 }
 		 
-		 deleteDialog.show();
+		 DialogResponse drp = Dialogs.showConfirmDialog(this.getStage(), "Wollen Sie die Produktkategorie wirklich löschen?", "Produktkategorie löschen", "Frage", DialogOptions.YES_NO);
+		 
+		 if(drp.equals(DialogResponse.YES))
+		 {
+			 try {
+				 s.deleteProduktKategorie(selectedPK);
+			} catch (IllegalArgumentException ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			} catch (DAOException ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			} 	 
+			 
+			 refreshKategorieListView();
+		 }
 	 }
 	 
 	 
@@ -203,45 +212,34 @@ public class SpeisekarteController extends Controller implements EventHandler<Ac
 	 @FXML
 	 public void clickOnProduktLoeschen(ActionEvent event) {
 		 
-		System.out.println("GEEEHT");
+		 selectedProdukt = produktListView.getSelectionModel().getSelectedItem();
+		 
+		 if(selectedProdukt == null)
+		 {
+			Dialogs.showInformationDialog(this.getStage(), "Bitte wählen Sie ein Produkt aus, welches Sie löschen wollen.", "Produkt löschen", "Information");
+			return;
+		 }
+		 
+		 DialogResponse drp = Dialogs.showConfirmDialog(this.getStage(), "Wollen Sie das Produkt wirklich löschen?", "Produkt löschen", "Frage", DialogOptions.YES_NO);
+		 
+		 if(drp.equals(DialogResponse.YES))
+		 {
+			 try {
+				 s.deleteProdukt(selectedProdukt);
+			} catch (IllegalArgumentException ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			} catch (DAOException ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			} 	 
+			 
+			 produktListeBefuellen(selectedPK);
+		 }
 	 }
 
 	 
 	 
 	 
 	 
-	 //EventHandler
-
-	public void handle(ActionEvent e) {
-		// TODO Auto-generated method stub
-
-		if(e.getSource().getClass() == Button.class)
-		{
-			Button b = (Button) e.getSource();
-			
-			if(b.getText() == "Ja" )
-			{
-				 try {
-					 s.deleteProduktKategorie(selectedPK);
-				} catch (IllegalArgumentException ex) {
-					// TODO Auto-generated catch block
-					ex.printStackTrace();
-				} catch (DAOException ex) {
-					// TODO Auto-generated catch block
-					ex.printStackTrace();
-				} 	 
-				selectedPK = null;
-				
-				refreshKategorieListView();
-			}
-			else if(b.getText() == "Nein")
-			{
-				System.out.println("Nein");
-			}
-			else if(b.getText() == "Abbrechen")
-			{
-				System.out.println("Abbrechen");
-			}
-		}
-	}
 }
