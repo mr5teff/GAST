@@ -5,21 +5,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import name.antonsmirnov.javafx.dialog.Dialog;
 
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.service.Service;
-import javafx.stage.Stage;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
+import javafx.scene.control.Dialogs;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -100,7 +96,7 @@ public class KuecheController extends Controller
 	public void clickOnChangeStatusToWirdGekocht(ActionEvent event) 
 	{					
 		if(kuecheBestellungTableView.getSelectionModel().getSelectedIndex() == -1)
-			Dialog.showInfo("Bestellung zubereiten", "Keine Bestellung ausgewaehlt!\n", null);
+			Dialogs.showInformationDialog(this.getStage(), "Keine Bestellung ausgewählt!", "Bestellung zubereiten", "Information");
 		else
 		{		
 			Bestellung changeBestellungStatus = new Bestellung();
@@ -125,7 +121,7 @@ public class KuecheController extends Controller
 	public void clickOnChangeStatusToFertigGekocht(ActionEvent event) 
 	{
 		if(kuecheBestellungTableView.getSelectionModel().getSelectedIndex() == -1)
-			Dialog.showInfo("Bestellung kann abgeholt werden", "Keine Bestellung ausgewaehlt!\n", null);
+			Dialogs.showInformationDialog(this.getStage(), "Keine Bestellung ausgewählt!", "Bestellung kann abgeholt werden", "Information");
 		else
 		{		
 			Bestellung changeBestellungStatus = new Bestellung();
