@@ -290,4 +290,36 @@ public class GASTService implements Service{
 		tischDAO.delete(t);
 	}
 	
+
+	/*
+	 * Services fuer Küche
+	 */
+	public void aktualisiereBearbeitungszeit() throws DAOException, IllegalArgumentException 
+	{
+		Date now = new Date();
+		
+		Bestellung bestellungStatus = new Bestellung();
+ 		
+		bestellungStatus.setStatus("bestellt");
+		
+		ArrayList<Bestellung> liste = searchBestellung(bestellungStatus);
+		
+		bestellungStatus.setStatus("wirdGekocht");
+		
+		liste.addAll(searchBestellung(bestellungStatus));
+
+		int anzahlBestellungen = liste.size();
+	
+		for(int i = 0; i < anzahlBestellungen; i++)
+		{			
+			if(liste.get(i).getBestelldatum() != null)
+			{			
+				int bearbeitungszeit = (int) ((now.getTime() - liste.get(i).getBestelldatumLong())/1000/60);
+				
+				liste.get(i).setBearbeitungszeit(bearbeitungszeit);
+				
+				updateBestellung(liste.get(i));		 
+			}
+		}
+	}	
 }

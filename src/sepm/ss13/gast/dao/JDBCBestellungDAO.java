@@ -21,9 +21,16 @@ public class JDBCBestellungDAO implements BestellungDAO {
 	
 	public Bestellung create(Bestellung b) throws DAOException {
 		try {
+			
+			b.setBestelldatum(new java.util.Date());
+			long t = b.getBestelldatum().getTime();
+			b.setBestelldatumLong(t);
+
+			java.sql.Date dt = new java.sql.Date(t);
+			
 			PreparedStatement ps = null;
 			
-			ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,produktname,preis,rechnungid,status,deleted) VALUES (NULL,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+			ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,produktname,preis,rechnungid,status,deleted,bestelldatum,bestelldatumlong,bearbeitungszeit) VALUES (NULL,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, b.getTisch());
 			ps.setInt(2, b.getProdukt());
 			ps.setString(3, b.getPname());
@@ -31,6 +38,9 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			ps.setObject(5, b.getRechnung());
 			ps.setString(6, b.getStatus());
 			ps.setBoolean(7,b.getDeleted());
+			ps.setDate(8,dt);
+			ps.setObject(9,b.getBestelldatumLong());
+			ps.setObject(10,b.getBearbeitungszeit());
 			
 			ps.executeUpdate();
 			
@@ -48,7 +58,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 	
 	public ArrayList<Bestellung> search(Bestellung b) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT b.id,b.tischnummer,b.produktid,b.produktname,b.preis,b.rechnungid,b.status,b.deleted FROM bestellung b WHERE (id=? OR ? IS NULL)  AND (tischnummer=? OR ? IS NULL) AND (status like ? OR ? IS NULL) AND (rechnungid=? OR ? IS NULL) AND deleted=?");
+			PreparedStatement ps=c.prepareStatement("SELECT b.id,b.tischnummer,b.produktid,b.produktname,b.preis,b.rechnungid,b.status,b.deleted,b.bestelldatum,b.bestelldatumlong,b.bearbeitungszeit FROM bestellung b WHERE (id=? OR ? IS NULL)  AND (tischnummer=? OR ? IS NULL) AND (status like ? OR ? IS NULL) AND (rechnungid=? OR ? IS NULL) AND deleted=?");
 			ps.setObject(1,b.getId());
 			ps.setObject(2,b.getId());
 			ps.setObject(3,b.getTisch());
@@ -58,10 +68,12 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			ps.setObject(7,b.getRechnung());
 			ps.setObject(8,b.getRechnung());
 			ps.setBoolean(9,b.getDeleted());
+			
 			ResultSet rs=ps.executeQuery();
+			
 			ArrayList<Bestellung> al=new ArrayList<Bestellung>();
 			while(rs.next()) {
-				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getString("produktname"),rs.getInt("preis"),(Integer)rs.getObject("rechnungid"),rs.getString("status"), rs.getBoolean("deleted")));
+				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getString("produktname"),rs.getInt("preis"),(Integer)rs.getObject("rechnungid"),rs.getString("status"), rs.getBoolean("deleted"), rs.getTime("bestelldatum"),rs.getLong("bestelldatumlong"),rs.getInt("bearbeitungszeit")));
 				
 			}
 			return al;
@@ -77,7 +89,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 	{	
 		try
 		{
-			PreparedStatement ps = c.prepareStatement("UPDATE bestellung SET tischnummer=?, produktid=?, produktname=?, preis=?, rechnungid=?, status=?, deleted=? WHERE id=?");
+			PreparedStatement ps = c.prepareStatement("UPDATE bestellung SET tischnummer=?, produktid=?, produktname=?, preis=?, rechnungid=?, status=?, deleted=?, bearbeitungszeit=? WHERE id=?");
 			
 			ps.setInt(1,b.getTisch());
 			ps.setInt(2,b.getProdukt());
@@ -86,7 +98,8 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			ps.setObject(5,b.getRechnung());
 			ps.setString(6,b.getStatus());
 			ps.setBoolean(7,b.getDeleted());
-			ps.setInt(8,b.getId());
+			ps.setObject(8,b.getBearbeitungszeit());
+			ps.setInt(9,b.getId());
 						
 			int updatedRows = ps.executeUpdate();
 			

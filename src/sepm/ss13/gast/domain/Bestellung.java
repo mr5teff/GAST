@@ -1,24 +1,29 @@
 package sepm.ss13.gast.domain;
 
+import java.util.Date;
+
 public class Bestellung {
 	private Integer id;
 	private Integer tisch;
 	private Integer produkt;
+	private String pname;
 	private int preis;
 	private Integer rechnung;
 	private String status;
 	private boolean deleted;
-	private String pname;
-	
+	private Date bestelldatum;
+	private Long bestelldatumLong;
+	private Integer bearbeitungszeit;
+
 	/**
 	 * Default Konstruktor. "Leeres" Domänenelement
 	 */
 	public Bestellung()
 	{
-		this(null,null,null,null,0,null,null,false);
+		this(null,null,null,null,0,null,null,false, new Date(0), null, null);
 	}
 	
-	public Bestellung(Integer id, Integer tisch, Integer produkt, String pname, int preis, Integer rechnung, String status, boolean deleted) {
+	public Bestellung(Integer id, Integer tisch, Integer produkt, String pname, int preis, Integer rechnung, String status, boolean deleted, Date bestelldatum, Long bestelldatumLong, Integer bearbeitungszeit) {
 		this.setId(id);
 		this.setTisch(tisch);
 		this.setProdukt(produkt);
@@ -27,10 +32,13 @@ public class Bestellung {
 		this.setRechnung(rechnung);
 		this.setStatus(status);
 		this.setDeleted(deleted);
+		this.setBestelldatum(bestelldatum);
+		this.setBestelldatumLong(bestelldatumLong);
+		this.setBearbeitungszeit(bearbeitungszeit);
 	}
 	
-	public Bestellung(Integer id, Integer tisch, Integer produkt, String pname, int preis, Integer rechnung, String status) {
-		this(id,tisch,produkt,pname,preis,rechnung,status,false);
+	public Bestellung(Integer id, Integer tisch, Integer produkt, String pname, int preis, Integer rechnung, String status,  Date bestelldatum, Long bestelldatumLong, Integer bearbeitungszeit) {
+		this(id, tisch, produkt, pname, preis, rechnung, status, false, bestelldatum, bestelldatumLong, bearbeitungszeit);
 	}
 
 	public Integer getId() {
@@ -96,5 +104,28 @@ public class Bestellung {
 	public boolean getDeleted(){
 		return this.deleted;
 	}
-
+	
+	public void setBestelldatum(Date bestelldatum){
+		this.bestelldatum = bestelldatum;
+	}
+	
+	public Date getBestelldatum(){
+		return this.bestelldatum;
+	}
+	
+	public void setBestelldatumLong(Long bestelldatumLong){
+		this.bestelldatumLong = bestelldatumLong;
+	}
+	
+	public Long getBestelldatumLong(){
+		return this.bestelldatumLong;
+	}
+	
+	public void setBearbeitungszeit(Integer bearbeitungszeit){
+		this.bearbeitungszeit = bearbeitungszeit;
+	}
+	
+	public Integer getBearbeitungszeit(){
+		return this.bearbeitungszeit;
+	}
 }

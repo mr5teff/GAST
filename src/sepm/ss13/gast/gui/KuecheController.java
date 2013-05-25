@@ -2,18 +2,25 @@ package sepm.ss13.gast.gui;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import name.antonsmirnov.javafx.dialog.Dialog;
 
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.service.Service;
-
+import javafx.stage.Stage;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -35,11 +42,14 @@ public class KuecheController extends Controller
 	@FXML private TableColumn<Bestellung, Integer> preisCol;
 	@FXML private TableColumn<Bestellung, Integer> rechnungIdCol;
 	@FXML private TableColumn<Bestellung, String> statusCol;
+	@FXML private TableColumn<Bestellung, Date> bestelldatumCol;
+	@FXML private TableColumn<Bestellung, Integer> bearbeitungszeitCol;
 	
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 		s = (Service) this.getApplicationContext().getBean("GASTService");
 		 
+		kuecheBestellungTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		idCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("id"));
 		tischnummerCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("tisch"));
 		produktIdCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("produkt"));
@@ -47,10 +57,12 @@ public class KuecheController extends Controller
 		preisCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("preis"));
 		rechnungIdCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("rechnung"));
 		statusCol.setCellValueFactory(new PropertyValueFactory<Bestellung, String>("status"));
+		bestelldatumCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Date>("bestelldatum"));
+		bearbeitungszeitCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("bearbeitungszeit"));
 		
-		listBestellungen();
+		listBestellungen();	
 	}
-	
+		
 	@FXML
 	public void listBestellungen() 
 	{
@@ -68,22 +80,22 @@ public class KuecheController extends Controller
 			
 			liste.addAll(s.searchBestellung(bestellungStatus));
 
-			bestellungen.addAll(liste);
+			bestellungen.addAll(liste);		
 		}
 		catch(IllegalArgumentException e) 
 		{
-			// TODO Auto-generated catch block
+			// Dialog "Fehler" ausgeben.
 			e.printStackTrace();
 		} 
 		catch(DAOException e) 
 		{
-			// TODO Auto-generated catch block
+			// Dialog "Fehler" ausgeben.
 			e.printStackTrace();
 		}
 		kuecheBestellungTableView.setItems(bestellungen);
 	}
 	
-	// todo: Die für die Speise laut Rezept notwendigen Waren aus dem Lager entfernen.
+	// todo: Die für die Speise laut Rezept notwendigen Waren aus dem Lager entfernen (Serviceschicht).
 	@FXML
 	public void clickOnChangeStatusToWirdGekocht(ActionEvent event) 
 	{					
@@ -97,13 +109,13 @@ public class KuecheController extends Controller
 			
 			try
 			{
-				changeBestellungStatus.setStatus("wirdGekocht");	
+				changeBestellungStatus.setStatus("wirdGekocht");
 				s.updateBestellung(changeBestellungStatus);
 				listBestellungen(); 
 			}
 			catch(DAOException e) 
 			{
-				// TODO Auto-generated catch block
+				// Dialog "Fehler" ausgeben.
 				e.printStackTrace();
 			}
 		}			
@@ -124,14 +136,36 @@ public class KuecheController extends Controller
 			{
 				changeBestellungStatus.setStatus("fertigGekocht");	
 				s.updateBestellung(changeBestellungStatus);
+				s.aktualisiereBearbeitungszeit();
 				listBestellungen(); 
 			}
 			catch(DAOException e) 
 			{
-				// TODO Auto-generated catch block
+				// Dialog "Fehler" ausgeben.
 				e.printStackTrace();
 			}
 		}	
+	}	
+	
+	@FXML
+	public void clickOnBearbeitungszeitAktualisieren(ActionEvent event) 
+	{
+		try 
+		{
+			s.aktualisiereBearbeitungszeit();
+		} 
+		catch (IllegalArgumentException e) 
+		{
+			// Dialog "Fehler" ausgeben.
+			e.printStackTrace();
+		} 
+		catch (DAOException e) 
+		{
+			// Dialog "Fehler" ausgeben.
+			e.printStackTrace();
+		}
+		
+		listBestellungen();
 	}	
 		 
 	// Zum einfacheren Wechseln der Anzeige (aus Testgründen)

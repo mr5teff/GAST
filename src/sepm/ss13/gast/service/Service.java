@@ -114,4 +114,9 @@ public interface Service {
 	public void updateTisch(Tisch t) throws DAOException, IllegalArgumentException;
 	
 	public void deleteTisch(Tisch t) throws DAOException, IllegalArgumentException;
+	
+	/*
+	 * Services für Küche
+	 */
+	public void aktualisiereBearbeitungszeit() throws DAOException, IllegalArgumentException;
 }
