@@ -85,8 +85,8 @@ public class Test_JDBCBestellungDAO {
 		testKategorie = new JDBCProduktKategorieDAO(dbc.getConnection());
 		testRechnung = new JDBCRechnungDAO(dbc.getConnection());
 		
-		p1_kategorie = new ProduktKategorie(-1,"Test 1","T 1");
-		p2_kategorie = new ProduktKategorie(-1,"Test 2","T 2");
+		p1_kategorie = new ProduktKategorie(-1,"Test 1","T 1",false,0);
+		p2_kategorie = new ProduktKategorie(-1,"Test 2","T 2",false,0);
 		
 		
 		ProduktKategorie p_temp_kategorie = null;

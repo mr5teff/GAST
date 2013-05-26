@@ -70,8 +70,8 @@ public class Test_JDBCProduktDAO {
 		test = new JDBCProduktDAO(dbc.getConnection());
 		testKategorie = new JDBCProduktKategorieDAO(dbc.getConnection());
 		
-		p1_kategorie = new ProduktKategorie(-1,"Test 1","T 1");
-		p2_kategorie = new ProduktKategorie(-1,"Test 2","T 2");
+		p1_kategorie = new ProduktKategorie(-1,"Test 1","T 1",false,0);
+		p2_kategorie = new ProduktKategorie(-1,"Test 2","T 2",false,0);
 		
 		ProduktKategorie p_temp_kategorie = null;
 		p_temp_kategorie = testKategorie.create(p1_kategorie);

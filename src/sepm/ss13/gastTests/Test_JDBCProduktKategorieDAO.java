@@ -54,18 +54,18 @@ public class Test_JDBCProduktKategorieDAO {
 		test = new JDBCProduktKategorieDAO(dbc.getConnection());
 		
 		
-		p1 = new ProduktKategorie(-1,"Test ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ßÄÖÜäöü","T ABCDEFGHÄÜÖ");
-		p2 = new ProduktKategorie(-1,"Test ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ßÄÖÜäöüasdafsdfasdfasdfasdfasdfasdfasdfasdf","T ABCDEFGHasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsad");
+		p1 = new ProduktKategorie(-1,"Test ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ßÄÖÜäöü","T ABCDEFGHÄÜÖ",false,0);
+		p2 = new ProduktKategorie(-1,"Test ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ßÄÖÜäöüasdafsdfasdfasdfasdfasdfasdfasdfasdf","T ABCDEFGHasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsad",false,0);
 		
 		
-		p3 = new ProduktKategorie(-1,"Test SEARCH 1","T SE 1");
-		p4 = new ProduktKategorie(-1,"Test SEARCH 2","T SE 2");
+		p3 = new ProduktKategorie(-1,"Test SEARCH 1","T SE 1",false,0);
+		p4 = new ProduktKategorie(-1,"Test SEARCH 2","T SE 2",false,0);
 		
-		p5 = new ProduktKategorie(-1,"Test UPDATE 1","T UP 1");
-		p6 = new ProduktKategorie(-1,"Test ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ßÄÖÜäöüasdafsdfasdfasdfasdfasdfasdfasdfasdf","T ABCDEFGHasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsad");
+		p5 = new ProduktKategorie(-1,"Test UPDATE 1","T UP 1",false,0);
+		p6 = new ProduktKategorie(-1,"Test ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890ßÄÖÜäöüasdafsdfasdfasdfasdfasdfasdfasdfasdf","T ABCDEFGHasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsad",false,0);
 		
-		p7 = new ProduktKategorie(-1,"Test DELETE 1","T DEL 1");
-		p8 = new ProduktKategorie(-1,"Test DELETE 2","T DEL 2");
+		p7 = new ProduktKategorie(-1,"Test DELETE 1","T DEL 1",false,0);
+		p8 = new ProduktKategorie(-1,"Test DELETE 2","T DEL 2",false,0);
 		
 		
 		ProduktKategorie p_temp = null;

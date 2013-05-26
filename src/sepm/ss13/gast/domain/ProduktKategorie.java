@@ -5,6 +5,7 @@ public class ProduktKategorie {
 	private String bezeichnung;
 	private String kurzbezeichnung;
 	private boolean deleted;
+	private int steuer;
 
 	
 	/**
@@ -12,18 +13,15 @@ public class ProduktKategorie {
 	 */
 	public ProduktKategorie()
 	{
-		this(null, "", "", false);
+		this(null, "", "", false, 0);
 	}
 	
-	public ProduktKategorie(Integer id, String bezeichnung, String kurzbezeichnung) {
-		this(id, bezeichnung, kurzbezeichnung, false);
-	}
-	
-	public ProduktKategorie(Integer id, String bezeichnung, String kurzbezeichnung, boolean deleted) {
+	public ProduktKategorie(Integer id, String bezeichnung, String kurzbezeichnung, boolean deleted, int steuer) {
 		this.setId(id);
 		this.setBezeichnung(bezeichnung);
 		this.setKurzbezeichnung(kurzbezeichnung);
 		this.setDeleted(deleted);
+		this.setSteuer(steuer);
 	} 
 
 	public Integer getId() {
@@ -56,6 +54,14 @@ public class ProduktKategorie {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public int getSteuer() {
+		return steuer;
+	}
+
+	public void setSteuer(int steuer) {
+		this.steuer = steuer;
 	}
 	
 	

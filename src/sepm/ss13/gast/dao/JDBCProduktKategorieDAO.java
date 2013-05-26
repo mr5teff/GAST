@@ -26,9 +26,10 @@ public class JDBCProduktKategorieDAO implements ProduktKategorieDAO {
 	
 	public ProduktKategorie create(ProduktKategorie p) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("INSERT INTO produkttyp (id,bezeichnung,kurzbezeichnung) VALUES (NULL,?,?)",Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps=c.prepareStatement("INSERT INTO produkttyp (id,bezeichnung,kurzbezeichnung,steuer) VALUES (NULL,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1,p.getBezeichnung());
 			ps.setString(2,p.getKurzbezeichnung());
+			ps.setInt(3,p.getSteuer());
 			ps.executeUpdate();
 			
 			ResultSet rs = ps.getGeneratedKeys();
@@ -45,7 +46,7 @@ public class JDBCProduktKategorieDAO implements ProduktKategorieDAO {
 	
 	public ArrayList<ProduktKategorie> search(ProduktKategorie p) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT id,bezeichnung,kurzbezeichnung FROM produkttyp WHERE (id=? OR ? IS NULL) AND deleted=?");
+			PreparedStatement ps=c.prepareStatement("SELECT id,bezeichnung,kurzbezeichnung,deleted,steuer FROM produkttyp WHERE (id=? OR ? IS NULL) AND deleted=?");
 			ps.setObject(1,p.getId());
 			ps.setObject(2,p.getId());
 			ps.setObject(3, p.getDeleted());
@@ -53,7 +54,7 @@ public class JDBCProduktKategorieDAO implements ProduktKategorieDAO {
 			ResultSet rs=ps.executeQuery();
 			ArrayList<ProduktKategorie> al=new ArrayList<ProduktKategorie>();
 			while(rs.next()) {
-				al.add(new ProduktKategorie(rs.getInt("id"),rs.getString("bezeichnung"),rs.getString("kurzbezeichnung")));
+				al.add(new ProduktKategorie(rs.getInt("id"),rs.getString("bezeichnung"),rs.getString("kurzbezeichnung"),rs.getBoolean("deleted"),rs.getInt("steuer")));
 				
 			}
 			return al;
@@ -69,11 +70,12 @@ public class JDBCProduktKategorieDAO implements ProduktKategorieDAO {
 	{	
 		try
 		{
-			PreparedStatement ps = c.prepareStatement("UPDATE produkttyp SET bezeichnung=?, kurzbezeichnung=? WHERE id=?");
+			PreparedStatement ps = c.prepareStatement("UPDATE produkttyp SET bezeichnung=?,kurzbezeichnung=?,steuer=? WHERE id=?");
 			
 			ps.setString(1, p.getBezeichnung());
 			ps.setString(2, p.getKurzbezeichnung());
-			ps.setInt(3, p.getId());
+			ps.setInt(3,p.getSteuer());
+			ps.setInt(4, p.getId());
 						
 			int updatedRows = ps.executeUpdate();
 			
