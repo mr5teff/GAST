@@ -88,5 +88,5 @@ nummer integer,
 plaetze integer,
 beschreibung varchar(100),
 art varchar(100) check(art in ('Raucher','Nichtraucher')),
-deleted boolean
+deleted boolean default false
 );
