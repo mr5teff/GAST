@@ -13,6 +13,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Jpeg;
 import com.itextpdf.text.List;
 import com.itextpdf.text.ListItem;
 import com.itextpdf.text.Paragraph;
@@ -29,7 +30,9 @@ import sepm.ss13.gast.dao.JDBCBestellungDAO;
 import sepm.ss13.gast.dao.JDBCRechnungDAO;
 import sepm.ss13.gast.dao.RechnungDAO;
 import sepm.ss13.gast.domain.Bestellung;
+import sepm.ss13.gast.domain.Konfiguration;
 import sepm.ss13.gast.domain.Rechnung;
+import sepm.ss13.gast.gui.GAST;
 
 public class PdfService {
 	
@@ -99,7 +102,7 @@ public class PdfService {
 			document.addCreator("QSE_03");
 		}
 	
-		private void addContent(Document document) throws DocumentException, DAOException {
+		private void addContent(Document document) throws DocumentException, DAOException, IOException {
 			
 			Paragraph titel = new Paragraph();
 			titel.add(new Paragraph("Rechnung", catFont));
@@ -145,6 +148,16 @@ public class PdfService {
 			Paragraph gruss = new Paragraph();
 			addEmptyLine(gruss, 3);
 			gruss.add(new Paragraph("Wir danken für Ihr kommen!", catFont));
+			
+			Konfiguration k = ((GASTService) GAST.getApplicationContext().getBean("GASTService")).loadKonfiguration();
+			gruss.add(new Paragraph(k.getName()));
+			gruss.add(new Paragraph(k.getAdresse()));
+			gruss.add(new Paragraph(k.getTel()));
+			Jpeg logo = new Jpeg(k.getLogo());
+			logo.scaleToFit(100,100);
+			logo.setAlignment(Jpeg.ALIGN_CENTER);
+			gruss.add(logo);
+			
 			gruss.setAlignment(Element.ALIGN_CENTER);
 			document.add(gruss);
 			
