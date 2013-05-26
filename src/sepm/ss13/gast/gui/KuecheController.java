@@ -88,13 +88,11 @@ public class KuecheController extends Controller
 		}
 		catch(IllegalArgumentException e) 
 		{
-			// Dialog "Fehler" ausgeben.
-			e.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Bestellungen konnten nicht geladen werden.", "Ladefehler", "Bestellungen laden", e);
 		} 
 		catch(DAOException e) 
 		{
-			// Dialog "Fehler" ausgeben.
-			e.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Bestellungen konnten nicht geladen werden.", "Ladefehler", "Bestellungen laden", e);
 		}
 		kuecheBestellungTableView.setItems(bestellungen);
 	}
@@ -119,8 +117,7 @@ public class KuecheController extends Controller
 			}
 			catch(DAOException e) 
 			{
-				// Dialog "Fehler" ausgeben.
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Status konnte nicht geändert werden.", "Speicherfehler", "Status ändern", e);
 			}
 		}			
 	}	
@@ -145,8 +142,7 @@ public class KuecheController extends Controller
 			}
 			catch(DAOException e) 
 			{
-				// Dialog "Fehler" ausgeben.
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Status konnte nicht geändert werden.", "Speicherfehler", "Status ändern", e);
 			}
 		}	
 	}	
@@ -162,13 +158,11 @@ public class KuecheController extends Controller
 		} 
 		catch (IllegalArgumentException e) 
 		{
-			// Dialog "Fehler" ausgeben.
-			e.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Bearbeitungszeit konnte nicht aktualisiert werden.", "Speicherfehler", "Bearbeitungszeit aktualisieren", e);
 		} 
 		catch (DAOException e) 
 		{
-			// Dialog "Fehler" ausgeben.
-			e.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Bearbeitungszeit konnte nicht aktualisiert werden.", "Speicherfehler", "Bearbeitungszeit aktualisieren", e);
 		}
 		
 		listBestellungen();
