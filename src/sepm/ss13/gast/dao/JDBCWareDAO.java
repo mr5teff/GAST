@@ -50,13 +50,11 @@ public class JDBCWareDAO implements WareDAO
 	{
 		try 
 		{
-			PreparedStatement ps = c.prepareStatement("SELECT id, bezeichnung, lagerstand FROM ware WHERE (id=? OR ? IS NULL) AND bezeichnung LIKE ? AND einheit LIKE ? AND (lagerstand=? OR ? IS NULL)");
+			PreparedStatement ps = c.prepareStatement("SELECT id, bezeichnung, einheit, lagerstand FROM ware WHERE (id=? OR ? IS NULL) AND bezeichnung LIKE ? AND einheit LIKE ?");
 			ps.setObject(1, w.getId());
 			ps.setObject(2, w.getId());
-			ps.setString(3, w.getBezeichnung());
-			ps.setString(4, w.getEinheit());
-			ps.setInt(5, w.getLagerstand());
-			ps.setInt(6, w.getLagerstand());
+			ps.setString(3, "%"+w.getBezeichnung()+"%");
+			ps.setString(4, "%"+w.getEinheit()+"%");
 			
 			ResultSet rs = ps.executeQuery();
 			ArrayList<Ware> al= new ArrayList<Ware>();

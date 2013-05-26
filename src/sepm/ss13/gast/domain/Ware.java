@@ -12,7 +12,7 @@ public class Ware {
 	 */
 	public Ware()
 	{
-		this(null, "","prozent", 0);
+		this(null, "","", 0);
 	}
 	
 	public Ware(Integer id, String bezeichnung, String einheit, int lagerstand) {

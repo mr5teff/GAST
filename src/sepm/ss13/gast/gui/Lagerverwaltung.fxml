@@ -13,10 +13,12 @@
     <AnchorPane minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="60.0">
       <children>
         <Button layoutX="503.0" layoutY="258.0" mnemonicParsing="false" prefWidth="160.0" text="Liste in Lager übertragen" />
-        <TableView layoutX="21.0" layoutY="39.0" prefHeight="438.0" prefWidth="404.0">
+        <TableView layoutX="21.0" layoutY="39.0" prefHeight="438.0" prefWidth="404.0" fx:id="warenTableView">
           <columns>
-            <TableColumn prefWidth="75.0" text="Column X" />
-            <TableColumn prefWidth="75.0" text="Column X" />
+            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="66.0" text="ID" fx:id="idCol"/>
+            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="117.0" text="Bezeichnung" fx:id="bezeichnungCol"/>
+            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="109.0" text="Lagerstand" fx:id="lagerstandCol"/>
+            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="113.0" text="Einheit" fx:id="einheitCol"/>
           </columns>
         </TableView>
         <Label layoutX="21.0" layoutY="6.0" text="Aktueller Lagerstand" />
