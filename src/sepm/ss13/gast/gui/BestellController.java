@@ -178,6 +178,7 @@ public class BestellController extends Controller {
 					 bestellung.setProdukt(p.get(produkt.getSelectionModel().getSelectedIndex()).getId());
 					 bestellung.setPname(p.get(produkt.getSelectionModel().getSelectedIndex()).getName());
 					 bestellung.setPreis(p.get(produkt.getSelectionModel().getSelectedIndex()).getPreis());
+					 bestellung.setSteuer(pk.get(kategorie.getSelectionModel().getSelectedIndex()).getSteuer());
 					 bestellung.setStatus("bestellt");
 					 bestellung.setDeleted(false);
 					 try {

@@ -185,14 +185,7 @@ public class PdfService {
 			float summe=0;
 			
 			for(Bestellung b:bestellungen) {
-				Produkt pSearch = new Produkt();
-				pSearch.setId(b.getProdukt());
-				Produkt p = s.searchProdukt(pSearch).get(0);
-				ProduktKategorie pkSearch = new ProduktKategorie();
-				pkSearch.setId(p.getKategorie());
-				int steuer = s.searchProduktKategorie(pkSearch).get(0).getSteuer();
-				
-				summe+=b.getPreis()*steuer/100;
+				summe+=b.getPreis()*b.getSteuer()/100;
 			}
 			
 			return summe;

@@ -14,16 +14,17 @@ public class Bestellung {
 	private Date bestelldatum;
 	private Long bestelldatumLong;
 	private Integer bearbeitungszeit;
+	private int steuer;
 
 	/**
 	 * Default Konstruktor. "Leeres" Domänenelement
 	 */
 	public Bestellung()
 	{
-		this(null,null,null,null,0,null,null,false, new Date(0), null, null);
+		this(null,null,null,null,0,null,null,false, new Date(0), null, null, 0);
 	}
 	
-	public Bestellung(Integer id, Integer tisch, Integer produkt, String pname, int preis, Integer rechnung, String status, boolean deleted, Date bestelldatum, Long bestelldatumLong, Integer bearbeitungszeit) {
+	public Bestellung(Integer id, Integer tisch, Integer produkt, String pname, int preis, Integer rechnung, String status, boolean deleted, Date bestelldatum, Long bestelldatumLong, Integer bearbeitungszeit, int steuer) {
 		this.setId(id);
 		this.setTisch(tisch);
 		this.setProdukt(produkt);
@@ -35,10 +36,7 @@ public class Bestellung {
 		this.setBestelldatum(bestelldatum);
 		this.setBestelldatumLong(bestelldatumLong);
 		this.setBearbeitungszeit(bearbeitungszeit);
-	}
-	
-	public Bestellung(Integer id, Integer tisch, Integer produkt, String pname, int preis, Integer rechnung, String status,  Date bestelldatum, Long bestelldatumLong, Integer bearbeitungszeit) {
-		this(id, tisch, produkt, pname, preis, rechnung, status, false, bestelldatum, bestelldatumLong, bearbeitungszeit);
+		this.setSteuer(steuer);
 	}
 
 	public Integer getId() {
@@ -127,5 +125,13 @@ public class Bestellung {
 	
 	public Integer getBearbeitungszeit(){
 		return this.bearbeitungszeit;
+	}
+
+	public int getSteuer() {
+		return steuer;
+	}
+
+	public void setSteuer(int steuer) {
+		this.steuer = steuer;
 	}
 }

@@ -30,7 +30,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			
 			PreparedStatement ps = null;
 			
-			ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,produktname,preis,rechnungid,status,deleted,bestelldatum,bestelldatumlong,bearbeitungszeit) VALUES (NULL,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+			ps=c.prepareStatement("INSERT INTO bestellung (id,tischnummer,produktid,produktname,preis,rechnungid,status,deleted,bestelldatum,bestelldatumlong,bearbeitungszeit,steuer) VALUES (NULL,?,?,?,?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, b.getTisch());
 			ps.setInt(2, b.getProdukt());
 			ps.setString(3, b.getPname());
@@ -41,6 +41,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			ps.setDate(8,dt);
 			ps.setObject(9,b.getBestelldatumLong());
 			ps.setObject(10,b.getBearbeitungszeit());
+			ps.setInt(11,b.getSteuer());
 			
 			ps.executeUpdate();
 			
@@ -58,7 +59,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 	
 	public ArrayList<Bestellung> search(Bestellung b) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT b.id,b.tischnummer,b.produktid,b.produktname,b.preis,b.rechnungid,b.status,b.deleted,b.bestelldatum,b.bestelldatumlong,b.bearbeitungszeit FROM bestellung b WHERE (id=? OR ? IS NULL)  AND (tischnummer=? OR ? IS NULL) AND (status like ? OR ? IS NULL) AND (rechnungid=? OR ? IS NULL) AND deleted=?");
+			PreparedStatement ps=c.prepareStatement("SELECT b.id,b.tischnummer,b.produktid,b.produktname,b.preis,b.rechnungid,b.status,b.deleted,b.bestelldatum,b.bestelldatumlong,b.bearbeitungszeit,b.steuer FROM bestellung b WHERE (id=? OR ? IS NULL)  AND (tischnummer=? OR ? IS NULL) AND (status like ? OR ? IS NULL) AND (rechnungid=? OR ? IS NULL) AND deleted=?");
 			ps.setObject(1,b.getId());
 			ps.setObject(2,b.getId());
 			ps.setObject(3,b.getTisch());
@@ -73,7 +74,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			
 			ArrayList<Bestellung> al=new ArrayList<Bestellung>();
 			while(rs.next()) {
-				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getString("produktname"),rs.getInt("preis"),(Integer)rs.getObject("rechnungid"),rs.getString("status"), rs.getBoolean("deleted"), rs.getTime("bestelldatum"),rs.getLong("bestelldatumlong"),rs.getInt("bearbeitungszeit")));
+				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getString("produktname"),rs.getInt("preis"),(Integer)rs.getObject("rechnungid"),rs.getString("status"), rs.getBoolean("deleted"), rs.getTime("bestelldatum"),rs.getLong("bestelldatumlong"),rs.getInt("bearbeitungszeit"),rs.getInt("steuer")));
 				
 			}
 			return al;

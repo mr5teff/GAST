@@ -124,14 +124,14 @@ public class Test_JDBCBestellungDAO {
 		
 
 		//Bestellung(int id, int tisch, int produkt, String produktname, int preis, int rechnung, String status, Date bestelldatum, Long bestelldatumLong, Integer bearbeitungszeit)
-		p1 = new Bestellung(-1,1, p1_produkt.getId(), p1_produkt.getName(), p1_produkt.getPreis(), null, "bestellt", new Date(), null, null);
-		p2 = new Bestellung(-1,1, p1_produkt.getId(), p1_produkt.getName(),  p1_produkt.getPreis(), p1_rechnung.getId(), "bezahlt", new Date(), null, null);
-		p3 = new Bestellung(-1,1, p2_produkt.getId(), p2_produkt.getName(),  p2_produkt.getPreis(), 0, "bezahlt", new Date(), null, null);
+		p1 = new Bestellung(-1,1, p1_produkt.getId(), p1_produkt.getName(), p1_produkt.getPreis(), null, "bestellt",false, new Date(), null, null,0);
+		p2 = new Bestellung(-1,1, p1_produkt.getId(), p1_produkt.getName(),  p1_produkt.getPreis(), p1_rechnung.getId(), "bezahlt", false,new Date(), null, null,0);
+		p3 = new Bestellung(-1,1, p2_produkt.getId(), p2_produkt.getName(),  p2_produkt.getPreis(), 0, "bezahlt", false,new Date(), null, null,0);
 		
-		p4 = new Bestellung(-1,-200, p1_produkt.getId(), p1_produkt.getName(),  p1_produkt.getPreis(), null, "bestellt", new Date(), null, null);
-		p5 = new Bestellung(-1,-300, p1_produkt.getId(), p1_produkt.getName(),  p1_produkt.getPreis(), null, "wirdGekocht", new Date(), null, null);
-		p6 = new Bestellung(-1,-400, p2_produkt.getId(), p2_produkt.getName(),  p2_produkt.getPreis(), null, "fertigGekocht", new Date(), null, null);
-		p7 = new Bestellung(-1,-500, p2_produkt.getId(), p2_produkt.getName(),  p2_produkt.getPreis(), null, "geliefert", new Date(), null, null);
+		p4 = new Bestellung(-1,-200, p1_produkt.getId(), p1_produkt.getName(),  p1_produkt.getPreis(), null, "bestellt",false, new Date(), null, null,0);
+		p5 = new Bestellung(-1,-300, p1_produkt.getId(), p1_produkt.getName(),  p1_produkt.getPreis(), null, "wirdGekocht",false, new Date(), null, null,0);
+		p6 = new Bestellung(-1,-400, p2_produkt.getId(), p2_produkt.getName(),  p2_produkt.getPreis(), null, "fertigGekocht", false,new Date(), null, null,0);
+		p7 = new Bestellung(-1,-500, p2_produkt.getId(), p2_produkt.getName(),  p2_produkt.getPreis(), null, "geliefert", false,new Date(), null, null,0);
 		
 		Bestellung p_temp = null;
 		p_temp = test.create(p4);
@@ -147,8 +147,8 @@ public class Test_JDBCBestellungDAO {
 		p7.setId(p_temp.getId());
 		mykeys.add(p_temp.getId());	
 
-		p8 = new Bestellung(-1,1, p2_produkt.getId(), p2_produkt.getName() ,  p2_produkt.getPreis(), null, "bestellt", new Date(), null, null);
-		p9 = new Bestellung(-1,1, p2_produkt.getId(), p2_produkt.getName(),  p2_produkt.getPreis(), p2_rechnung.getId(), "bezahlt", new Date(), null, null);
+		p8 = new Bestellung(-1,1, p2_produkt.getId(), p2_produkt.getName() ,  p2_produkt.getPreis(), null, "bestellt", false,new Date(), null, null,0);
+		p9 = new Bestellung(-1,1, p2_produkt.getId(), p2_produkt.getName(),  p2_produkt.getPreis(), p2_rechnung.getId(), "bezahlt", false,new Date(), null, null,0);
 		
 	}
 
@@ -349,7 +349,7 @@ public class Test_JDBCBestellungDAO {
 	public void testSearch_1() throws DAOException,IllegalArgumentException {
 		
 		//Bestellung(int id, int tisch, int produkt, int preis, int rechnung, String status)
-		Bestellung toSearch = new Bestellung(-1,-200,-1,"",-1,null,"-1", new Date(), null, null);
+		Bestellung toSearch = new Bestellung(-1,-200,-1,"",-1,null,"-1", false,new Date(), null, null,0);
 		ArrayList<Bestellung> p_test = new ArrayList<Bestellung>();
 		p_test = test.search(toSearch);
 	
@@ -363,7 +363,7 @@ public class Test_JDBCBestellungDAO {
 			assertThat(p_test.get(i).getDeleted(), equalTo(p4.getDeleted()));
 		}
 
-		toSearch = new Bestellung(-1,-300,-1,"",-1,null,"wirdGekocht", new Date(), null, null);
+		toSearch = new Bestellung(-1,-300,-1,"",-1,null,"wirdGekocht", false,new Date(), null, null,0);
 		p_test = new ArrayList<Bestellung>();
 		p_test = test.search(toSearch);
 	
@@ -377,7 +377,7 @@ public class Test_JDBCBestellungDAO {
 			assertThat(p_test.get(i).getDeleted(), equalTo(p5.getDeleted()));
 		}
 		
-		toSearch = new Bestellung(p6.getId(),-1,-1,"",-1,null,"-1", new Date(), null, null);
+		toSearch = new Bestellung(p6.getId(),-1,-1,"",-1,null,"-1",false, new Date(), null, null,0);
 		p_test = new ArrayList<Bestellung>();
 		p_test = test.search(toSearch);
 	
@@ -391,7 +391,7 @@ public class Test_JDBCBestellungDAO {
 			assertThat(p_test.get(i).getDeleted(), equalTo(p6.getDeleted()));
 		}
 		
-		toSearch = new Bestellung(p7.getId(),-500,-1,"",-1,null,"geliefert", new Date(), null, null);
+		toSearch = new Bestellung(p7.getId(),-500,-1,"",-1,null,"geliefert",false, new Date(), null, null,0);
 		p_test = new ArrayList<Bestellung>();
 		p_test = test.search(toSearch);
 	
@@ -423,7 +423,7 @@ public class Test_JDBCBestellungDAO {
 	@Test
 	public void testSearch_3() throws DAOException,IllegalArgumentException {
 		
-		Bestellung toSearch = new Bestellung(-1,-500,-1,"",-1,null,null, new Date(), null, null);
+		Bestellung toSearch = new Bestellung(-1,-500,-1,"",-1,null,null, false,new Date(), null, null,0);
 		ArrayList<Bestellung> p_test = new ArrayList<Bestellung>();
 		p_test = test.search(toSearch);
 
