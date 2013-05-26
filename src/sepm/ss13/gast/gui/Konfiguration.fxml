@@ -8,50 +8,50 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="810.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.KonfigurationController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.KonfigurationController">
   <children>
-    <FlowPane prefHeight="252.0" prefWidth="377.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0">
+    <Label prefHeight="21.0" prefWidth="330.0" text="Hier können Sie Ihr Lager verwalten" AnchorPane.bottomAnchor="546.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="536.0" AnchorPane.topAnchor="23.0" />
+    <AnchorPane prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
       <children>
-        <Label contentDisplay="RIGHT" text="Hier können Sie die Daten Ihrer Gastronomie konfigurieren">
-          <FlowPane.margin>
-            <Insets bottom="15.0" />
-          </FlowPane.margin>
-        </Label>
-        <GridPane prefHeight="185.0" prefWidth="322.0000999999975">
+        <FlowPane prefHeight="252.0" prefWidth="377.0" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="21.0">
           <children>
-            <Label id="nameL" text="Betriebsname" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <Label id="adresseL" text="Adresse" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <Label id="telL" text="Telefonnummer" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <Label id="tischanzahlL" text="Tischanzahl" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-            <TextField fx:id="name" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-            <TextField fx:id="adresse" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="tel" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="tischanzahl" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <GridPane prefHeight="185.0" prefWidth="322.0000999999975">
+              <children>
+                <Label id="nameL" text="Betriebsname" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label id="adresseL" text="Adresse" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Label id="telL" text="Telefonnummer" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <Label id="tischanzahlL" text="Tischanzahl" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <TextField fx:id="name" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="adresse" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="tel" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="tischanzahl" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+              </children>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="124.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="199.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <Button mnemonicParsing="false" onAction="#saveKonfiguration" text="Änderungen speichern">
+              <FlowPane.margin>
+                <Insets right="100.0" top="30.0" />
+              </FlowPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#undoKonfiguration" text="Rückgängig">
+              <FlowPane.margin>
+                <Insets top="30.0" />
+              </FlowPane.margin>
+            </Button>
           </children>
-          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="142.0" minWidth="10.0" prefWidth="124.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="199.0" />
-          </columnConstraints>
-          <rowConstraints>
-            <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-          </rowConstraints>
-        </GridPane>
-        <Button mnemonicParsing="false" onAction="#saveKonfiguration" text="Änderungen speichern">
-          <FlowPane.margin>
-            <Insets right="100.0" top="30.0" />
-          </FlowPane.margin>
-        </Button>
-        <Button mnemonicParsing="false" onAction="#undoKonfiguration" text="Rückgängig">
-          <FlowPane.margin>
-            <Insets top="30.0" />
-          </FlowPane.margin>
-        </Button>
+        </FlowPane>
+        <Button layoutX="474.0" layoutY="236.0" mnemonicParsing="false" onAction="#chooseLogo" text="Logo auswählen" />
+        <ImageView id="" fx:id="logo" fitHeight="150.0" fitWidth="200.0" focusTraversable="false" layoutX="474.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
       </children>
-    </FlowPane>
-    <Button layoutX="573.0" layoutY="280.0" mnemonicParsing="false" onAction="#chooseLogo" text="Logo auswählen" />
-    <ImageView id="" fx:id="logo" fitHeight="150.0" fitWidth="200.0" layoutX="492.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true" />
+    </AnchorPane>
   </children>
 </AnchorPane>

@@ -101,10 +101,12 @@ public class KonfigurationController extends Controller {
 		 
 	 }
 	 
+	 @FXML
 	 public void undoKonfiguration(ActionEvent e) {
 		 loadKonfiguration();
 	 }	
 	 
+	 @FXML
 	 public void chooseLogo(ActionEvent e) {
 		 FileChooser fileChooser = new FileChooser();
 		 
