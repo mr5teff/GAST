@@ -7,15 +7,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" fx:id="root" maxHeight="-Infinity" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="878.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.BestellController">
+<AnchorPane id="AnchorPane" fx:id="root" maxHeight="-Infinity" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.BestellController">
   <children>
-    <SplitPane dividerPositions="0.5" focusTraversable="true" prefHeight="536.0" prefWidth="796.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <SplitPane dividerPositions="0.405811623246493" focusTraversable="true" prefHeight="536.0" prefWidth="796.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="534.0" prefWidth="611.0">
           <children>
             <Label layoutX="39.0" layoutY="256.0" text="Kategorie wählen:" />
             <Label layoutX="35.0" layoutY="93.0" text="Wählen Sie einen Tisch aus:" />
-            <ComboBox id="table" fx:id="tisch" layoutX="238.0" layoutY="93.0" minHeight="20.0" prefWidth="120.0">
+            <ComboBox id="table" fx:id="tisch" layoutX="238.0" layoutY="93.0" minHeight="20.0" prefWidth="95.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
                   <Integer fx:value="1" />
@@ -46,8 +46,8 @@
             <CheckBox fx:id="alleBestellungen" layoutX="14.0" layoutY="418.0" mnemonicParsing="false" onAction="#listBestellungen" text="Alle Bestellungen anzeigen" />
             <Button layoutX="14.0" layoutY="458.0" mnemonicParsing="false" onAction="#storniereBestellung" text="Stornieren" />
             <Button layoutX="115.0" layoutY="458.0" mnemonicParsing="false" onAction="#clickOnDruckeRechnung" text="Rechnung drucken" />
-            <Button layoutX="251.0" layoutY="458.0" mnemonicParsing="false" onAction="#moveToTable" text="auf anderen Tisch verschieben" />
-            <ComboBox fx:id="zielTisch" layoutX="301.0" layoutY="479.0" minHeight="20.0" prefWidth="120.0">
+            <Button layoutX="251.0" layoutY="458.0" mnemonicParsing="false" onAction="#moveToTable" text="auf anderen Tisch verschieben:" />
+            <ComboBox fx:id="zielTisch" layoutX="444.0" layoutY="459.0" minHeight="20.0" prefWidth="65.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
                   <Integer fx:value="1" />
