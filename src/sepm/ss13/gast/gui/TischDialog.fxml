@@ -2,17 +2,30 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="195.00009999999747" prefWidth="320.9999000000025" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.ProduktKategorieDialogController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="272.0000999999975" prefWidth="320.9999000000025" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.TischDialogController">
   <children>
-    <TextField fx:id="bezeichnung" layoutX="106.0" layoutY="25.0" prefWidth="90.0" />
-    <TextField fx:id="kurzbezeichnung" layoutX="26.0" layoutY="99.0" prefWidth="260.0" />
-    <Button layoutX="26.0" layoutY="147.0" mnemonicParsing="false" onAction="#clickOnSave" prefWidth="104.0" text="Speichern" />
-    <Button layoutX="182.0" layoutY="147.0" mnemonicParsing="false" onAction="#clickOnAbort" prefWidth="104.0" text="Abbrechen" />
-    <Label layoutX="26.0" layoutY="28.0" text="Sitzplaetze:" />
-    <Label layoutX="26.0" layoutY="66.0" text="Beschreibung:" />
+    <TextField id="bezeichnung" fx:id="plaetzeTF" layoutX="125.0" layoutY="61.0" prefWidth="90.0" />
+    <TextField id="kurzbezeichnung" fx:id="beschreibung" layoutX="21.0" layoutY="176.0" prefWidth="260.0" />
+    <Button layoutX="21.0" layoutY="224.0" mnemonicParsing="false" onAction="#clickOnSave" prefWidth="104.0" text="Speichern" />
+    <Button layoutX="177.0" layoutY="224.0" mnemonicParsing="false" onAction="#clickOnAbort" prefWidth="104.0" text="Abbrechen" />
+    <Label layoutX="26.0" layoutY="64.0" text="Sitzplaetze:" />
+    <Label layoutX="21.0" layoutY="143.0" text="Beschreibung:" />
+    <Label layoutX="26.0" layoutY="104.0" text="Art:" />
+    <ComboBox id="art" fx:id="artCB" layoutX="130.0" layoutY="102.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="Item 1" />
+          <String fx:value="Item 2" />
+          <String fx:value="Item 3" />
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <TextField id="bezeichnung" fx:id="nummerTF" layoutX="125.0" layoutY="25.0" prefWidth="90.0" />
+    <Label layoutX="26.0" layoutY="28.0" text="Tischnummer:" />
   </children>
 </AnchorPane>
