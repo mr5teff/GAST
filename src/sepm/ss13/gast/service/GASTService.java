@@ -169,8 +169,11 @@ public class GASTService implements Service{
 	 */
 	
 	public void verifyProduktKategorie(ProduktKategorie p) throws DAOException, IllegalArgumentException{
-		if(p==null) throw new IllegalArgumentException();
-		if(p.getBezeichnung().equals("")||p.getId()<0||p.getKurzbezeichnung().equals("")) throw new IllegalArgumentException();
+		try {
+			if(p.getBezeichnung().equals("")||p.getKurzbezeichnung().equals("")||p.getSteuer()<0) throw new IllegalArgumentException();
+		} catch (NullPointerException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 	
 	public ProduktKategorie createProduktKategorie(ProduktKategorie p) throws DAOException, IllegalArgumentException {
@@ -185,6 +188,7 @@ public class GASTService implements Service{
 
 	public void updateProduktKategorie(ProduktKategorie p) throws DAOException, IllegalArgumentException {
 		verifyProduktKategorie(p);
+		if(p.getId()==null) throw new IllegalArgumentException();
 		produktKategorieDAO.update(p);
 	}
 

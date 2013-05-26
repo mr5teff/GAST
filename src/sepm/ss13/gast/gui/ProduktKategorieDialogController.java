@@ -54,7 +54,6 @@ public class ProduktKategorieDialogController extends Controller {
 				Dialogs.showInformationDialog(this.getStage(), "Bitte geben Sie gültige Paramter an.\n" +
 										 "Bezeichnung und Kurzbezeichnung müssen jeweils mindestens ein Zeichen beinhalten, Steuer muss eine positive Ganzzahl sein!",
 										 "Ungültige Eingabe", "Produktkategorie anlegen/bearbeiten");
-				pk = null;
 				return;
 		} 
 		catch (DAOException e) {
