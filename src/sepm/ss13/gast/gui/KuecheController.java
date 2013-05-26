@@ -32,12 +32,8 @@ public class KuecheController extends Controller
 	
 	@FXML private TableView<Bestellung> kuecheBestellungTableView;
 	
-	@FXML private TableColumn<Bestellung, Integer> idCol;
 	@FXML private TableColumn<Bestellung, Integer> tischnummerCol;
-	@FXML private TableColumn<Bestellung, Integer> produktIdCol;
 	@FXML private TableColumn<Bestellung, String> produktNameCol;
-	@FXML private TableColumn<Bestellung, Integer> preisCol;
-	@FXML private TableColumn<Bestellung, Integer> rechnungIdCol;
 	@FXML private TableColumn<Bestellung, String> statusCol;
 	@FXML private TableColumn<Bestellung, Date> bestelldatumCol;
 	@FXML private TableColumn<Bestellung, Integer> bearbeitungszeitCol;
@@ -47,12 +43,8 @@ public class KuecheController extends Controller
 		s = (Service) this.getApplicationContext().getBean("GASTService");
 		 
 		kuecheBestellungTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		idCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("id"));
 		tischnummerCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("tisch"));
-		produktIdCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("produkt"));
 		produktNameCol.setCellValueFactory(new PropertyValueFactory<Bestellung, String>("pname"));
-		preisCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("preis"));
-		rechnungIdCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("rechnung"));
 		statusCol.setCellValueFactory(new PropertyValueFactory<Bestellung, String>("status"));
 		bestelldatumCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Date>("bestelldatum"));
 		bearbeitungszeitCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("bearbeitungszeit"));
