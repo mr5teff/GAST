@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Bestellung;
@@ -57,26 +59,12 @@ public class KuecheController extends Controller
 		
 		listBestellungen();
 		
-		//Beginn Timer
-		Runnable r = new Runnable() {
+		Timer t = new Timer(true);
+		t.schedule(new TimerTask() {
 			public void run() {
-				while(true) {
-					clickOnBearbeitungszeitAktualisieren();
-					
-					try {
-						Thread.sleep(10*1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+				clickOnBearbeitungszeitAktualisieren();
 			}
-		};
-		
-		Thread t = new Thread(r);
-		t.setDaemon(true);
-		t.start();
-		//Ende Timer
+		}, 0, 10*1000);
 	}
 		
 	@FXML
