@@ -12,19 +12,8 @@ import sepm.ss13.gast.domain.Rechnung;
 import sepm.ss13.gast.domain.Reservierung;
 import sepm.ss13.gast.domain.Tisch;
 import sepm.ss13.gast.domain.Ware;
-import sepm.ss13.gast.gui.KuecheController;
 
 public interface Service {
-	
-	/*
-	 * Allgemeine Funktionen
-	 */
-	
-	/**
-	 * Es werden alle laufenden Dienste geschlossen.
-	 */
-	public void close();
-
 	/*
 	 * Services für Bestellung
 	 */
@@ -129,8 +118,4 @@ public interface Service {
 	 * Services für Küche
 	 */
 	public void aktualisiereBearbeitungszeit() throws DAOException, IllegalArgumentException;
-	
-	public void startAutoRefresh(KuecheController kuecheController);
-	
-	public void stopAutoRefresh();
 }
