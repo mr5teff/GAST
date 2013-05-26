@@ -115,6 +115,8 @@ public interface Service {
 	
 	public void deleteTisch(Tisch t) throws DAOException, IllegalArgumentException;
 	
+	public boolean availableTischnummer(Tisch t) throws DAOException, IllegalArgumentException;
+	
 	/*
 	 * Services für Küche
 	 */

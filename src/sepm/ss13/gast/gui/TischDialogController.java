@@ -59,6 +59,20 @@ public class TischDialogController extends Controller {
 		t.setBeschreibung(beschreibung.getText());
 		t.setPlaetze(plaetze);
 		t.setNummer(nummer);
+		Boolean avTN=false;
+		try {
+			avTN=s.availableTischnummer(t);
+		} catch (IllegalArgumentException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (DAOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if(avTN==false) {
+			Dialogs.showInformationDialog(this.getStage(), "Tischnummer wird bereits verwendet!", "Tisch erstellen/bearbeiten", "Information");
+			return;
+		}
 		if(neu) { 
 			try {
 				s.createTisch(t);
