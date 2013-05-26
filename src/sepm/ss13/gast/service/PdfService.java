@@ -145,7 +145,7 @@ public class PdfService {
 			//summe.add(new Paragraph("davon MWST: " + (r.getSummeBrt() - r.getSummeNet()), subFont));
 			//summe.add(new Paragraph("Summe netto: " + r.getSummeNet(), subFont));
 			summe.add(new Paragraph("Summe: € "+(float)this.calculateSum()/100));
-			//summe.add(new Paragraph("MWSt: € "+this.calculateTaxSum()/100));
+			summe.add(new Paragraph("MWSt: € "+this.calculateTaxSum()/100));
 			document.add(summe);
 			
 			Paragraph gruss = new Paragraph();
@@ -189,7 +189,7 @@ public class PdfService {
 				pSearch.setId(b.getProdukt());
 				Produkt p = s.searchProdukt(pSearch).get(0);
 				ProduktKategorie pkSearch = new ProduktKategorie();
-				pkSearch.setId(p.getId());
+				pkSearch.setId(p.getKategorie());
 				int steuer = s.searchProduktKategorie(pkSearch).get(0).getSteuer();
 				
 				summe+=b.getPreis()*steuer/100;
