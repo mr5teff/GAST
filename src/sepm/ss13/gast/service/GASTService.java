@@ -195,7 +195,7 @@ public class GASTService implements Service{
 	}
 
 	/*
-	 * Services fuer RechnungDAO
+	 * Services fuer Rechnungen
 	 */
 	
 	public Rechnung createRechung(ArrayList<Bestellung> al, int trinkgeld) throws DAOException, IllegalArgumentException {

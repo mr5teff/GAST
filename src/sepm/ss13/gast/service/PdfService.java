@@ -8,10 +8,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import com.itextpdf.text.Anchor;
-import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -102,7 +99,7 @@ public class PdfService {
 			document.addCreator("QSE_03");
 		}
 	
-		private void addContent(Document document) throws DocumentException {
+		private void addContent(Document document) throws DocumentException, DAOException {
 			
 			Paragraph titel = new Paragraph();
 			titel.add(new Paragraph("Rechnung", catFont));
@@ -118,20 +115,21 @@ public class PdfService {
 	
 			PdfPTable table = new PdfPTable(2);
 			
-			PdfPCell c1 = new PdfPCell(new Phrase(""));
+			PdfPCell c1 = new PdfPCell(new Phrase("Bezeichnung"));
 			c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(c1);
 	
-			c1 = new PdfPCell(new Phrase("Preis brutto"));
+			c1 = new PdfPCell(new Phrase("Preis"));
 			c1.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(c1);
 	
 			for (Bestellung b : bestellungen) {
-				//String[] t = s.split(",");
 				table.addCell(b.getPname());
-				PdfPCell c = new PdfPCell(new Phrase(b.getPreis()));
-				c.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				table.addCell(c);
+				//PdfPCell c = new PdfPCell(new Phrase(b.getPreis()));
+				//System.out.println(b.getPreis());
+				//c.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				//table.addCell(c);
+				table.addCell("€ "+String.valueOf((float)b.getPreis()/100));
 			}
 			document.add(table);
 			
@@ -141,11 +139,12 @@ public class PdfService {
 			//summe.add(new Paragraph("Summe brutto: " + r.getSummeBrt()));
 			//summe.add(new Paragraph("davon MWST: " + (r.getSummeBrt() - r.getSummeNet()), subFont));
 			//summe.add(new Paragraph("Summe netto: " + r.getSummeNet(), subFont));
+			summe.add(new Paragraph("Summe: € "+(float)this.calculateSum(r)/100));
 			document.add(summe);
 			
 			Paragraph gruss = new Paragraph();
 			addEmptyLine(gruss, 3);
-			gruss.add(new Paragraph("Wir danken fÃ¼r Ihr kommen!", catFont));
+			gruss.add(new Paragraph("Wir danken für Ihr kommen!", catFont));
 			gruss.setAlignment(Element.ALIGN_CENTER);
 			document.add(gruss);
 			
@@ -171,5 +170,20 @@ public class PdfService {
 
 		public void setR(Rechnung r) {
 			this.r = r;
+		}
+		
+		public int calculateSum(Rechnung r) throws DAOException {
+			if(r==null) throw new IllegalArgumentException();
+			
+			Bestellung bSearch = new Bestellung();
+			bSearch.setRechnung(r.getId());
+			ArrayList<Bestellung> al = bestellungDAO.search(bSearch);
+			
+			int summe=0;
+			for(Bestellung b:al) {
+				summe+=b.getPreis();
+			}
+			
+			return summe;
 		}
 }
