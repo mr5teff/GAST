@@ -39,7 +39,6 @@ public class BestellController extends Controller {
 	private ObservableList<Integer> tischnummern;
 	private ObservableList<String> kategorien;
 	private ObservableList<String> produkte;
-	private ArrayList<Bestellung> bestellungenListe;
 	private ArrayList<ProduktKategorie> pk;
 	private ArrayList<Produkt> p;
 
@@ -129,8 +128,8 @@ public class BestellController extends Controller {
 					if(alleBestellungen.isSelected()==false) {
 						bestellung.setTisch(tisch.getValue());
 					}
-					bestellungenListe=s.searchBestellung(bestellung);
-					bestellungen.addAll(bestellungenListe);
+					
+					bestellungen.addAll(s.searchBestellung(bestellung));
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -237,25 +236,17 @@ public class BestellController extends Controller {
 		 
 		 @FXML
 		 public void clickOnDruckeRechnung(ActionEvent event) {
-			 bestellungen = FXCollections.observableArrayList();
-			 try {
-				Bestellung bestellung=new Bestellung();
-				if(alleBestellungen.isSelected()==false) {
-					bestellung.setTisch(tisch.getValue());
-				}
-				bestellungenListe=s.searchBestellung(bestellung);
-			 } catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			 } catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			 }
-			
-			 Rechnung r = null;
+			 ObservableList<Bestellung> gewaehlteBestellungen=bestellungTableView.getSelectionModel().getSelectedItems();
 			 
-			 try {
-				r=s.createRechung(bestellungenListe,0); //TODO 0 steht fuer Trinkgeld
+			 if(gewaehlteBestellungen.isEmpty()) {
+				 Dialogs.showInformationDialog(this.getStage(), "Keine Bestellung ausgewählt!", "Rechnung erstellen", "Information");
+				 return;
+			 }
+			 
+			Rechnung r = null;
+			 
+			try {
+				r=s.createRechung(new ArrayList<Bestellung>(gewaehlteBestellungen),0); //TODO 0 steht fuer Trinkgeld
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -263,8 +254,10 @@ public class BestellController extends Controller {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			listBestellungen();
 			 
-			 try {
+			try {
 				Desktop.getDesktop().open(((PdfService)this.getApplicationContext().getBean("PdfService")).getFile(r));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -277,5 +270,4 @@ public class BestellController extends Controller {
 				e.printStackTrace();
 			}
 		 }
-
 }
