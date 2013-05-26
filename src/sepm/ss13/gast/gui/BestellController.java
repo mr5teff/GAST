@@ -68,8 +68,7 @@ public class BestellController extends Controller {
 					tischnummern.add(i);
 				}
 			} catch (DAOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Konfiguration konnte nicht geladen werden.", "Ladefehler", "Konfiguration laden", e1);
 			}
 			tisch.setItems(tischnummern);
 			tisch.setValue(1);
@@ -89,11 +88,9 @@ public class BestellController extends Controller {
 					kategorien.add(pk.get(i).getBezeichnung());
 				}
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Kategorien konnten nicht geladen werden.", "Ladefehler", "Kategorien laden", e);
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Kategorien konnten nicht geladen werden.", "Ladefehler", "Kategorien laden", e);
 			}
 			kategorie.setItems(kategorien);
 			kategorie.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -108,11 +105,9 @@ public class BestellController extends Controller {
 							produkte.add(p.get(i).getName());
 						}
 					} catch (IllegalArgumentException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						Dialogs.showErrorDialog(null, "Produkte konnten nicht geladen werden.", "Ladefehler", "Produkte laden", e);
 					} catch (DAOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						Dialogs.showErrorDialog(null, "Produkte konnten nicht geladen werden.", "Ladefehler", "Produkte laden", e);
 					}
 					produkt.setItems(produkte);
 				}
@@ -131,11 +126,9 @@ public class BestellController extends Controller {
 					
 					bestellungen.addAll(s.searchBestellung(bestellung));
 				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Dialogs.showErrorDialog(this.getStage(), "Bestellungen konnten nicht geladen werden.", "Ladefehler", "Bestellungen laden", e);
 				} catch (DAOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Dialogs.showErrorDialog(this.getStage(), "Bestellungen konnten nicht geladen werden.", "Ladefehler", "Bestellungen laden", e);
 				}
 				bestellungTableView.setItems(bestellungen);
 		 }
@@ -161,11 +154,9 @@ public class BestellController extends Controller {
 				 }
 				 
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Bestellungen konnten nicht storniert werden.", "Speicherfehler", "Bestellungen stornieren", e);
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Bestellungen konnten nicht storniert werden.", "Speicherfehler", "Bestellungen stornieren", e);
 			}
 			listBestellungen();
 		}
@@ -192,11 +183,9 @@ public class BestellController extends Controller {
 					 try {
 						 s.createBestellung(bestellung);
 					 } catch (IllegalArgumentException e) {
-						 // TODO Auto-generated catch block
-						 e.printStackTrace();
+						 Dialogs.showErrorDialog(this.getStage(), "Bestellung konnte nicht erstellt werden.", "Speicherfehler", "Bestellung erstellen", e);
 					 } catch (DAOException e) {
-						 // TODO Auto-generated catch block
-						 e.printStackTrace();
+						 Dialogs.showErrorDialog(this.getStage(), "Bestellung konnte nicht erstellt werden.", "Speicherfehler", "Bestellung erstellen", e);
 					 }
 				 }
 				 listBestellungen();
@@ -228,8 +217,7 @@ public class BestellController extends Controller {
 				Dialogs.showInformationDialog(this.getStage(), "Kein Tisch ausgewählt!", "Bestellung verschieben", "Information");
 				return;
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Bestellung konnte nicht verschocben werden.", "Speicherfehler", "Bestellung verschieben", e);
 			}
 			listBestellungen();
 		 }
@@ -248,11 +236,9 @@ public class BestellController extends Controller {
 			try {
 				r=s.createRechung(new ArrayList<Bestellung>(gewaehlteBestellungen),0); //TODO 0 steht fuer Trinkgeld
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Rechnung konnte nicht erstellt werden.", "Speicherfehler", "Rechnung erstellen", e);
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Rechnung konnte nicht erstellt werden.", "Speicherfehler", "Rechnung erstellen", e);
 			}
 			
 			listBestellungen();
@@ -260,14 +246,11 @@ public class BestellController extends Controller {
 			try {
 				Desktop.getDesktop().open(((PdfService)this.getApplicationContext().getBean("PdfService")).getFile(r));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Fehler beim öffnen der Rechnung.", "Dateizugriffsfehler", "Rechnung öffnen", e);
 			} catch (BeansException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Fehler beim öffnen der Rechnung.", "Beans Exception", "Rechnung öffnen", e);
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Fehler beim öffnen der Rechnung.", "Dateizugriffsfehler", "Rechnung öffnen", e);
 			}
 		 }
 }
