@@ -77,6 +77,7 @@ public interface Service {
 	public Rechnung createRechung(ArrayList<Bestellung> al, int trinkgeld) throws DAOException, IllegalArgumentException;
 
 	public ArrayList<Rechnung> searchRechung(Rechnung r) throws DAOException, IllegalArgumentException;
+	public void updateRechnung(Rechnung r) throws DAOException;
 
 	/*
 	 * Services für Reservierung

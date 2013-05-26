@@ -225,6 +225,11 @@ public class GASTService implements Service{
 		if(r==null) throw new IllegalArgumentException();
 		return rechnungDAO.search(r);
 	}
+	
+	public void updateRechnung(Rechnung r) throws DAOException {
+		if(r==null) throw new IllegalArgumentException();
+		rechnungDAO.update(r);
+	}
 
 	/*
 	 * Services fuer Reservierung

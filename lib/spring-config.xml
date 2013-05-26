@@ -15,6 +15,6 @@
     </bean>
     
     <bean name="PdfService" class="sepm.ss13.gast.service.PdfService" scope="singleton">
-        <constructor-arg name="dbCon" ref="databaseManager" />
+        <constructor-arg name="s" ref="GASTService" />
     </bean>
 </beans>

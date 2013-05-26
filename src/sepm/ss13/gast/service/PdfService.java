@@ -28,16 +28,18 @@ import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.dao.DBConnector;
 import sepm.ss13.gast.dao.JDBCBestellungDAO;
 import sepm.ss13.gast.dao.JDBCRechnungDAO;
+import sepm.ss13.gast.dao.ProduktKategorieDAO;
 import sepm.ss13.gast.dao.RechnungDAO;
 import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.domain.Konfiguration;
+import sepm.ss13.gast.domain.Produkt;
+import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.domain.Rechnung;
 import sepm.ss13.gast.gui.GAST;
 
 public class PdfService {
 	
-	private BestellungDAO bestellungDAO;
-	private RechnungDAO rechnungDAO;
+	private Service s;
 	
 	private Rechnung r;
 	private ArrayList<Bestellung> bestellungen;
@@ -47,14 +49,12 @@ public class PdfService {
 	private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 10);
 	private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 	
-	public PdfService(DBConnector dbCon) {
-		Connection con = dbCon.getConnection();
-		this.bestellungDAO = new JDBCBestellungDAO(con);
-		this.rechnungDAO = new JDBCRechnungDAO(con);
+	public PdfService(Service s) {
+		this.s=s;
 	}
 
 	public File getFile(Rechnung r) throws DAOException {
-		byte[] pdf = rechnungDAO.search(r).get(0).getPdf();
+		byte[] pdf = s.searchRechung(r).get(0).getPdf();
 		File f = null;
 		
 		try {
@@ -74,10 +74,12 @@ public class PdfService {
 	}
 	
 	public void createPDF(Rechnung r) throws DAOException {
+		if(r==null) throw new IllegalArgumentException();
+		
 		this.r = r;
 		Bestellung bSearch = new Bestellung();
 		bSearch.setRechnung(r.getId());
-		this.bestellungen=bestellungDAO.search(bSearch);
+		this.bestellungen=s.searchBestellung(bSearch);
 		
 			try {
 				Document document = new Document();
@@ -90,7 +92,7 @@ public class PdfService {
 				document.close();
 				
 				r.setPdf(baos.toByteArray());
-				rechnungDAO.update(r);
+				s.updateRechnung(r);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -142,14 +144,15 @@ public class PdfService {
 			//summe.add(new Paragraph("Summe brutto: " + r.getSummeBrt()));
 			//summe.add(new Paragraph("davon MWST: " + (r.getSummeBrt() - r.getSummeNet()), subFont));
 			//summe.add(new Paragraph("Summe netto: " + r.getSummeNet(), subFont));
-			summe.add(new Paragraph("Summe: € "+(float)this.calculateSum(r)/100));
+			summe.add(new Paragraph("Summe: € "+(float)this.calculateSum()/100));
+			//summe.add(new Paragraph("MWSt: € "+this.calculateTaxSum()/100));
 			document.add(summe);
 			
 			Paragraph gruss = new Paragraph();
 			addEmptyLine(gruss, 3);
 			gruss.add(new Paragraph("Wir danken für Ihr kommen!", catFont));
 			
-			Konfiguration k = ((GASTService) GAST.getApplicationContext().getBean("GASTService")).loadKonfiguration();
+			Konfiguration k = s.loadKonfiguration();
 			gruss.add(new Paragraph(k.getName()));
 			gruss.add(new Paragraph(k.getAdresse()));
 			gruss.add(new Paragraph(k.getTel()));
@@ -163,38 +166,33 @@ public class PdfService {
 			
 		}
 	
-		private static void createList(Section subCatPart) {
-			List list = new List(true, false, 10);
-			list.add(new ListItem("First point"));
-			list.add(new ListItem("Second point"));
-			list.add(new ListItem("Third point"));
-			subCatPart.add(list);
-		}
-	
 		private static void addEmptyLine(Paragraph paragraph, int number) {
 			for (int i = 0; i < number; i++) {
 				paragraph.add(new Paragraph(" "));
 			}
 		}
-
-		public Rechnung getR() {
-			return r;
-		}
-
-		public void setR(Rechnung r) {
-			this.r = r;
+		
+		public int calculateSum() {
+			int summe=0;
+			for(Bestellung b:bestellungen) {
+				summe+=b.getPreis();
+			}
+			
+			return summe;
 		}
 		
-		public int calculateSum(Rechnung r) throws DAOException {
-			if(r==null) throw new IllegalArgumentException();
+		public float calculateTaxSum() throws IllegalArgumentException, DAOException {
+			float summe=0;
 			
-			Bestellung bSearch = new Bestellung();
-			bSearch.setRechnung(r.getId());
-			ArrayList<Bestellung> al = bestellungDAO.search(bSearch);
-			
-			int summe=0;
-			for(Bestellung b:al) {
-				summe+=b.getPreis();
+			for(Bestellung b:bestellungen) {
+				Produkt pSearch = new Produkt();
+				pSearch.setId(b.getProdukt());
+				Produkt p = s.searchProdukt(pSearch).get(0);
+				ProduktKategorie pkSearch = new ProduktKategorie();
+				pkSearch.setId(p.getId());
+				int steuer = s.searchProduktKategorie(pkSearch).get(0).getSteuer();
+				
+				summe+=b.getPreis()*steuer/100;
 			}
 			
 			return summe;
