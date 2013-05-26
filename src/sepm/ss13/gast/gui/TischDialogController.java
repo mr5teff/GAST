@@ -7,38 +7,60 @@ import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Tisch;
 import sepm.ss13.gast.service.Service;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialogs;
 import javafx.scene.control.TextField;
 
 public class TischDialogController extends Controller {
 	
-	 private Tisch t;
-	
-	@FXML private TextField kurzbezeichnung;
-	@FXML private TextField bezeichnung;
-	 
+	private Tisch t;
+	private ObservableList<String> art;
+	@FXML private TextField beschreibung;
+	@FXML private ComboBox<String> artCB;
+	@FXML private TextField plaetzeTF;
+	@FXML private TextField nummerTF;
 	private Service s;
 	 
 	public void initialize(URL location, ResourceBundle resources) {
 		s = (Service) this.getApplicationContext().getBean("GASTService");
-   	 	this.t=null;
+		
+		art = FXCollections.observableArrayList();
+   	 	art.add("Raucher");
+   	 	art.add("Nichtraucher");
+   	 	artCB.setItems(art);
+   	 	artCB.setValue("Raucher");
+   	 	
 	}
-    
-    public void setTisch(Tisch t) {
-    	this.t=t;
-    	
-    	if(t!=null) {
-    		//bezeichnung.setText(this.t.getBezeichnung());
-            //kurzbezeichnung.setText(this.t.getKurzbezeichnung());
-    	}
-    }
 	
 	 @FXML
 	 public void clickOnSave(ActionEvent event) {
-		 if(t == null) {
-			 t = new Tisch();
-			 try {
+		Boolean neu=false;
+		if(t == null) {
+			neu=true;
+			t = new Tisch();
+		}
+		int plaetze=0;
+		int nummer=0;
+		Boolean valid=true;
+		try {
+			plaetze=Integer.parseInt(plaetzeTF.getText());
+			nummer=Integer.parseInt(nummerTF.getText());
+		}
+		catch(NumberFormatException e) {
+			valid=false;
+		}
+		if(valid&&plaetze!=0&&nummer!=0) {
+			
+		t.setArt(artCB.getSelectionModel().getSelectedItem());
+		t.setBeschreibung(beschreibung.getText());
+		t.setPlaetze(plaetze);
+		t.setNummer(nummer);
+		if(neu) { 
+			try {
 				s.createTisch(t);
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
@@ -49,8 +71,6 @@ public class TischDialogController extends Controller {
 			}
 		 }
 		 else {
-			 //t.setBezeichnung(bezeichnung.getText());
-			 //t.setKurzbezeichnung(kurzbezeichnung.getText());
 			 try {
 				s.updateTisch(t);
 			} catch (IllegalArgumentException e) {
@@ -62,13 +82,27 @@ public class TischDialogController extends Controller {
 			}
 		 }
 		 
-		 this.getStage().hide();
 		 TischeController tc = (TischeController) this.getParentController();
 		 tc.listTische();
+		 this.getStage().hide();
+		}
+		else {
+			Dialogs.showInformationDialog(this.getStage(), "Keinen gültigen Wert für Tischnummer oder Sitzplatzanzahl gewaehlt!", "Tisch erstellen/bearbeiten", "Information");
+		}
 	 }
 	 
 	 @FXML
 	 public void clickOnAbort(ActionEvent event) {
 		 this.getStage().hide();
+	 }
+	 
+	 public void setTisch(Tisch t) {
+		 this.t=t;
+		 if(t!=null) {
+				plaetzeTF.setText(t.getPlaetze().toString());
+				artCB.setValue(t.getArt());
+				beschreibung.setText(t.getBeschreibung());
+				nummerTF.setText(t.getNummer().toString());
+			}
 	 }
 }

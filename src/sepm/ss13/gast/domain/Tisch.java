@@ -6,17 +6,19 @@ public class Tisch {
 	private Integer plaetze;
 	private String beschreibung;
 	private Boolean deleted;
+	private String art;
 	
 	public Tisch() {
-		this(null,0,0,"",false);
+		this(null,0,0,"","",false);
 	}
 	
-	public Tisch(Integer id,Integer nummer, Integer plaetze, String beschreibung, Boolean deleted) {
+	public Tisch(Integer id,Integer nummer, Integer plaetze, String beschreibung,String art, Boolean deleted) {
 		this.id=id;
 		this.nummer=nummer;
 		this.plaetze=plaetze;
 		this.beschreibung=beschreibung;
 		this.deleted=deleted;
+		this.setArt(art);
 	}
 	
 	public Integer getId() {
@@ -53,6 +55,14 @@ public class Tisch {
 
 	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public String getArt() {
+		return art;
+	}
+
+	public void setArt(String art) {
+		this.art = art;
 	}
 	
 }
