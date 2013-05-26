@@ -43,8 +43,7 @@ public class KonfigurationController extends Controller {
 		try {
 			k = s.loadKonfiguration();
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Konfiguration konnte nicht geladen werden.", "Ladefehler", "Konfiguration laden", e);
 		}
 
 
@@ -61,8 +60,7 @@ public class KonfigurationController extends Controller {
 				logo.setImage( SwingFXUtils.toFXImage(image, null));
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Logo konnte nicht geladen werden.", "Ladefehler", "Konfiguration laden", e);
 		}
 	}
 	 @FXML
@@ -86,8 +84,7 @@ public class KonfigurationController extends Controller {
 			ImageIO.write( image, "jpg", baos );
 			baos.flush();
 		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Logo konnte nicht gespeichert werden.", "Speicherfehler", "Konfiguration speichern", e2);
 		}
 		 
 		 byte[] logo = baos.toByteArray();
@@ -97,11 +94,9 @@ public class KonfigurationController extends Controller {
 		try {
 			s.saveKonfiguration(k);
 		} catch (IllegalArgumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Konfiguration konnte nicht gespeichert werden.", "Speicherfehler", "Konfiguration speichern", e1);
 		} catch (DAOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Konfiguration konnte nicht gespeichert werden.", "Speicherfehler", "Konfiguration speichern", e1);
 		}
 		 
 	 }
@@ -127,8 +122,7 @@ public class KonfigurationController extends Controller {
         		image = ImageIO.read(picture);
         		logo.setImage( SwingFXUtils.toFXImage(image, null));
         	} catch (IOException e1) {
-        		// TODO Auto-generated catch block
-        		e1.printStackTrace();
+        		Dialogs.showErrorDialog(this.getStage(), "Logo konnte nicht geladen werden.", "Dateizugriffsfehler", "Logo auswählen", e1);
         	}
         }
         

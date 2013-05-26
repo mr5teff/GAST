@@ -74,7 +74,7 @@ public class ProduktDialogController extends Controller {
 				produkt = null;
 				return;
 			} catch (DAOException e) {
-				Dialogs.showInformationDialog(this.getStage(), "Produkt konnte nicht erstellet werden", "Speicherfehler", "Produkt erstellen");
+				Dialogs.showErrorDialog(this.getStage(), "Produkt konnte nicht erstellet werden.", "Speicherfehler", "Produkt erstellen", e);
 			}
 			
 		}
@@ -96,7 +96,7 @@ public class ProduktDialogController extends Controller {
 						 "Ungültige Eingabe", "Produkt bearbeiten");
 				return;
 			} catch (DAOException e) {
-				Dialogs.showInformationDialog(this.getStage(), "Produkt konnte nicht bearbeitet werden", "Speicherfehler", "Produkt bearbeiten");
+				Dialogs.showErrorDialog(this.getStage(), "Produkt konnte nicht bearbeitet werden.", "Speicherfehler", "Produkt bearbeiten", e);
 			}
 		}
 		
