@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.LagerverwaltungController">
+<AnchorPane id="AnchorPane" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.LagerverwaltungController">
   <children>
     <Label prefHeight="21.0" prefWidth="330.0" text="Hier können Sie Ihr Lager verwalten" AnchorPane.bottomAnchor="546.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="536.0" AnchorPane.topAnchor="23.0" />
     <AnchorPane minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="61.0">
@@ -39,7 +39,7 @@
             </FXCollections>
           </items>
         </ComboBox>
-        <TextField layoutX="783.0" layoutY="104.0" prefWidth="160.0" promptText="Warenmenge" text="" />
+        <TextField layoutX="783.0" layoutY="104.0" prefWidth="160.0" promptText="Warenmenge" text="" fx:id="mengeTextField"/>
         <Button layoutX="783.0" layoutY="150.0" mnemonicParsing="false" prefWidth="160.0" text="Ware zur Liste hinzufügen" onAction="#clickOnWarehinzufuegen"/>
       </children>
     </AnchorPane>

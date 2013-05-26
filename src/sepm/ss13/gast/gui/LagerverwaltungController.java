@@ -17,6 +17,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
@@ -41,9 +42,13 @@ public class LagerverwaltungController extends Controller {
 	@FXML private TableColumn<Ware, String> bezeichnungCol2;
 	@FXML private TableColumn<Ware, Integer> mengeCol;
 	
+	@FXML private TextField mengeTextField;
+	
 	@FXML private ComboBox<Ware> warenComboBox; 
 	
 	private ObservableList<Ware> waren;
+	
+	private ObservableList<Ware> einkaufwaren;
 	
 	private ArrayList<Ware> warenListe;
 	
@@ -57,6 +62,9 @@ public class LagerverwaltungController extends Controller {
 		lagerstandCol.setCellValueFactory(new PropertyValueFactory<Ware, Integer>("lagerstand"));
 		einheitCol.setCellValueFactory(new PropertyValueFactory<Ware, String>("einheit"));
 		
+		bezeichnungCol2.setCellValueFactory(new PropertyValueFactory<Ware, String>("bezeichnung"));
+		mengeCol.setCellValueFactory(new PropertyValueFactory<Ware, Integer>("lagerstand"));
+		
 		warenComboBox.setConverter(new StringConverter<Ware>(){
 	        @Override public String toString(Ware item) {
 	            if (item != null)
@@ -69,24 +77,8 @@ public class LagerverwaltungController extends Controller {
 			public Ware fromString(String arg0) {
 				throw new RuntimeException("not required for non editable ComboBox");
 			}
-
 	    });
-		/*
-		warenComboBox.setCellFactory( new Callback<ListView<Ware>, ListCell<Ware>>() {					 
-            public ListCell<Ware> call(ListView<Ware> param) {       	
-            	final ListCell<Ware> cell = new ListCell<Ware>() { 
-
-                    @Override public void updateItem(Ware item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (item != null) {
-                               setText(item.getBezeichnung());
-                            }
-
-                        }
-            };
-            return cell;
-        }
-    });*/
+		
 
 		warenComboBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Ware>() {
 
@@ -97,7 +89,9 @@ public class LagerverwaltungController extends Controller {
 			
 		});
 		
-		waren = FXCollections.observableArrayList();
+		waren = FXCollections.observableArrayList();		
+		einkaufwaren = FXCollections.observableArrayList();
+		
 		refreshWareContent();
 	}
 	
@@ -117,23 +111,78 @@ public class LagerverwaltungController extends Controller {
 			warenComboBox.setItems(waren);
 	}
 	
+	public void refreshEinkaufListe()
+	{
+		einkaufTableView.setItems(einkaufwaren);
+	}
+	
 	
 	@FXML
 	public void clickOnListeSpeichern() 
 	{
-		
+		for(Ware w: einkaufwaren)
+		{
+			Ware neu = null;
+			try {
+				neu = s.searchWare(w).get(0);
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			neu.setLagerstand(neu.getLagerstand() + w.getLagerstand());
+			
+			try {
+				s.updateWare(neu);
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		clickOnListeLeeren();
+		refreshWareContent();
 	}
 	
 	@FXML
 	public void clickOnListeLeeren() 
 	{
-		
+		einkaufwaren.clear();
+		refreshEinkaufListe();
 	}
 	
 	@FXML
 	public void clickOnWarehinzufuegen() 
 	{
+		Ware w = warenComboBox.getValue();
+		if(w == null)
+		{
+			Dialogs.showInformationDialog(this.getStage(), "Bitte wählen Sie eine Ware aus.", "Ware hinzufügen", "Information");
+			return;
+		}
 		
+		int menge = 0;
+		try
+		{
+			menge = Integer.parseInt(mengeTextField.getText());
+			if(menge<0)
+				throw new NumberFormatException();
+		}
+		catch(NumberFormatException e)
+		{
+			Dialogs.showInformationDialog(this.getStage(), "Geben Sie einen positiven ganzzahligen Wert für die Menge an!", "Ware hinzufügen", "Information");
+			return;
+		}
+		
+		w.setLagerstand(menge);
+		
+		einkaufwaren.add(w);
+		refreshEinkaufListe();
 	}
 
 }
