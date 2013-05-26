@@ -75,6 +75,7 @@ public class GASTService implements Service{
 	
 	public Bestellung createBestellung(Bestellung b) throws DAOException,IllegalArgumentException{
 		verifyBestellung(b);
+		b.setBestelldatum(new java.util.Date());
 		return bestellungDAO.create(b);
 	}
 

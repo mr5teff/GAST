@@ -12,7 +12,6 @@ public class Bestellung {
 	private String status;
 	private boolean deleted;
 	private Date bestelldatum;
-	private Long bestelldatumLong;
 	private Integer bearbeitungszeit;
 	private int steuer;
 
@@ -21,10 +20,10 @@ public class Bestellung {
 	 */
 	public Bestellung()
 	{
-		this(null,null,null,null,0,null,null,false, new Date(0), null, null, 0);
+		this(null,null,null,null,0,null,null,false, new Date(0), null, 0);
 	}
 	
-	public Bestellung(Integer id, Integer tisch, Integer produkt, String pname, int preis, Integer rechnung, String status, boolean deleted, Date bestelldatum, Long bestelldatumLong, Integer bearbeitungszeit, int steuer) {
+	public Bestellung(Integer id, Integer tisch, Integer produkt, String pname, int preis, Integer rechnung, String status, boolean deleted, Date bestelldatum, Integer bearbeitungszeit, int steuer) {
 		this.setId(id);
 		this.setTisch(tisch);
 		this.setProdukt(produkt);
@@ -34,7 +33,6 @@ public class Bestellung {
 		this.setStatus(status);
 		this.setDeleted(deleted);
 		this.setBestelldatum(bestelldatum);
-		this.setBestelldatumLong(bestelldatumLong);
 		this.setBearbeitungszeit(bearbeitungszeit);
 		this.setSteuer(steuer);
 	}
@@ -109,14 +107,6 @@ public class Bestellung {
 	
 	public Date getBestelldatum(){
 		return this.bestelldatum;
-	}
-	
-	public void setBestelldatumLong(Long bestelldatumLong){
-		this.bestelldatumLong = bestelldatumLong;
-	}
-	
-	public Long getBestelldatumLong(){
-		return this.bestelldatumLong;
 	}
 	
 	public void setBearbeitungszeit(Integer bearbeitungszeit){
