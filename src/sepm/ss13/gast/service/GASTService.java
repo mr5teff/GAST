@@ -303,6 +303,18 @@ public class GASTService implements Service{
 		tischDAO.delete(t);
 	}
 
+	public boolean availableTischnummer(Tisch t) {
+		Tisch sTisch=new Tisch();
+		sTisch.setNummer(t.getNummer());
+		ArrayList<Tisch> tische=null;
+		try {
+			tische = tischDAO.search(sTisch);
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return(tische.isEmpty());
+	}
 	/*
 	 * Services fuer Küche
 	 */

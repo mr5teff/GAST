@@ -124,7 +124,9 @@ public class BestellController extends Controller {
 						bestellung.setTisch(tisch.getValue());
 					}
 					
-					bestellungen.addAll(s.searchBestellung(bestellung));
+					for(Bestellung b:s.searchBestellung(bestellung)) {
+						if(b.getRechnung()==null) bestellungen.add(b);
+					}
 				} catch (IllegalArgumentException e) {
 					Dialogs.showErrorDialog(this.getStage(), "Bestellungen konnten nicht geladen werden.", "Ladefehler", "Bestellungen laden", e);
 				} catch (DAOException e) {

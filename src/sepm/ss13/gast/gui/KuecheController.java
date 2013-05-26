@@ -92,50 +92,50 @@ public class KuecheController extends Controller
 	// todo: Die für die Speise laut Rezept notwendigen Waren aus dem Lager entfernen (Serviceschicht).
 	@FXML
 	public void clickOnChangeStatusToWirdGekocht(ActionEvent event) 
-	{					
-		if(kuecheBestellungTableView.getSelectionModel().getSelectedIndex() == -1)
+	{
+		ObservableList<Bestellung> gewaehlteBestellungen = kuecheBestellungTableView.getSelectionModel().getSelectedItems();
+		
+		if(gewaehlteBestellungen.isEmpty())
 			Dialogs.showInformationDialog(this.getStage(), "Keine Bestellung ausgewählt!", "Bestellung zubereiten", "Information");
 		else
-		{		
-			Bestellung changeBestellungStatus = new Bestellung();
-			
-			changeBestellungStatus = (kuecheBestellungTableView.getSelectionModel().getSelectedItem());			
-			
-			try
-			{
-				changeBestellungStatus.setStatus("wirdGekocht");
-				s.updateBestellung(changeBestellungStatus);
-				listBestellungen(); 
+		{
+			try {
+				for(Bestellung b:gewaehlteBestellungen) {
+					b.setStatus("wirdGekocht");
+					s.updateBestellung(b);
+				}
 			}
 			catch(DAOException e) 
 			{
 				Dialogs.showErrorDialog(this.getStage(), "Status konnte nicht geändert werden.", "Speicherfehler", "Status ändern", e);
 			}
+			
+			listBestellungen();
 		}			
 	}	
 	
 	@FXML
 	public void clickOnChangeStatusToFertigGekocht(ActionEvent event) 
 	{
-		if(kuecheBestellungTableView.getSelectionModel().getSelectedIndex() == -1)
-			Dialogs.showInformationDialog(this.getStage(), "Keine Bestellung ausgewählt!", "Bestellung kann abgeholt werden", "Information");
+		ObservableList<Bestellung> gewaehlteBestellungen = kuecheBestellungTableView.getSelectionModel().getSelectedItems();
+		
+		if(gewaehlteBestellungen.isEmpty())
+			Dialogs.showInformationDialog(this.getStage(), "Keine Bestellung ausgewählt!", "Bestellung als fertig markieren", "Information");
 		else
-		{		
-			Bestellung changeBestellungStatus = new Bestellung();
-			
-			changeBestellungStatus = (kuecheBestellungTableView.getSelectionModel().getSelectedItem());			
-			
-			try
-			{
-				changeBestellungStatus.setStatus("fertigGekocht");	
-				s.updateBestellung(changeBestellungStatus);
-				s.aktualisiereBearbeitungszeit();
-				listBestellungen(); 
+		{
+			try {
+				for(Bestellung b:gewaehlteBestellungen) {
+					b.setStatus("fertigGekocht");
+					s.updateBestellung(b);
+					s.aktualisiereBearbeitungszeit();
+				}
 			}
 			catch(DAOException e) 
 			{
 				Dialogs.showErrorDialog(this.getStage(), "Status konnte nicht geändert werden.", "Speicherfehler", "Status ändern", e);
 			}
+			
+			listBestellungen();
 		}	
 	}	
 	
