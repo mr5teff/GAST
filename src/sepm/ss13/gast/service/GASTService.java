@@ -66,8 +66,11 @@ public class GASTService implements Service{
 	 */
 	
 	public void verifyBestellung(Bestellung b) throws DAOException, IllegalArgumentException{
-		if(b==null) throw new IllegalArgumentException();
-		if(b.getPname().equals("")||b.getPreis()<0||b.getProdukt()<0||b.getTisch()<0) throw new IllegalArgumentException();
+		try {
+			if(b.getPname().equals("")||b.getPreis()<0||b.getProdukt()<0||b.getTisch()<0) throw new IllegalArgumentException();
+		} catch(NullPointerException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 	
 	public Bestellung createBestellung(Bestellung b) throws DAOException,IllegalArgumentException{

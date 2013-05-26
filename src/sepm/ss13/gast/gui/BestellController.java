@@ -53,6 +53,7 @@ public class BestellController extends Controller {
 	@FXML private TableColumn<Bestellung,String> statusCol;
 	@FXML private CheckBox alleBestellungen;
 	@FXML private TextField anzahl;
+	@FXML private ComboBox<Integer> zielTisch;
 
 	 public void initialize(URL arg0, ResourceBundle arg1) {
 			s = (Service) this.getApplicationContext().getBean("GASTService");
@@ -79,6 +80,8 @@ public class BestellController extends Controller {
 					listBestellungen();
 				}
 			});
+			
+			zielTisch.setItems(tischnummern);
 
 			kategorien = FXCollections.observableArrayList();
 			try {
@@ -117,6 +120,7 @@ public class BestellController extends Controller {
 				
 			});
 		 }
+	 
 		 @FXML
 		 public void listBestellungen() {
 			 bestellungen = FXCollections.observableArrayList();
@@ -206,6 +210,29 @@ public class BestellController extends Controller {
 				 Dialogs.showInformationDialog(this.getStage(), message , "Bestellung hinzufügen", "Information");
 			 }
 			 
+		 }
+		 
+		 @FXML
+		 public void moveToTable() {
+			 if(bestellungTableView.getSelectionModel().getSelectedItems().isEmpty()) {
+				 Dialogs.showInformationDialog(this.getStage(), "Keine Bestellung ausgewählt!", "Bestellung verschieben", "Information");
+				 return;
+			 }
+			 
+			 try {
+				 ObservableList<Bestellung> gewaehlteBestellungen=bestellungTableView.getSelectionModel().getSelectedItems();
+				 for(Bestellung b:gewaehlteBestellungen) {
+					b.setTisch(zielTisch.getValue());
+					s.updateBestellung(b);
+				 }
+			} catch (IllegalArgumentException e) {
+				Dialogs.showInformationDialog(this.getStage(), "Kein Tisch ausgewählt!", "Bestellung verschieben", "Information");
+				return;
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			listBestellungen();
 		 }
 		 
 		 @FXML

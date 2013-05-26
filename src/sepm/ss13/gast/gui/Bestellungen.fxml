@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane fx:id="root" id="AnchorPane" maxHeight="-Infinity" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.BestellController">
+<AnchorPane id="AnchorPane" fx:id="root" maxHeight="-Infinity" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="878.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.BestellController">
   <children>
     <SplitPane dividerPositions="0.5" focusTraversable="true" prefHeight="536.0" prefWidth="796.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <items>
@@ -46,6 +46,16 @@
             <CheckBox fx:id="alleBestellungen" layoutX="14.0" layoutY="418.0" mnemonicParsing="false" onAction="#listBestellungen" text="Alle Bestellungen anzeigen" />
             <Button layoutX="14.0" layoutY="458.0" mnemonicParsing="false" onAction="#storniereBestellung" text="Stornieren" />
             <Button layoutX="115.0" layoutY="458.0" mnemonicParsing="false" onAction="#clickOnDruckeRechnung" text="Rechnung drucken" />
+            <Button layoutX="251.0" layoutY="458.0" mnemonicParsing="false" onAction="#moveToTable" text="auf anderen Tisch verschieben" />
+            <ComboBox fx:id="zielTisch" layoutX="301.0" layoutY="479.0" minHeight="20.0" prefWidth="120.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <Integer fx:value="1" />
+                  <Integer fx:value="2" />
+                  <Integer fx:value="3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
           </children>
         </AnchorPane>
       </items>
