@@ -45,9 +45,10 @@ public class JDBCProduktKategorieDAO implements ProduktKategorieDAO {
 	
 	public ArrayList<ProduktKategorie> search(ProduktKategorie p) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT id,bezeichnung,kurzbezeichnung FROM produkttyp WHERE (id=? OR ? IS NULL)");
+			PreparedStatement ps=c.prepareStatement("SELECT id,bezeichnung,kurzbezeichnung FROM produkttyp WHERE (id=? OR ? IS NULL) AND deleted=?");
 			ps.setObject(1,p.getId());
 			ps.setObject(2,p.getId());
+			ps.setObject(3, p.getDeleted());
 			
 			ResultSet rs=ps.executeQuery();
 			ArrayList<ProduktKategorie> al=new ArrayList<ProduktKategorie>();
@@ -90,10 +91,17 @@ public class JDBCProduktKategorieDAO implements ProduktKategorieDAO {
 	}
 	
 	public void delete(ProduktKategorie p) throws DAOException {
-		try {
-			PreparedStatement ps=c.prepareStatement("DELETE FROM produkttyp WHERE id=?");
-			ps.setInt(1,p.getId());
-			ps.executeUpdate();
+		try {		
+			PreparedStatement ps = c.prepareStatement("UPDATE produkttyp SET deleted = true WHERE id=?");
+			
+			ps.setInt(1, p.getId());
+						
+			int updatedRows = ps.executeUpdate();
+			log.info("SQL updated rows: " + updatedRows);
+			
+			if(updatedRows == 0)
+				throw new DAOException("producttype id not found in DB!");	
+			
 		} catch (SQLException e) {
 			throw new DAOException("ERROR: failed to delete product category from DB!");
 		}
