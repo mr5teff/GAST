@@ -21,7 +21,7 @@ public abstract class Controller implements Initializable {
 	protected Stage getStage() {
 		if(s!=null) return s;
 		else if(root!=null) return (Stage) root.getScene().getWindow();
-		else return null;
+		else throw new NullPointerException("failed to get stage! missing root in fxml?");
 	}
 	
 	protected void setParentController(Controller c) {
