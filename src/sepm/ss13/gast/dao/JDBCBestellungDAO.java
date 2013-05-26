@@ -74,8 +74,7 @@ public class JDBCBestellungDAO implements BestellungDAO {
 			
 			ArrayList<Bestellung> al=new ArrayList<Bestellung>();
 			while(rs.next()) {
-				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getString("produktname"),rs.getInt("preis"),(Integer)rs.getObject("rechnungid"),rs.getString("status"), rs.getBoolean("deleted"), rs.getTime("bestelldatum"),rs.getLong("bestelldatumlong"),rs.getInt("bearbeitungszeit"),rs.getInt("steuer")));
-				
+				al.add(new Bestellung(rs.getInt("id"),rs.getInt("tischnummer"),rs.getInt("produktid"),rs.getString("produktname"),rs.getInt("preis"),(Integer)rs.getObject("rechnungid"),rs.getString("status"), rs.getBoolean("deleted"), rs.getTimestamp("bestelldatum"),rs.getLong("bestelldatumlong"),rs.getInt("bearbeitungszeit"),rs.getInt("steuer")));
 			}
 			return al;
 		} catch (SQLException e) {

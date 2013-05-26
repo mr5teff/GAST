@@ -319,7 +319,7 @@ public class GASTService implements Service{
 		{			
 			if(liste.get(i).getBestelldatum() != null)
 			{			
-				int bearbeitungszeit = (int) ((now.getTime() - liste.get(i).getBestelldatumLong())/1000/60);
+				int bearbeitungszeit = (int) ((now.getTime() - liste.get(i).getBestelldatum().getTime())/1000/60);
 				
 				liste.get(i).setBearbeitungszeit(bearbeitungszeit);
 				
