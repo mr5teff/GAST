@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.itextpdf.text.BaseColor;
@@ -14,28 +13,16 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Jpeg;
-import com.itextpdf.text.List;
-import com.itextpdf.text.ListItem;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Section;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import sepm.ss13.gast.dao.BestellungDAO;
 import sepm.ss13.gast.dao.DAOException;
-import sepm.ss13.gast.dao.DBConnector;
-import sepm.ss13.gast.dao.JDBCBestellungDAO;
-import sepm.ss13.gast.dao.JDBCRechnungDAO;
-import sepm.ss13.gast.dao.ProduktKategorieDAO;
-import sepm.ss13.gast.dao.RechnungDAO;
 import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.domain.Konfiguration;
-import sepm.ss13.gast.domain.Produkt;
-import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.domain.Rechnung;
-import sepm.ss13.gast.gui.GAST;
 
 public class PdfService {
 	
@@ -83,7 +70,6 @@ public class PdfService {
 		
 			try {
 				Document document = new Document();
-				//PdfWriter.getInstance(document, new FileOutputStream(FILE));
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				PdfWriter.getInstance(document,baos);
 				document.open();
@@ -99,9 +85,9 @@ public class PdfService {
 		}
 	
 		private void addMetaData(Document document) {
-			document.addTitle("created bill");
-			document.addAuthor("QSE_03");
-			document.addCreator("QSE_03");
+			document.addTitle("Rechnung "+r.getId());
+			document.addAuthor("GAST");
+			document.addCreator("GAST");
 		}
 	
 		private void addContent(Document document) throws DocumentException, DAOException, IOException {
@@ -130,10 +116,6 @@ public class PdfService {
 	
 			for (Bestellung b : bestellungen) {
 				table.addCell(b.getPname());
-				//PdfPCell c = new PdfPCell(new Phrase(b.getPreis()));
-				//System.out.println(b.getPreis());
-				//c.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				//table.addCell(c);
 				table.addCell("€ "+String.valueOf((float)b.getPreis()/100));
 			}
 			document.add(table);
@@ -141,11 +123,8 @@ public class PdfService {
 			Paragraph summe = new Paragraph();
 			addEmptyLine(summe, 2);
 			summe.setAlignment(Element.ALIGN_RIGHT);
-			//summe.add(new Paragraph("Summe brutto: " + r.getSummeBrt()));
-			//summe.add(new Paragraph("davon MWST: " + (r.getSummeBrt() - r.getSummeNet()), subFont));
-			//summe.add(new Paragraph("Summe netto: " + r.getSummeNet(), subFont));
 			summe.add(new Paragraph("Summe: € "+(float)this.calculateSum()/100));
-			summe.add(new Paragraph("MWSt: € "+this.calculateTaxSum()/100));
+			summe.add(new Paragraph("davon MWSt: € "+this.calculateTaxSum()/100));
 			document.add(summe);
 			
 			Paragraph gruss = new Paragraph();
@@ -172,7 +151,7 @@ public class PdfService {
 			}
 		}
 		
-		public int calculateSum() {
+		private int calculateSum() {
 			int summe=0;
 			for(Bestellung b:bestellungen) {
 				summe+=b.getPreis();
@@ -181,7 +160,7 @@ public class PdfService {
 			return summe;
 		}
 		
-		public float calculateTaxSum() throws IllegalArgumentException, DAOException {
+		private float calculateTaxSum() throws IllegalArgumentException, DAOException {
 			float summe=0;
 			
 			for(Bestellung b:bestellungen) {
