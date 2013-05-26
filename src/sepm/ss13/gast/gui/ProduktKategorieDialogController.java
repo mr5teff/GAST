@@ -52,7 +52,7 @@ public class ProduktKategorieDialogController extends Controller {
 				return;
 			} 
 			catch (DAOException e) {
-				Dialogs.showInformationDialog(this.getStage(), "Produktkategorie konnte nicht angelegt werden", "Speicherfehler", "Produktkategorie anlegen");
+				Dialogs.showErrorDialog(this.getStage(), "Produktkategorie konnte nicht angelegt werden.", "Speicherfehler", "Produktkategorie anlegen", e);
 			}
 		 }
 		 else {
@@ -61,13 +61,12 @@ public class ProduktKategorieDialogController extends Controller {
 			 try {
 				s.updateProduktKategorie(pk);
 			} catch (IllegalArgumentException e) {
-				
 				Dialogs.showInformationDialog(this.getStage(), "Bitte geben Sie gültige Paramter an.\n" +
 						 "Bezeichnung und Kurzbezeichnung müssen jeweils mindestens ein Zeichen beinhalten.",
 						 "Ungültige Eingabe", "Produktkategorie bearbeiten");
 				return;
 			} catch (DAOException e) {
-				Dialogs.showInformationDialog(this.getStage(), "Produktkategorie konnte nicht bearbeitet werden", "Speicherfehler", "Produktkategorie bearbeiten");
+				Dialogs.showErrorDialog(this.getStage(), "Produktkategorie konnte nicht bearbeitet werden.", "Speicherfehler", "Produktkategorie bearbeiten", e);
 			}
 		 }
 		 

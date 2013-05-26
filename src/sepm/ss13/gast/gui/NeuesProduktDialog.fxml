@@ -11,7 +11,7 @@
   <children>
     <Label layoutX="14.0" layoutY="29.0" text="Produktname" />
     <TextField fx:id="name" layoutX="14.0" layoutY="45.0" prefWidth="200.0" />
-    <Label layoutX="14.0" layoutY="89.0" text="Verkaufspreis" />
+    <Label layoutX="14.0" layoutY="89.0" text="Verkaufspreis in Centbetrag" />
     <TextField fx:id="preis" layoutX="14.0" layoutY="105.0" prefWidth="200.0" />
     <Label layoutX="14.0" layoutY="142.0" text="Rezept auswählen" />
     <ComboBox fx:id="rezeptComboBox" layoutX="14.0" layoutY="166.0" prefHeight="21.0" prefWidth="126.0">
@@ -21,7 +21,7 @@
         </FXCollections>
       </items>
     </ComboBox>
-    <Button layoutX="14.0" layoutY="255.0" mnemonicParsing="false" prefWidth="80.0" text="Speichern" onAction="#clickOnSave" />
-    <Button layoutX="163.0" layoutY="255.0" mnemonicParsing="false" prefWidth="80.0" text="Abbrechen" onAction="#clickOnAbort" />
+    <Button layoutX="14.0" layoutY="255.0" mnemonicParsing="false" onAction="#clickOnSave" prefWidth="80.0" text="Speichern" />
+    <Button layoutX="163.0" layoutY="255.0" mnemonicParsing="false" onAction="#clickOnAbort" prefWidth="80.0" text="Abbrechen" />
   </children>
 </AnchorPane>

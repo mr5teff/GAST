@@ -98,11 +98,9 @@ public class SpeisekarteController extends Controller{
 		 try {
 			 DAOkategorien = s.searchProduktKategorie(kategorieBlank);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Produktkategorieliste konnte nicht aktualisiert werden.", "Aktualisierungsfehler", "Error", e);
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Produktkategorieliste konnte nicht aktualisiert werden.", "Aktualisierungsfehler", "Error", e);
 		}
 		 
 		 //Mit allen Produktkategorien befüllen
@@ -123,11 +121,9 @@ public class SpeisekarteController extends Controller{
 		 try {
 			 DAOprodukte = s.searchProdukt(searchP);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Produktliste konnte nicht aktualisiert werden.", "Aktualisierungsfehler", "Error", e);
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Dialogs.showErrorDialog(this.getStage(), "Produktliste konnte nicht aktualisiert werden.", "Aktualisierungsfehler", "Error", e);
 		} 
 		 
 		 produktItems.clear();
@@ -175,7 +171,7 @@ public class SpeisekarteController extends Controller{
 			} catch (IllegalArgumentException ex) {
 				Dialogs.showInformationDialog(this.getStage(), "Produktkategorie konnte nicht gelöscht werden.", "Produktkategorie löschen", "Information");
 			} catch (DAOException ex) {
-				Dialogs.showInformationDialog(this.getStage(), "Produktkategorie konnte nicht gelöscht werden.", "Speicherfehler", "Information");
+				Dialogs.showErrorDialog(this.getStage(), "Produktkategorie konnte nicht gelöscht werden.", "Speicherfehler", "Error", ex);
 			} 	 
 			 
 			 refreshKategorieListView();
@@ -206,8 +202,7 @@ public class SpeisekarteController extends Controller{
 			 Dialogs.showInformationDialog(this.getStage(), "Bitte wählen Sie zunächst ein Produkt aus, welches Sie bearbeiten möchten.", "Produkt bearbeiten", "Information");
 			 return;
 		 }
-			 
-		 
+			 	 
 		 Stage stage = GUITools.openDialog("Produkt bearbeiten", this.getStage());
 		 ProduktDialogController pdc = (ProduktDialogController) GUITools.loadFXML("NeuesProduktDialog.fxml", stage, this);
 		 pdc.setPK(selectedPK);
