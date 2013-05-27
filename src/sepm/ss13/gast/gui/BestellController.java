@@ -33,7 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class BestellController extends Controller {
+public class BestellController extends RefreshableController {
 	private Service s;
 	private ObservableList<Bestellung> bestellungen;
 	private ObservableList<Integer> tischnummern;
@@ -113,6 +113,8 @@ public class BestellController extends Controller {
 				}
 				
 			});
+			
+			this.startRefresh();
 		 }
 	 
 		 @FXML
@@ -256,4 +258,9 @@ public class BestellController extends Controller {
 				Dialogs.showErrorDialog(this.getStage(), "Fehler beim öffnen der Rechnung.", "Dateizugriffsfehler", "Rechnung öffnen", e);
 			}
 		 }
+
+		@Override
+		protected void refresh() {
+			listBestellungen();
+		}
 }
