@@ -2,32 +2,45 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.LagerverwaltungController">
+<AnchorPane id="AnchorPane" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.LagerverwaltungController">
   <children>
     <Label prefHeight="21.0" prefWidth="330.0" text="Hier können Sie Ihr Lager verwalten" AnchorPane.bottomAnchor="546.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="536.0" AnchorPane.topAnchor="23.0" />
-    <AnchorPane minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="60.0">
+    <AnchorPane minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="61.0">
       <children>
-        <Button layoutX="503.0" layoutY="258.0" mnemonicParsing="false" prefWidth="160.0" text="Liste in Lager übertragen" />
-        <TableView layoutX="21.0" layoutY="39.0" prefHeight="438.0" prefWidth="404.0">
+        <Button layoutX="503.0" layoutY="296.0" mnemonicParsing="false" prefWidth="160.0" text="Liste in Lager übertragen" onAction="#clickOnListeSpeichern"/>
+        <TableView fx:id="warenTableView" layoutX="21.0" layoutY="39.0" prefHeight="438.0" prefWidth="404.0">
           <columns>
-            <TableColumn prefWidth="75.0" text="Column X" />
-            <TableColumn prefWidth="75.0" text="Column X" />
+            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="66.0" text="ID" fx:id="idCol" />
+            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="117.0" text="Bezeichnung" fx:id="bezeichnungCol" />
+            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="109.0" text="Lagerstand" fx:id="lagerstandCol" />
+            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="113.0" text="Einheit" fx:id="einheitCol" />
           </columns>
         </TableView>
         <Label layoutX="21.0" layoutY="6.0" text="Aktueller Lagerstand" />
         <Label layoutX="503.0" layoutY="14.0" text="Lagereinkauf (Einkauf):" />
-        <TableView layoutX="503.0" layoutY="39.0" prefHeight="200.0" prefWidth="200.0">
+        <TableView fx:id="einkaufTableView" layoutX="503.0" layoutY="39.0" prefHeight="242.0" prefWidth="258.0">
           <columns>
-            <TableColumn prefWidth="75.0" text="Column X" />
-            <TableColumn prefWidth="75.0" text="Column X" />
+            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="119.0" text="Bezeichnung" fx:id="bezeichnungCol2"/>
+            <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="138.0" text="Menge in Einheiten"  fx:id="mengeCol"/>
           </columns>
         </TableView>
-        <Button layoutX="503.0" layoutY="294.0" mnemonicParsing="false" prefWidth="160.0" text="Liste leeren" />
+        <Button layoutX="503.0" layoutY="336.0" mnemonicParsing="false" prefWidth="160.0" text="Liste leeren" onAction="#clickOnListeLeeren"/>
+        <Label layoutX="783.0" layoutY="17.0" text="Waren hinzufügen" />
+        <ComboBox layoutX="783.0" layoutY="62.0" prefWidth="160.0"  fx:id="warenComboBox">
+          <items>
+            <FXCollections fx:factory="observableArrayList">
+              <String fx:value="Keine Waren" />
+            </FXCollections>
+          </items>
+        </ComboBox>
+        <TextField layoutX="783.0" layoutY="104.0" prefWidth="160.0" promptText="Warenmenge" text="" fx:id="mengeTextField"/>
+        <Button layoutX="783.0" layoutY="150.0" mnemonicParsing="false" prefWidth="160.0" text="Ware zur Liste hinzufügen" onAction="#clickOnWarehinzufuegen"/>
       </children>
     </AnchorPane>
   </children>
