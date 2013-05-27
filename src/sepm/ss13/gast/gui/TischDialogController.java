@@ -67,11 +67,11 @@ public class TischDialogController extends Controller {
 		try {
 			avTN=s.availableTischnummer(t);
 		} catch (IllegalArgumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			showErrorTischSpeichern(e1);
+			return;
 		} catch (DAOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			showErrorTischSpeichern(e1);
+			return;
 		}
 		if(avTN==false && neu) {
 			Dialogs.showInformationDialog(this.getStage(), "Tischnummer wird bereits verwendet!", "Tisch erstellen/bearbeiten", "Information");
@@ -82,22 +82,22 @@ public class TischDialogController extends Controller {
 			try {
 				s.createTisch(t);
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				showErrorTischSpeichern(e);
+				return;
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				showErrorTischSpeichern(e);
+				return;
 			}
 		 }
 		 else {
 			 try {
 				s.updateTisch(t);
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				showErrorTischSpeichern(e);
+				return;
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				showErrorTischSpeichern(e);
+				return;
 			}
 		 }
 		 
@@ -110,6 +110,11 @@ public class TischDialogController extends Controller {
 		}
 	 }
 	 
+	 private void showErrorTischSpeichern(Exception e)
+	 {
+		 Dialogs.showErrorDialog(this.getStage(), "Tisch konnte nicht gespeichert werden.", "Speicherfehler", "Error", e);
+	 }
+	 
 	 @FXML
 	 public void clickOnAbort(ActionEvent event) {
 		 this.getStage().hide();
@@ -118,7 +123,6 @@ public class TischDialogController extends Controller {
 	 public void setTisch(Tisch t) {
 		 this.t=t;
 		 if(t!=null) {
-			 System.out.println(t.getArt());
 				plaetzeTF.setText(t.getPlaetze().toString());
 				if(t.getArt().contentEquals("Raucher"))
 					raucherRadio.setSelected(true);
