@@ -3,29 +3,30 @@
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.collections.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="272.0000999999975" prefWidth="320.9999000000025" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.TischDialogController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="299.0000999999975" prefWidth="320.9999000000025" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.TischDialogController">
   <children>
     <TextField id="bezeichnung" fx:id="plaetzeTF" layoutX="125.0" layoutY="61.0" prefWidth="90.0" />
-    <TextField id="kurzbezeichnung" fx:id="beschreibung" layoutX="21.0" layoutY="176.0" prefWidth="260.0" />
-    <Button layoutX="21.0" layoutY="224.0" mnemonicParsing="false" onAction="#clickOnSave" prefWidth="104.0" text="Speichern" />
-    <Button layoutX="177.0" layoutY="224.0" mnemonicParsing="false" onAction="#clickOnAbort" prefWidth="104.0" text="Abbrechen" />
+    <TextField id="kurzbezeichnung" fx:id="beschreibung" layoutX="21.0" layoutY="190.0" prefWidth="260.0" />
+    <Button layoutX="21.0" layoutY="245.0" mnemonicParsing="false" onAction="#clickOnSave" prefWidth="104.0" text="Speichern" />
+    <Button layoutX="177.0" layoutY="245.0" mnemonicParsing="false" onAction="#clickOnAbort" prefWidth="104.0" text="Abbrechen" />
     <Label layoutX="26.0" layoutY="64.0" text="Sitzplaetze:" />
-    <Label layoutX="21.0" layoutY="143.0" text="Beschreibung:" />
+    <Label layoutX="21.0" layoutY="171.0" text="Beschreibung:" />
     <Label layoutX="26.0" layoutY="104.0" text="Art:" />
-    <ComboBox id="art" fx:id="artCB" layoutX="130.0" layoutY="102.0">
-      <items>
-        <FXCollections fx:factory="observableArrayList">
-          <String fx:value="Item 1" />
-          <String fx:value="Item 2" />
-          <String fx:value="Item 3" />
-        </FXCollections>
-      </items>
-    </ComboBox>
     <TextField id="bezeichnung" fx:id="nummerTF" layoutX="125.0" layoutY="25.0" prefWidth="90.0" />
     <Label layoutX="26.0" layoutY="28.0" text="Tischnummer:" />
+    <Group id="Group" layoutX="125.0" layoutY="104.0" scaleX="1.0" scaleY="1.0">
+      <fx:define>
+        <ToggleGroup fx:id="raucherToggleGroup" />
+      </fx:define>
+      <children>
+        <RadioButton fx:id="raucherRadio" layoutX="0.0" layoutY="0.0" mnemonicParsing="false" text="Raucher" toggleGroup="$raucherToggleGroup" />
+        <RadioButton fx:id="nichtRaucherRadio" layoutX="0.0" layoutY="21.0" mnemonicParsing="false" text="Nichtraucher" toggleGroup="$raucherToggleGroup" />
+      </children>
+    </Group>
   </children>
 </AnchorPane>

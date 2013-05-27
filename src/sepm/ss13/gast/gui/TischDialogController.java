@@ -13,26 +13,30 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialogs;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 public class TischDialogController extends Controller {
 	
 	private Tisch t;
-	private ObservableList<String> art;
 	@FXML private TextField beschreibung;
-	@FXML private ComboBox<String> artCB;
 	@FXML private TextField plaetzeTF;
 	@FXML private TextField nummerTF;
+	
+	@FXML private ToggleGroup  raucherToggleGroup;	
+	@FXML private RadioButton  raucherRadio;
+	@FXML private RadioButton  nichtRaucherRadio;
+	
 	private Service s;
 	 
 	public void initialize(URL location, ResourceBundle resources) {
 		s = (Service) this.getApplicationContext().getBean("GASTService");
 		
-		art = FXCollections.observableArrayList();
-   	 	art.add("Raucher");
-   	 	art.add("Nichtraucher");
-   	 	artCB.setItems(art);
-   	 	artCB.setValue("Raucher");
+		raucherRadio.setUserData("Raucher");
+		nichtRaucherRadio.setUserData("Nichtraucher");
+		
+		raucherToggleGroup.selectToggle(raucherRadio);
    	 	
 	}
 	
@@ -55,7 +59,7 @@ public class TischDialogController extends Controller {
 		}
 		if(valid&&plaetze!=0&&nummer!=0) {
 			
-		t.setArt(artCB.getSelectionModel().getSelectedItem());
+		t.setArt(raucherToggleGroup.getSelectedToggle().getUserData().toString());
 		t.setBeschreibung(beschreibung.getText());
 		t.setPlaetze(plaetze);
 		t.setNummer(nummer);
@@ -69,7 +73,7 @@ public class TischDialogController extends Controller {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		if(avTN==false) {
+		if(avTN==false && neu) {
 			Dialogs.showInformationDialog(this.getStage(), "Tischnummer wird bereits verwendet!", "Tisch erstellen/bearbeiten", "Information");
 			t=null;
 			return;
@@ -115,7 +119,10 @@ public class TischDialogController extends Controller {
 		 this.t=t;
 		 if(t!=null) {
 				plaetzeTF.setText(t.getPlaetze().toString());
-				artCB.setValue(t.getArt());
+				if(t.getArt().contentEquals("Raucher"))
+					raucherToggleGroup.selectToggle(raucherRadio);
+				else
+					raucherToggleGroup.selectToggle(nichtRaucherRadio);
 				beschreibung.setText(t.getBeschreibung());
 				nummerTF.setText(t.getNummer().toString());
 			}
