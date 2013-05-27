@@ -20,6 +20,7 @@ public abstract class RefreshableController extends Controller {
 			{
 				public void run() 
 				{
+					getLogger().info("refreshing view...");
 					refresh();
 				}
 			}, 0, s.loadKonfiguration().getTimerIntervall()*1000);

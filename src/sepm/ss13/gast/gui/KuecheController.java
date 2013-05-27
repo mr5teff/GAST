@@ -134,8 +134,6 @@ public class KuecheController extends RefreshableController
 	@FXML
 	public void clickOnBearbeitungszeitAktualisieren() 
 	{
-		this.getLogger().info("refreshing view...");
-		
 		try 
 		{
 			s.aktualisiereBearbeitungszeit();
