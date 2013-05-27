@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 public abstract class Controller implements Initializable {
 	private Stage s;
 	private Controller pc;
-	private boolean active=true;
 	
 	@FXML protected Parent root;
 	
@@ -39,13 +38,5 @@ public abstract class Controller implements Initializable {
 	
 	protected Logger getLogger() {
 		return Logger.getLogger(this.getClass());
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 }

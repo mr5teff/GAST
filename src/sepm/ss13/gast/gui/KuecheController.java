@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Bestellung;
@@ -22,7 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class KuecheController extends Controller 
+public class KuecheController extends RefreshableController 
 {
 	private Service s;
 	
@@ -50,23 +48,7 @@ public class KuecheController extends Controller
 		bearbeitungszeitCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("bearbeitungszeit"));
 		
 		listBestellungen();
-		
-		Timer t = new Timer(true);
-		try 
-		{
-			t.schedule(new TimerTask() 
-			{
-				public void run() 
-				{
-					clickOnBearbeitungszeitAktualisieren();
-					if(!isActive()) this.cancel();
-				}
-			}, 0, s.loadKonfiguration().getTimerIntervall()*1000);
-		} 
-		catch (DAOException e) 
-		{
-			Dialogs.showErrorDialog(this.getStage(), "Konfiguration konnte nicht geladen werden.", "Ladefehler", "Konfiguration laden", e);
-		}
+		this.startRefresh();
 	}
 		
 	@FXML
@@ -173,13 +155,18 @@ public class KuecheController extends Controller
 	// Zum einfacheren Wechseln der Anzeige (aus Testgründen)
 	@FXML
 	public void clickOnManagement(ActionEvent event) {
-		this.setActive(false);
+		this.stopRefresh();
 		GUITools.loadFXML("Management.fxml",this.getStage());
 	}
 	 
 	@FXML
 	public void clickOnKassa(ActionEvent event) {
-		this.setActive(false);
+		this.stopRefresh();
 		GUITools.loadFXML("Kassa.fxml",this.getStage());
+	}
+
+	@Override
+	protected void refresh() {
+		clickOnBearbeitungszeitAktualisieren();
 	}
 }
