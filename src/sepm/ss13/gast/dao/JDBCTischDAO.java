@@ -44,7 +44,7 @@ public class JDBCTischDAO implements TischDAO {
 
 	public ArrayList<Tisch> search(Tisch t) throws DAOException {
 		try{
-			PreparedStatement ps = c.prepareStatement("SELECT id, nummer, plaetze, beschreibung, art, deleted FROM tisch WHERE (id=? OR ? IS NULL) AND (nummer=? or ?=0) AND (plaetze>=? or ?=0) AND (beschreibung LIKE ? or ? LIKE '') AND (art=? or ? like '') AND deleted=?");
+			PreparedStatement ps = c.prepareStatement("SELECT id, nummer, plaetze, beschreibung, art, deleted FROM tisch WHERE (id=? OR ? IS NULL) AND (nummer=? or ?=0) AND (plaetze>=? or ?=0) AND (beschreibung LIKE ? or ? LIKE '') AND (art=? or ? like '') AND deleted=? order by nummer");
 			ps.setObject(1, t.getId());
 			ps.setObject(2, t.getId());
 			ps.setInt(3, t.getNummer());
