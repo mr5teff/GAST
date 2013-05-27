@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 
 
 import sepm.ss13.gast.dao.DAOException;
+import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.domain.Ware;
 import sepm.ss13.gast.service.Service;
 
@@ -67,6 +68,20 @@ public class WarenController extends Controller {
 			 
 			 refreshWareListView();
 			
+			 warenListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Ware>() {	   
+				    public void changed(ObservableValue<? extends Ware> observable, Ware oldValue, Ware newValue) {
+				        // Your action here
+				    	if(newValue != null)
+				    	{
+				    		System.out.println("Selected item: " + newValue.getBezeichnung());
+				    		selectedW = newValue;
+				    	}
+				    	else
+				    	{
+				    		selectedW = null;
+				    	}
+				    }
+				 });
 		}	
 	
 
@@ -88,6 +103,18 @@ public class WarenController extends Controller {
 			 wareItems.addAll(DAOwaren);
 			 warenListView.setItems(wareItems);
 		}
+		
+		 @FXML
+		 public void clickOnWareBearbeiten(ActionEvent event) {
+			 if(selectedW == null)
+				 return;
+			 
+			 Stage stage = GUITools.openDialog("Ware bearbeiten",this.getStage());
+			 WareDialogController wdc = (WareDialogController) GUITools.loadFXML("NeueWareDialog.fxml", stage, this);
+			 
+			 wdc.setW(selectedW);
+			 stage.show();
+		 }
 		
 		 @FXML
 		 public void saveWare(ActionEvent e) {
