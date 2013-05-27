@@ -71,6 +71,7 @@ public class TischDialogController extends Controller {
 		}
 		if(avTN==false) {
 			Dialogs.showInformationDialog(this.getStage(), "Tischnummer wird bereits verwendet!", "Tisch erstellen/bearbeiten", "Information");
+			t=null;
 			return;
 		}
 		if(neu) { 

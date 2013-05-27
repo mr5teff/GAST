@@ -130,7 +130,7 @@ public class GASTService implements Service{
 
 	public void saveKonfiguration(Konfiguration k) throws DAOException, IllegalArgumentException {
 		if(k==null) throw new IllegalArgumentException();
-		if(k.getAdresse().equals("")||k.getName().equals("")||k.getTel().equals("")||k.getTischanzahl()<0) throw new IllegalArgumentException();
+		if(k.getAdresse().equals("")||k.getName().equals("")||k.getTel().equals("")) throw new IllegalArgumentException();
 		konfigurationDAO.save(k);
 	}
 

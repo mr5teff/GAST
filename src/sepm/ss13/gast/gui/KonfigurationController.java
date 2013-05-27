@@ -31,7 +31,6 @@ public class KonfigurationController extends Controller {
 	 @FXML private TextField adresse;
 	 @FXML private TextField tel;
 	 @FXML private ImageView logo;
-	 @FXML private TextField tischanzahl;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		s = (Service) this.getApplicationContext().getBean("GASTService");
@@ -50,7 +49,6 @@ public class KonfigurationController extends Controller {
 		name.setText(k.getName());
 		adresse.setText(k.getAdresse());
 		tel.setText(k.getTel());
-		tischanzahl.setText(String.valueOf(k.getTischanzahl()));
 		try {
 			if(k.getLogo()==null) {
 				logo.setImage(null);
@@ -66,15 +64,7 @@ public class KonfigurationController extends Controller {
 	 @FXML
 	 public void saveKonfiguration(ActionEvent e) {
 		
-		int anzahl=0;
-		try {
-			anzahl=Integer.parseInt(tischanzahl.getText());
-			if(anzahl<1) throw new NumberFormatException();
-		}
-		catch(NumberFormatException e1) {
-			Dialogs.showInformationDialog(this.getStage(), "Keine gültige Tischanzahl!", "Konfiguration speichern", "Information");
-			return;
-		}
+
 		if(name.getText().isEmpty()||adresse.getText().isEmpty()||tel.getText().isEmpty()){
 			Dialogs.showInformationDialog(this.getStage(), "Es wurden nicht alle Felder befüllt!", "Konfiguration speichern", "Information");
 			return;
@@ -89,7 +79,7 @@ public class KonfigurationController extends Controller {
 		 
 		 byte[] logo = baos.toByteArray();
 
-		 Konfiguration k = new Konfiguration(name.getText(),adresse.getText(),tel.getText(),logo,anzahl);
+		 Konfiguration k = new Konfiguration(name.getText(),adresse.getText(),tel.getText(),logo);
 		
 		try {
 			s.saveKonfiguration(k);

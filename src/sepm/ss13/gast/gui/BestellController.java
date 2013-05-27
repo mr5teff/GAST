@@ -11,10 +11,10 @@ import org.springframework.beans.BeansException;
 
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Bestellung;
-import sepm.ss13.gast.domain.Konfiguration;
 import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.domain.Rechnung;
+import sepm.ss13.gast.domain.Tisch;
 import sepm.ss13.gast.service.PdfService;
 import sepm.ss13.gast.service.Service;
 
@@ -63,15 +63,15 @@ public class BestellController extends Controller {
 			statusCol.setCellValueFactory(new PropertyValueFactory<Bestellung,String>("status"));
 			tischnummern = FXCollections.observableArrayList();
 			try {
-				Konfiguration k=s.loadKonfiguration();
-				for(int i=1;i<=k.getTischanzahl();i++) {
-					tischnummern.add(i);
+				ArrayList<Tisch> tische=s.searchTisch(new Tisch());
+				for(Tisch t : tische) {
+					tischnummern.add(t.getNummer());
 				}
 			} catch (DAOException e1) {
-				Dialogs.showErrorDialog(this.getStage(), "Konfiguration konnte nicht geladen werden.", "Ladefehler", "Konfiguration laden", e1);
+				Dialogs.showErrorDialog(this.getStage(), "Tische konnten nicht geladen werden.", "Ladefehler", "Tische laden", e1);
 			}
 			tisch.setItems(tischnummern);
-			tisch.setValue(1);
+			tisch.setValue(tischnummern.get(0));
 			listBestellungen();
 			tisch.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Integer>() {
 				public void changed(ObservableValue<? extends Integer> arg0,Integer arg1, Integer arg2) {

@@ -5,7 +5,6 @@ public class Konfiguration {
 	private String adresse;
 	private String tel;
 	private byte[] logo;
-	private int tischanzahl;
 	
 	
 	/**
@@ -13,15 +12,14 @@ public class Konfiguration {
 	 */
 	public Konfiguration()
 	{
-		this("", "", "", new byte[1], 0);
+		this("", "", "", new byte[1]);
 	}
 	
-	public Konfiguration(String name, String adresse, String tel, byte[] logo, int tischanzahl) {
+	public Konfiguration(String name, String adresse, String tel, byte[] logo) {
 		this.setName(name);
 		this.setAdresse(adresse);
 		this.setTel(tel);
 		this.setLogo(logo);
-		this.setTischanzahl(tischanzahl);
 	}
 
 	public String getName() {
@@ -55,15 +53,6 @@ public class Konfiguration {
 	public void setLogo(byte[] logo) {
 		this.logo = logo;
 	}
-
-	public int getTischanzahl() {
-		return tischanzahl;
-	}
-
-	public void setTischanzahl(int tischanzahl) {
-		this.tischanzahl = tischanzahl;
-	}
-	
 	
 
 }
