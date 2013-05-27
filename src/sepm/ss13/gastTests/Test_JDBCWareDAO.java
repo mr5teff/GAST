@@ -163,7 +163,7 @@ public class Test_JDBCWareDAO {
 	
 	@Test
 	public void testSearch_1() throws DAOException {
-		Ware toSearch = new Ware(w3.getId(), w3.getBezeichnung(), w3.getEinheit(), w3.getLagerstand());
+		Ware toSearch = new Ware(w3.getId(), null, null, 0);
 		ArrayList<Ware> t_test = test.search(toSearch);
 		
 		for (Ware w : t_test) {
@@ -178,6 +178,7 @@ public class Test_JDBCWareDAO {
 	public void testSearch_2() throws DAOException {
 		Ware toSearch = new Ware(-1, w4.getBezeichnung(), w4.getEinheit(), w4.getLagerstand());
 		ArrayList<Ware> t_test = test.search(toSearch);
+		
 		assertTrue(t_test.size() == 0);
 		
 		toSearch = new Ware(w4.getId(), w4.getBezeichnung(), w4.getEinheit(), w4.getLagerstand());
@@ -193,25 +194,21 @@ public class Test_JDBCWareDAO {
 	
 	@Test
 	public void testUpdate_1() throws DAOException {
-		
+
 		w5 = test.create(w5);
 		mykeys_generated.add(w5.getId());
 		
 		Ware toUpdate = new Ware(w5.getId(), "Fanta", "milliliter", 60);
 		
 		test.update(toUpdate);
-		ArrayList<Ware> shouldBeUpdated = test.search(w5);
+		ArrayList<Ware> shouldBeUpdated = test.search(toUpdate);
 		
 		for (Ware w : shouldBeUpdated) {
-			assertTrue(w.getId() == w5.getId());
-			
-			assertFalse(w.getBezeichnung().equals(w5.getBezeichnung()));
-			assertFalse(w.getEinheit().equals(w5.getEinheit()));
-			assertFalse(w.getLagerstand() == (w5.getLagerstand()));
-			
-			assertTrue(w.getBezeichnung().equals(w5.getBezeichnung()));
-			assertTrue(w.getEinheit().equals(w5.getEinheit()));
-			assertTrue(w.getLagerstand() == (w5.getLagerstand()));
+			assertThat(w.getId(), equalTo(w5.getId()));
+			assertThat(w.getId(), equalTo(toUpdate.getId()));
+			assertThat(w.getBezeichnung(), equalTo(toUpdate.getBezeichnung()));
+			assertThat(w.getEinheit(), equalTo(toUpdate.getEinheit()));
+			assertThat(w.getLagerstand(), equalTo(toUpdate.getLagerstand()));
 		}
 	}
 	

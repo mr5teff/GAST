@@ -169,7 +169,7 @@ public class Test_JDBCTischDAO {
 
 	@Test
 	public void testSearch_1() throws DAOException {
-		Tisch toSearch = new Tisch(t3.getId(), t3.getNummer(), t3.getPlaetze(), t3.getBeschreibung(), t3.getArt(), t3.getDeleted());
+		Tisch toSearch = new Tisch(t3.getId(), 0, 0, null, null, false);
 		ArrayList<Tisch> t_test = test.search(toSearch);
 		
 		for (Tisch t : t_test) {
@@ -186,9 +186,10 @@ public class Test_JDBCTischDAO {
 	public void testSearch_2() throws DAOException {
 		Tisch toSearch = new Tisch(-1, t4.getNummer(), t4.getPlaetze(), t4.getBeschreibung(), t4.getArt(), t4.getDeleted());
 		ArrayList<Tisch> t_test = test.search(toSearch);
+		
 		assertTrue(t_test.size() == 0);
 		
-		toSearch = new Tisch(t4.getId(), 666, 33, "bla", "Nichtraucher", !t4.getDeleted());
+		toSearch = new Tisch(t4.getId(), 0, 0, null, null, false);
 		t_test = test.search(toSearch);
 		
 		for (Tisch t : t_test) {

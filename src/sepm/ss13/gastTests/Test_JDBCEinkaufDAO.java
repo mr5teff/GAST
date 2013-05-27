@@ -67,21 +67,25 @@ public class Test_JDBCEinkaufDAO {
 		test_Einkauf = new JDBCEinkaufDAO(dbc.getConnection());
 		test_Ware = new JDBCWareDAO(dbc.getConnection());
 		
+		// create
 		w1 = new Ware(-1, "Blutwurst", "gramm", 10000);
 		w2 = new Ware(-1, "Weißbier", "milliliter", 50000);
 		e1 = new Einkauf(-1, -1, 30000, new Date(0), 30);
 		e2 = new Einkauf(-1, -1, 60000, new Date(0), 40);
 
+		// search
 		w3 = new Ware(-1, "Blutwurst", "gramm", 10000);
 		w4 = new Ware(-1, "Weißbier", "milliliter", 50000);
 		e3 = new Einkauf(-1, -1, 30000, new Date(0), 30);
 		e4 = new Einkauf(-1, -1, 60000, new Date(0), 40);
 
+		// update
 		w5 = new Ware(-1, "Blutwurst", "gramm", 10000);
 		w6 = new Ware(-1, "Weißbier", "milliliter", 50000);
 		e5 = new Einkauf(-1, -1, 30000, new Date(0), 30);
 		e6 = new Einkauf(-1, -1, 60000, new Date(0), 40);
 
+		// delete
 		w7 = new Ware(-1, "Blutwurst", "gramm", 10000);
 		w8 = new Ware(-1, "Weißbier", "milliliter", 50000);
 		e7 = new Einkauf(-1, -1, 30000, new Date(0), 30);
@@ -207,7 +211,7 @@ public class Test_JDBCEinkaufDAO {
 	public void testCreate_2() throws DAOException {
 		Ware w_test = test_Ware.create(w2);
 		mykeys_generated_Ware.add(w_test.getId());
-		e1.setWarenId(w_test.getId());
+		e2.setWarenId(w_test.getId());
 		Einkauf e_test = test_Einkauf.create(e2);
 		mykeys_generated_Einkauf.add(e_test.getId());
 		
@@ -229,7 +233,6 @@ public class Test_JDBCEinkaufDAO {
 				return;
 			}
 			
-			
 		} catch (SQLException e) {
 			fail("ERROR: failed to search DB for Einkauf");
 			return;
@@ -240,32 +243,114 @@ public class Test_JDBCEinkaufDAO {
 	}
 	
 	@Test
-	public void testSearch_1() {
-		fail("Not yet implemented");
+	public void testSearch_1() throws DAOException {
+		Einkauf toSearch = new Einkauf(e3.getId(), e3.getWarenId(), 0, null, 0);
+		ArrayList<Einkauf> e_test = test_Einkauf.search(toSearch);
+				
+		for (Einkauf e : e_test) {
+			assertThat(e.getId(), equalTo(e3.getId()));
+			assertThat(e.getWarenId(), equalTo(e3.getWarenId()));
+			assertThat(e.getMenge(), equalTo(e3.getMenge()));
+			assertThat(e.getDatum().toString() ,equalTo(e3.getDatum().toString()));
+			assertThat(e.getPreis(), equalTo(e3.getPreis()));
+		}
 	}
 	
 	@Test
-	public void testSearch_2(){
-		fail("Not yet implemented");
+	public void testSearch_2() throws DAOException{
+		Einkauf toSearch = new Einkauf(-1, e4.getWarenId(), e4.getMenge(), e4.getDatum(), e4.getPreis());
+		ArrayList<Einkauf> e_test = test_Einkauf.search(toSearch);
+		
+		assertTrue(e_test.size() == 0);
+		
+		toSearch = new Einkauf(e4.getId(), e4.getWarenId(), 0, null, 0);
+		e_test = test_Einkauf.search(toSearch);
+				
+		for (Einkauf e : e_test) {
+			assertThat(e.getId(), equalTo(e4.getId()));
+			assertThat(e.getWarenId(), equalTo(e4.getWarenId()));
+			assertThat(e.getMenge(), equalTo(e4.getMenge()));
+			assertThat(e.getDatum().toString() ,equalTo(e4.getDatum().toString()));
+			assertThat(e.getPreis(), equalTo(e4.getPreis()));
+		}
 	}
 	
 	@Test
-	public void testUpdate_1(){
-		fail("Not yet implemented");
+	public void testUpdate_1() throws DAOException{
+
+		w5 = test_Ware.create(w5);
+		mykeys_generated_Ware.add(w5.getId());
+		e5 = test_Einkauf.create(e5);
+		e5.setWarenId(w5.getId());
+		mykeys_generated_Einkauf.add(e5.getId());
+		
+		Einkauf toUpdate = new Einkauf(e5.getId(), -1, -1, new Date(0), -1);
+		
+		test_Einkauf.update(toUpdate);
+		ArrayList<Einkauf> shouldBeUpdated = test_Einkauf.search(e5);
+		
+		for (Einkauf e : shouldBeUpdated) {
+			assertThat(e.getId(), equalTo(toUpdate.getId()));
+			assertThat(e.getWarenId(), equalTo(toUpdate.getWarenId()));
+			assertThat(e.getMenge(), equalTo(toUpdate.getMenge()));
+			assertThat(e.getDatum().toString() ,equalTo(toUpdate.getDatum().toString()));
+			assertThat(e.getPreis(), equalTo(toUpdate.getPreis()));
+		}
 	}
 	
 	@Test
-	public void testUpdate_2(){
-		fail("Not yet implemented");
+	public void testUpdate_2() throws DAOException{
+
+		w6 = test_Ware.create(w6);
+		mykeys_generated_Ware.add(w6.getId());
+		e6.setWarenId(w6.getId());
+		e6 = test_Einkauf.create(e6);
+		mykeys_generated_Einkauf.add(e6.getId());
+		
+		e6.setPreis(666);
+		e6.setMenge(7000);
+		
+		test_Einkauf.update(e6);
+		ArrayList<Einkauf> shouldBeUpdated = test_Einkauf.search(e6);
+		
+		for (Einkauf e : shouldBeUpdated) {
+			assertThat(e.getId(), equalTo(e6.getId()));
+			assertThat(e.getWarenId(), equalTo(e6.getWarenId()));
+			assertThat(e.getMenge(), equalTo(e6.getMenge()));
+			assertThat(e.getDatum().toString() ,equalTo(e6.getDatum().toString()));
+			assertThat(e.getPreis(), equalTo(e6.getPreis()));
+		}
 	}
 	
 	@Test
-	public void testDelete_1(){
-		fail("Not yet implemented"); 
+	public void testDelete_1() throws DAOException{
+		
+		w7 = test_Ware.create(w7);
+		mykeys_generated_Ware.add(w7.getId());
+		e7.setWarenId(w7.getId());
+		e7 = test_Einkauf.create(e7);
+		mykeys_generated_Einkauf.add(e7.getId());
+		
+		ArrayList<Einkauf> e_test = test_Einkauf.search(e7);
+		assertTrue(e_test.size() != 0);
+		test_Einkauf.delete(e7);
+		e_test = test_Einkauf.search(e7);
+		assertThat(e_test.size(), equalTo(0));
 	}
 	
 	@Test
-	public void testDelete_2(){
-		fail("Not yet implemented");
+	public void testDelete_2() throws DAOException{
+		
+		w8 = test_Ware.create(w8);
+		mykeys_generated_Ware.add(w8.getId());
+		e8.setWarenId(w8.getId());
+		e8 = test_Einkauf.create(e8);
+		mykeys_generated_Einkauf.add(e8.getId());
+		
+		ArrayList<Einkauf> e_test = test_Einkauf.search(e8);
+		assertTrue(e_test.size() != 0);
+		test_Einkauf.delete(new Einkauf(e8.getId(), 0, 0, null, 0));
+		e_test = test_Einkauf.search(e8);
+		assertThat(e_test.size(), equalTo(0));
 	}
 }
