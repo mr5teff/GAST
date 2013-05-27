@@ -60,7 +60,6 @@ public class Test_JDBCTischDAO {
 		t7 = new Tisch(-1, 33, 5, "Mitte", "Nichtraucher", false);
 		t8 = new Tisch(2, 44, 5, "Neben Stammtisch", "Raucher", false);
 		
-		
 		Tisch t_temp = null;
 		t_temp = test.create(t3);
 		t3.setId(t_temp.getId());
@@ -125,7 +124,7 @@ public class Test_JDBCTischDAO {
 				assertThat(rs.getBoolean("deleted") , equalTo(t_test.getDeleted()));
 				return;
 			} else {
-				fail("No Data found");
+				fail("No data found");
 				return;
 			}
 		} catch (SQLException e) {
@@ -156,7 +155,7 @@ public class Test_JDBCTischDAO {
 				assertThat(rs.getBoolean("deleted") , equalTo(t_test.getDeleted()));
 				return;
 			} else {
-				fail("No Data found");
+				fail("No data found");
 				return;
 			}
 		} catch (SQLException e) {
@@ -185,8 +184,13 @@ public class Test_JDBCTischDAO {
 
 	@Test
 	public void testSearch_2() throws DAOException {
-		Tisch toSearch = new Tisch(t4.getId(), t4.getNummer(), t4.getPlaetze(), t4.getBeschreibung(), t4.getArt(), t4.getDeleted());
+		Tisch toSearch = new Tisch(-1, t4.getNummer(), t4.getPlaetze(), t4.getBeschreibung(), t4.getArt(), t4.getDeleted());
 		ArrayList<Tisch> t_test = test.search(toSearch);
+		
+		assertTrue(t_test.size() == 0);
+		
+		toSearch = new Tisch(t4.getId(), 666, 33, "bla", "Nichtraucher", !t4.getDeleted());
+		t_test = test.search(toSearch);
 		
 		for (Tisch t : t_test) {
 			assertThat(t.getId(), equalTo(t4.getId()));
