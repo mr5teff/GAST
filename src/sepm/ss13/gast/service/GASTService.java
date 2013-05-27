@@ -212,6 +212,7 @@ public class GASTService implements Service{
 		r=rechnungDAO.create(r);
 		
 		for(Bestellung b:al) {
+			if(b==null) throw new IllegalArgumentException();
 			b.setRechnung(r.getId());
 			bestellungDAO.update(b);
 		}

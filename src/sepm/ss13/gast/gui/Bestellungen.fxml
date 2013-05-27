@@ -45,7 +45,7 @@
             </TableView>
             <CheckBox fx:id="alleBestellungen" layoutX="14.0" layoutY="418.0" mnemonicParsing="false" onAction="#listBestellungen" text="Alle Bestellungen anzeigen" />
             <Button layoutX="14.0" layoutY="458.0" mnemonicParsing="false" onAction="#storniereBestellung" text="Stornieren" />
-            <Button layoutX="115.0" layoutY="458.0" mnemonicParsing="false" onAction="#clickOnDruckeRechnung" text="Rechnung drucken" />
+            <Button layoutX="115.0" layoutY="458.0" mnemonicParsing="false" onAction="#clickOnDruckeRechnung" text="Rechnung erstellen" />
             <Button layoutX="251.0" layoutY="458.0" mnemonicParsing="false" onAction="#moveToTable" text="auf anderen Tisch verschieben:" />
             <ComboBox fx:id="zielTisch" layoutX="444.0" layoutY="459.0" minHeight="20.0" prefWidth="65.0">
               <items>

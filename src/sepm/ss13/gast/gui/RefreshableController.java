@@ -3,7 +3,6 @@ package sepm.ss13.gast.gui;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javafx.scene.control.Dialogs;
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.service.Service;
 
@@ -27,7 +26,7 @@ public abstract class RefreshableController extends Controller {
 		} 
 		catch (DAOException e) 
 		{
-			Dialogs.showErrorDialog(this.getStage(), "Konfiguration konnte nicht geladen werden.", "Ladefehler", "Konfiguration laden", e);
+			getLogger().error("DB Error during refresh!", e);
 		}
 	}
 	

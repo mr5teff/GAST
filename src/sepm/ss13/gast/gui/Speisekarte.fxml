@@ -12,10 +12,30 @@
     <AnchorPane prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
       <children>
         <Label layoutX="14.0" layoutY="6.0" text="Produktkategorien" />
-        <ListView fx:id="kategorieListView" layoutX="13.0" layoutY="33.0" prefHeight="450.0" prefWidth="240.0" />
+        <ListView fx:id="kategorieListView" layoutX="13.0" layoutY="33.0" prefHeight="450.0" prefWidth="240.0">
+          <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#clickOnNeueKategorie" text="Neue Kategorie" />
+                <MenuItem mnemonicParsing="false" onAction="#clickOnKategorieBearbeiten" text="Bearbeiten" />
+                <MenuItem mnemonicParsing="false" onAction="#clickOnKategorieLoeschen" text="Löschen" />
+              </items>
+            </ContextMenu>
+          </contextMenu>
+        </ListView>
         <Button layoutX="270.0" layoutY="48.0" mnemonicParsing="false" onAction="#clickOnNeueKategorie" prefWidth="135.0" text="Neue Kategorie" />
         <Label layoutX="454.0" layoutY="3.0" text="Produkte der gewählten Kategorie" />
-        <ListView fx:id="produktListView" layoutX="454.0" layoutY="33.0" prefHeight="450.0" prefWidth="240.0" />
+        <ListView fx:id="produktListView" layoutX="454.0" layoutY="33.0" prefHeight="450.0" prefWidth="240.0">
+          <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" text="Neues Produkt" onAction="#clickOnNeuesProdukt"/>
+                <MenuItem mnemonicParsing="false" text="Bearbeiten" onAction="#clickOnProduktBearbeiten" />
+                <MenuItem mnemonicParsing="false" text="Löschen"  onAction="#clickOnProduktLoeschen"/>
+              </items>
+            </ContextMenu>
+          </contextMenu>
+        </ListView>
         <Button layoutX="709.0" layoutY="48.0" mnemonicParsing="false" onAction="#clickOnNeuesProdukt" prefWidth="135.0" text="Neues Produkt" />
         <Button layoutX="709.0" layoutY="84.0" mnemonicParsing="false" onAction="#clickOnProduktBearbeiten" prefWidth="135.0" text="Produkt bearbeiten" />
         <Button layoutX="709.0" layoutY="117.0" mnemonicParsing="false" onAction="#clickOnProduktLoeschen" prefWidth="135.0" text="Produkt löschen" />
