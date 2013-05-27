@@ -102,6 +102,7 @@ public class KuecheController extends RefreshableController
 				Dialogs.showErrorDialog(this.getStage(), "Status konnte nicht geändert werden.", "Speicherfehler", "Status ändern", e);
 			}
 			
+			kuecheBestellungTableView.getSelectionModel().clearSelection();
 			listBestellungen();
 		}			
 	}	
@@ -127,6 +128,7 @@ public class KuecheController extends RefreshableController
 				Dialogs.showErrorDialog(this.getStage(), "Status konnte nicht geändert werden.", "Speicherfehler", "Status ändern", e);
 			}
 			
+			kuecheBestellungTableView.getSelectionModel().clearSelection();
 			listBestellungen();
 		}	
 	}	

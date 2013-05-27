@@ -162,6 +162,8 @@ public class BestellController extends RefreshableController {
 			} catch (DAOException e) {
 				Dialogs.showErrorDialog(this.getStage(), "Bestellungen konnten nicht storniert werden.", "Speicherfehler", "Bestellungen stornieren", e);
 			}
+			 
+			bestellungTableView.getSelectionModel().clearSelection();
 			listBestellungen();
 		}
 		
@@ -224,6 +226,8 @@ public class BestellController extends RefreshableController {
 			} catch (DAOException e) {
 				Dialogs.showErrorDialog(this.getStage(), "Bestellung konnte nicht verschocben werden.", "Speicherfehler", "Bestellung verschieben", e);
 			}
+			 
+			bestellungTableView.getSelectionModel().clearSelection();
 			listBestellungen();
 		 }
 		 
@@ -246,6 +250,7 @@ public class BestellController extends RefreshableController {
 				Dialogs.showErrorDialog(this.getStage(), "Rechnung konnte nicht erstellt werden.", "Speicherfehler", "Rechnung erstellen", e);
 			}
 			
+			bestellungTableView.getSelectionModel().clearSelection();
 			listBestellungen();
 			 
 			try {
