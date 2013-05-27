@@ -102,8 +102,10 @@ public class LagerverwaltungController extends Controller {
 				warenListe = s.searchWare(searchWare);		
 			} catch (IllegalArgumentException e) {
 				Dialogs.showErrorDialog(this.getStage(), "Warenliste konnte nicht geladen werden.", "Ladefehler", "Error", e);
+				return;
 			} catch (DAOException e) {
 				Dialogs.showErrorDialog(this.getStage(), "Warenliste konnte nicht geladen werden.", "Ladefehler", "Error", e);
+				return;
 			}
 			waren.clear();
 			waren.addAll(warenListe);
@@ -126,22 +128,18 @@ public class LagerverwaltungController extends Controller {
 			try {
 				neu = s.searchWare(w).get(0);
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Ware konnte nicht gefunden werden.", "Ladefehler", "Error", e);
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Ware konnte nicht gefunden werden.", "Ladefehler", "Error", e);
 			}
 			neu.setLagerstand(neu.getLagerstand() + w.getLagerstand());
 			
 			try {
 				s.updateWare(neu);
 			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Ware konnte nicht gespeichert werden.", "Speicherfehler", "Error", e);
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showErrorDialog(this.getStage(), "Ware konnte nicht gespeichert werden.", "Speicherfehler", "Error", e);
 			}
 			
 		}
