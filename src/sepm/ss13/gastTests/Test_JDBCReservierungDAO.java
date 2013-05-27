@@ -188,7 +188,6 @@ public class Test_JDBCReservierungDAO {
 	public void testSearch_2() throws DAOException {
 		Reservierung toSearch = new Reservierung(-1, r4.getDatum(), r4.getDauer(), r4.getPersonen(), r4.getTischnummer(), r4.getName(), r4.getTelefonnummer());
 		ArrayList<Reservierung> r_test = test.search(toSearch);
-		
 		assertTrue(r_test.size() == 0);
 		
 		toSearch = new Reservierung(r4.getId(), new Date(0),10, 20, 5, "Mustermaxal", "0664 987654321");

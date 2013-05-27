@@ -178,7 +178,6 @@ public class Test_JDBCWareDAO {
 	public void testSearch_2() throws DAOException {
 		Ware toSearch = new Ware(-1, w4.getBezeichnung(), w4.getEinheit(), w4.getLagerstand());
 		ArrayList<Ware> t_test = test.search(toSearch);
-		
 		assertTrue(t_test.size() == 0);
 		
 		toSearch = new Ware(w4.getId(), w4.getBezeichnung(), w4.getEinheit(), w4.getLagerstand());

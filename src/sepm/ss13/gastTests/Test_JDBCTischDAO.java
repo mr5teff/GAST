@@ -186,7 +186,6 @@ public class Test_JDBCTischDAO {
 	public void testSearch_2() throws DAOException {
 		Tisch toSearch = new Tisch(-1, t4.getNummer(), t4.getPlaetze(), t4.getBeschreibung(), t4.getArt(), t4.getDeleted());
 		ArrayList<Tisch> t_test = test.search(toSearch);
-		
 		assertTrue(t_test.size() == 0);
 		
 		toSearch = new Tisch(t4.getId(), 666, 33, "bla", "Nichtraucher", !t4.getDeleted());

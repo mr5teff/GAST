@@ -223,7 +223,6 @@ public class Test_JDBCEinkaufDAO {
 				assertThat(rs.getInt("menge"), equalTo(e2.getMenge()));
 				assertThat(rs.getDate("datum").toString(), equalTo(e2.getDatum().toString()));
 				assertThat(rs.getInt("preis"), equalTo(e2.getPreis()));
-				
 				return;
 			} else {
 				fail("No data found");
