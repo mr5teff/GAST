@@ -7,11 +7,9 @@ import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Tisch;
 import sepm.ss13.gast.service.Service;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialogs;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -20,6 +18,7 @@ import javafx.scene.control.ToggleGroup;
 public class TischDialogController extends Controller {
 	
 	private Tisch t;
+	private Boolean neu;
 	@FXML private TextField beschreibung;
 	@FXML private TextField plaetzeTF;
 	@FXML private TextField nummerTF;
@@ -37,12 +36,12 @@ public class TischDialogController extends Controller {
 		nichtRaucherRadio.setUserData("Nichtraucher");
 		
 		raucherRadio.setSelected(true);
-	
+		neu=false;
 	}
 	
 	 @FXML
 	 public void clickOnSave(ActionEvent event) {
-		Boolean neu=false;
+
 		if(t == null) {
 			neu=true;
 			t = new Tisch();
@@ -57,7 +56,7 @@ public class TischDialogController extends Controller {
 		catch(NumberFormatException e) {
 			valid=false;
 		}
-		if(valid&&plaetze!=0&&nummer!=0) {
+		if(valid&&plaetze!=0&&nummer!=0&&plaetze>0&&nummer>0) {
 			
 		t.setArt(raucherToggleGroup.getSelectedToggle().getUserData().toString());
 		t.setBeschreibung(beschreibung.getText());
@@ -107,6 +106,7 @@ public class TischDialogController extends Controller {
 		}
 		else {
 			Dialogs.showInformationDialog(this.getStage(), "Keinen gültigen Wert für Tischnummer oder Sitzplatzanzahl gewaehlt!", "Tisch erstellen/bearbeiten", "Information");
+
 		}
 	 }
 	 
