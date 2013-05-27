@@ -25,12 +25,14 @@ import javafx.stage.FileChooser;
 
 public class KonfigurationController extends Controller {
 	private Service s;
+	private Konfiguration k;
 	private BufferedImage image;
 	 
 	 @FXML private TextField name;
 	 @FXML private TextField adresse;
 	 @FXML private TextField tel;
 	 @FXML private ImageView logo;
+	 @FXML private TextField timerIntervalTF;
 
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		s = (Service) this.getApplicationContext().getBean("GASTService");
@@ -38,7 +40,7 @@ public class KonfigurationController extends Controller {
 	}
 		
 	private void loadKonfiguration()  {
-		Konfiguration k = null;
+		k = null;
 		try {
 			k = s.loadKonfiguration();
 		} catch (DAOException e) {
@@ -49,6 +51,7 @@ public class KonfigurationController extends Controller {
 		name.setText(k.getName());
 		adresse.setText(k.getAdresse());
 		tel.setText(k.getTel());
+		timerIntervalTF.setText(String.valueOf(k.getTimerIntervall()));
 		try {
 			if(k.getLogo()==null) {
 				logo.setImage(null);
@@ -79,7 +82,7 @@ public class KonfigurationController extends Controller {
 		 
 		 byte[] logo = baos.toByteArray();
 
-		 Konfiguration k = new Konfiguration(name.getText(),adresse.getText(),tel.getText(),logo);
+		k = new Konfiguration(name.getText(),adresse.getText(),tel.getText(),logo,30);
 		
 		try {
 			s.saveKonfiguration(k);
@@ -117,6 +120,37 @@ public class KonfigurationController extends Controller {
         		Dialogs.showErrorDialog(this.getStage(), "Logo konnte nicht geladen werden.", "Dateizugriffsfehler", "Logo auswählen", e1);
         	}
         }
-        
-	 }
+      
+     
+   	 }	   
+
+	@FXML
+	public void saveTimerInterval(ActionEvent e) 
+	{
+		int timerInterval = 0;
+
+		try 
+		{
+			timerInterval = Integer.parseInt(timerIntervalTF.getText());
+		}
+		catch(NumberFormatException e2) 
+		{
+			Dialogs.showErrorDialog(this.getStage(), "Aktualisierungsintervall konnte nicht geändert werden.", "Eingabefehler", "Aktualisierungsintervall ändern", e2);
+		}
+		
+		k.setTimerIntervall(timerInterval);
+		
+		try 
+		{
+			s.saveKonfiguration(k);
+		} 
+		catch (IllegalArgumentException e1) 
+		{
+			Dialogs.showErrorDialog(this.getStage(), "Konfiguration konnte nicht gespeichert werden.", "Speicherfehler", "Konfiguration speichern", e1);
+		} 
+		catch (DAOException e1) 
+		{
+			Dialogs.showErrorDialog(this.getStage(), "Konfiguration konnte nicht gespeichert werden.", "Speicherfehler", "Konfiguration speichern", e1);
+		}
+	}	 
 }

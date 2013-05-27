@@ -7,8 +7,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.KonfigurationController">
+<AnchorPane id="AnchorPane" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.KonfigurationController">
   <children>
     <Label prefHeight="21.0" prefWidth="330.0" text="Hier können Sie Ihr Betriebsinformationen verwalten" AnchorPane.bottomAnchor="546.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="536.0" AnchorPane.topAnchor="23.0" />
     <AnchorPane prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
@@ -48,6 +49,32 @@
         </FlowPane>
         <Button layoutX="474.0" layoutY="236.0" mnemonicParsing="false" onAction="#chooseLogo" text="Logo auswählen" />
         <ImageView id="" fx:id="logo" fitHeight="150.0" fitWidth="200.0" focusTraversable="false" layoutX="474.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
+        <FlowPane layoutX="21.0" layoutY="298.0" prefHeight="213.0" prefWidth="349.0">
+          <children>
+            <GridPane prefWidth="241.0">
+              <children>
+                <Label text="Küche" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                  <font>
+                    <Font size="14.0" />
+                  </font>
+                </Label>
+                <Label text="Aktualisierungsintervall Timer" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="timerIntervalTF" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="38.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Label text="sec" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                <Button contentDisplay="LEFT" mnemonicParsing="false" onAction="#saveTimerInterval" text="Speichern" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+              </children>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="155.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="99.0" minWidth="10.0" prefWidth="28.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+          </children>
+        </FlowPane>
       </children>
     </AnchorPane>
   </children>

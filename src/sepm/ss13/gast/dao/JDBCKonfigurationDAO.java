@@ -19,13 +19,13 @@ public class JDBCKonfigurationDAO implements KonfigurationDAO {
 	
 	public Konfiguration load() throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("SELECT name,adresse,tel,logo FROM konfiguration");
+			PreparedStatement ps=c.prepareStatement("SELECT name,adresse,tel,logo,timerintervall FROM konfiguration");
 			
 			Konfiguration k = null;
 			
 			ResultSet rs=ps.executeQuery();
 			while(rs.next()) {
-				k = new Konfiguration(rs.getString("name"), rs.getString("adresse"), rs.getString("tel"), rs.getBytes("logo"));
+				k = new Konfiguration(rs.getString("name"), rs.getString("adresse"), rs.getString("tel"), rs.getBytes("logo"), rs.getInt("timerintervall"));
 			}
 			
 			return k;
@@ -36,11 +36,12 @@ public class JDBCKonfigurationDAO implements KonfigurationDAO {
 	
 	public void save(Konfiguration k) throws DAOException {
 		try {
-			PreparedStatement ps=c.prepareStatement("UPDATE konfiguration SET name=?,adresse=?,tel=?,logo=?");
+			PreparedStatement ps=c.prepareStatement("UPDATE konfiguration SET name=?,adresse=?,tel=?,logo=?,timerIntervall=?");
 			ps.setString(1,k.getName());
 			ps.setString(2,k.getAdresse());
 			ps.setString(3,k.getTel());
 			ps.setBytes(4,k.getLogo());
+			ps.setInt(5,k.getTimerIntervall());
 			
 			ps.executeUpdate();
 		} catch (SQLException e) {
