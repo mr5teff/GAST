@@ -208,7 +208,7 @@ public class Test_JDBCTischDAO {
 		t5 = test.create(t5);
 		mykeys_generated.add(t5.getId());
 		
-		Tisch toUpdate = new Tisch(t5.getId(), 666, 11, "Superplatz" , "Nichtraucher", !t5.getDeleted());
+		Tisch toUpdate = new Tisch(t5.getId(), 666, 11, "Superplatzerl" , "Nichtraucher", !t5.getDeleted());
 		
 		test.update(toUpdate);
 		ArrayList<Tisch> shouldBeUpdated = test.search(t5);

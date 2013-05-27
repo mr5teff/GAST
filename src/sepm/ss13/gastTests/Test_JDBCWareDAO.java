@@ -73,11 +73,11 @@ public class Test_JDBCWareDAO {
 	public static void tearDownAfterClass() throws Exception {
 		for(int i = 0; i < mykeys.size();i++){
 			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM tisch WHERE id=?");
+				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM ware WHERE id=?");
 				ps.setInt(1,mykeys.get(i));
 				ps.executeUpdate();
 			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete tisch from DB!");
+				throw new DAOException("ERROR: failed to delete Ware from DB!");
 			}
 			catch (NullPointerException e) {
 				throw new IllegalArgumentException();
@@ -93,11 +93,11 @@ public class Test_JDBCWareDAO {
 	public void tearDown() throws Exception {
 		for(int i = 0; i < mykeys_generated.size();i++){
 			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM tisch WHERE id=?");
+				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM ware WHERE id=?");
 				ps.setInt(1,mykeys_generated.get(i));
 				ps.executeUpdate();
 			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete tisch category from DB!");
+				throw new DAOException("ERROR: failed to delete Ware from DB!");
 			}
 			catch (NullPointerException e) {
 				throw new IllegalArgumentException();
