@@ -171,6 +171,15 @@ public class Test_JDBCTischDAO {
 	public void testSearch_1() throws DAOException {
 		Tisch toSearch = new Tisch(t3.getId(), 0, 0, null, null, false);
 		ArrayList<Tisch> t_test = test.search(toSearch);
+		assertThat(t_test.size(), equalTo(0));
+		
+		toSearch = t3;
+		t_test = test.search(toSearch);
+		assertTrue(t_test.size() > 0);
+		
+		toSearch = new Tisch(t3.getId(), t3.getNummer(), t3.getPlaetze(), t3.getBeschreibung(), t3.getArt(), t3.getDeleted());
+		t_test = test.search(toSearch);
+		assertTrue(t_test.size() > 0);
 		
 		for (Tisch t : t_test) {
 			assertThat(t.getId(), equalTo(t3.getId()));
@@ -189,8 +198,7 @@ public class Test_JDBCTischDAO {
 		
 		assertTrue(t_test.size() == 0);
 		
-		toSearch = new Tisch(t4.getId(), 0, 0, null, null, false);
-		t_test = test.search(toSearch);
+		t_test = test.search(t4);
 		
 		for (Tisch t : t_test) {
 			assertThat(t.getId(), equalTo(t4.getId()));
@@ -208,25 +216,24 @@ public class Test_JDBCTischDAO {
 		t5 = test.create(t5);
 		mykeys_generated.add(t5.getId());
 		
-		Tisch toUpdate = new Tisch(t5.getId(), 666, 11, "Superplatzerl" , "Nichtraucher", !t5.getDeleted());
+		Tisch toUpdate = new Tisch(t5.getId(), 666, 11, "Superplatzerl" , "Raucher", t5.getDeleted());
 		
 		test.update(toUpdate);
-		ArrayList<Tisch> shouldBeUpdated = test.search(t5);
+		ArrayList<Tisch> shouldBeUpdated = test.search(toUpdate);
 		
 		for (Tisch t : shouldBeUpdated) {
-			assertTrue(t.getId() == t5.getId());
+			assertThat(t.getId(), equalTo(t5.getId()));
 			
-			assertFalse(t.getNummer() == t5.getNummer());
-			assertFalse(t.getPlaetze() == t5.getPlaetze());
+			assertFalse(t.getNummer().equals(t5.getNummer()));
+			assertFalse(t.getPlaetze().equals(t5.getPlaetze()));
 			assertFalse(t.getBeschreibung().equals(t5.getBeschreibung()));
 			assertFalse(t.getArt().equals(t5.getArt()));
-			assertFalse(t.getDeleted() == t5.getDeleted());
 			
-			assertTrue(t.getNummer() == toUpdate.getNummer());
-			assertTrue(t.getPlaetze() == toUpdate.getPlaetze());
-			assertTrue(t.getBeschreibung().equals(toUpdate.getBeschreibung()));
-			assertTrue(t.getArt().equals(toUpdate.getArt()));
-			assertTrue(t.getDeleted() == toUpdate.getDeleted());
+			assertThat(t.getNummer(), equalTo(toUpdate.getNummer()));
+			assertThat(t.getPlaetze(), equalTo(toUpdate.getPlaetze()));
+			assertThat(t.getBeschreibung(), equalTo(toUpdate.getBeschreibung()));
+			assertThat(t.getArt(), equalTo(toUpdate.getArt()));
+			assertThat(t.getDeleted(), equalTo(toUpdate.getDeleted()));
 		}
 	}
 
@@ -239,22 +246,18 @@ public class Test_JDBCTischDAO {
 		Tisch toUpdate = new Tisch(t6.getId(), t6.getNummer(), t6.getPlaetze(), t6.getBeschreibung(), "Nichtraucher", t6.getDeleted());
 		
 		test.update(toUpdate);
-		ArrayList<Tisch> shouldBeUpdated = test.search(t6);
+		ArrayList<Tisch> shouldBeUpdated = test.search(toUpdate);
 		
 		for (Tisch t : shouldBeUpdated) {
-			assertTrue(t.getId() == t6.getId());
+			assertThat(t.getId(), equalTo(t6.getId()));
 			
-			assertFalse(t.getNummer() == t6.getNummer());
-			assertFalse(t.getPlaetze() == t6.getPlaetze());
-			assertFalse(t.getBeschreibung().equals(t6.getBeschreibung()));
 			assertFalse(t.getArt().equals(t6.getArt()));
-			assertFalse(t.getDeleted() == t6.getDeleted());
 			
-			assertTrue(t.getNummer() == toUpdate.getNummer());
-			assertTrue(t.getPlaetze() == toUpdate.getPlaetze());
-			assertTrue(t.getBeschreibung().equals(toUpdate.getBeschreibung()));
-			assertTrue(t.getArt().equals(toUpdate.getArt()));
-			assertTrue(t.getDeleted() == toUpdate.getDeleted());
+			assertThat(t.getNummer(), equalTo(toUpdate.getNummer()));
+			assertThat(t.getPlaetze(), equalTo(toUpdate.getPlaetze()));
+			assertThat(t.getBeschreibung(), equalTo(toUpdate.getBeschreibung()));
+			assertThat(t.getArt(), equalTo(toUpdate.getArt()));
+			assertThat(t.getDeleted(), equalTo(toUpdate.getDeleted()));
 		}
 	}
 	

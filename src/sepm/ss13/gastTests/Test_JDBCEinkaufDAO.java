@@ -244,8 +244,7 @@ public class Test_JDBCEinkaufDAO {
 	
 	@Test
 	public void testSearch_1() throws DAOException {
-		Einkauf toSearch = new Einkauf(e3.getId(), e3.getWarenId(), 0, null, 0);
-		ArrayList<Einkauf> e_test = test_Einkauf.search(toSearch);
+		ArrayList<Einkauf> e_test = test_Einkauf.search(e3);
 				
 		for (Einkauf e : e_test) {
 			assertThat(e.getId(), equalTo(e3.getId()));
@@ -258,12 +257,17 @@ public class Test_JDBCEinkaufDAO {
 	
 	@Test
 	public void testSearch_2() throws DAOException{
-		Einkauf toSearch = new Einkauf(-1, e4.getWarenId(), e4.getMenge(), e4.getDatum(), e4.getPreis());
+		Einkauf toSearch = new Einkauf(e4.getId(), e4.getWarenId(), 0, null, 0);
 		ArrayList<Einkauf> e_test = test_Einkauf.search(toSearch);
 		
-		assertTrue(e_test.size() == 0);
+		assertThat(e_test.size(), equalTo(0));
 		
-		toSearch = new Einkauf(e4.getId(), e4.getWarenId(), 0, null, 0);
+		toSearch = new Einkauf(-1, e4.getWarenId(), e4.getMenge(), e4.getDatum(), e4.getPreis());
+		e_test = test_Einkauf.search(toSearch);
+		
+		assertThat(e_test.size(), equalTo(0));
+		
+		toSearch = new Einkauf(e4.getId(), e4.getWarenId(), e4.getMenge(), e4.getDatum(), e4.getPreis());
 		e_test = test_Einkauf.search(toSearch);
 				
 		for (Einkauf e : e_test) {
@@ -287,7 +291,7 @@ public class Test_JDBCEinkaufDAO {
 		Einkauf toUpdate = new Einkauf(e5.getId(), -1, -1, new Date(0), -1);
 		
 		test_Einkauf.update(toUpdate);
-		ArrayList<Einkauf> shouldBeUpdated = test_Einkauf.search(e5);
+		ArrayList<Einkauf> shouldBeUpdated = test_Einkauf.search(toUpdate);
 		
 		for (Einkauf e : shouldBeUpdated) {
 			assertThat(e.getId(), equalTo(toUpdate.getId()));

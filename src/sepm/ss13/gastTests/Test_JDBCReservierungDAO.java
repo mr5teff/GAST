@@ -191,12 +191,11 @@ public class Test_JDBCReservierungDAO {
 		
 		assertTrue(r_test.size() == 0);
 		
-		toSearch = new Reservierung(r4.getId(), new Date(0),10, 20, 5, "Mustermaxal", "0664 987654321");
-		r_test = test.search(toSearch);
+		r_test = test.search(r4);
 		
 		for (Reservierung r : r_test) {
 			assertThat(r.getId(), equalTo(r4.getId()));
-			assertThat(r.getDatum(), equalTo(r4.getDatum()));
+			assertThat(r.getDatum().toString(), equalTo(r4.getDatum().toString()));
 			assertThat(r.getDauer(), equalTo(r4.getDauer()));
 			assertThat(r.getPersonen(), equalTo(r4.getPersonen()));
 			assertThat(r.getTischnummer(), equalTo(r4.getTischnummer()));
@@ -214,24 +213,17 @@ public class Test_JDBCReservierungDAO {
 		Reservierung toUpdate = new Reservierung(r5.getId(), new Date(100), 3, 5, 10, "Maxmuster", "0699 1122334455");
 		
 		test.update(toUpdate);
-		ArrayList<Reservierung> shouldBeUpdated = test.search(r5);
+		ArrayList<Reservierung> shouldBeUpdated = test.search(toUpdate);
 		
 		for (Reservierung r : shouldBeUpdated) {
-			assertTrue(r.getId() == r5.getId());
+			assertThat(r.getId(), equalTo(r5.getId()));
 			
-			assertFalse(r.getDatum().toString().equals(r5.getDatum().toString()));
-			assertFalse(r.getDauer() == r5.getDauer());
-			assertFalse(r.getPersonen() == r5.getPersonen());
-			assertFalse(r.getTischnummer() == r5.getTischnummer());
-			assertFalse(r.getName().equals(r5.getName()));
-			assertFalse(r.getTelefonnummer().equals(r5.getTelefonnummer()));
-			
-			assertTrue(r.getDatum().equals(toUpdate.getDatum()));
-			assertTrue(r.getDauer() == toUpdate.getDauer());
-			assertTrue(r.getPersonen() == toUpdate.getPersonen());
-			assertTrue(r.getTischnummer() == toUpdate.getTischnummer());
-			assertTrue(r.getName().equals(toUpdate.getName()));
-			assertTrue(r.getTelefonnummer().equals(toUpdate.getTelefonnummer()));
+			assertThat(r.getDatum().toString(), equalTo(toUpdate.getDatum().toString()));
+			assertThat(r.getDauer(), equalTo(toUpdate.getDauer()));
+			assertThat(r.getPersonen(), equalTo(toUpdate.getPersonen()));
+			assertThat(r.getTischnummer(), equalTo(toUpdate.getTischnummer()));
+			assertThat(r.getName(), equalTo(toUpdate.getName()));
+			assertThat(r.getTelefonnummer(), equalTo(toUpdate.getTelefonnummer()));
 		}
 	}
 
@@ -241,27 +233,25 @@ public class Test_JDBCReservierungDAO {
 		r6 = test.create(r6);
 		mykeys_generated.add(r6.getId());
 		
-		Reservierung toUpdate = new Reservierung(r6.getId(), new Date(100), 3, 5, 10, "Maxmuster", "0699 1122334455");
-		
+		Reservierung toUpdate = new Reservierung(r6.getId(), null, 0, 0, 0, null, null);
 		test.update(toUpdate);
-		ArrayList<Reservierung> shouldBeUpdated = test.search(r6);
+		ArrayList<Reservierung> shouldBeUpdated = test.search(toUpdate);
+		
+		assertThat(shouldBeUpdated.size(), equalTo(0));
+		
+		toUpdate = new Reservierung(r6.getId(), r6.getDatum(), r6.getDauer(), r6.getPersonen(), r6.getTischnummer(), "Musterfrau", r6.getTelefonnummer());
+		test.update(toUpdate);
+		shouldBeUpdated = test.search(toUpdate);
 		
 		for (Reservierung r : shouldBeUpdated) {
-			assertTrue(r.getId() == r6.getId());
+			assertThat(r.getId(), equalTo(r6.getId()));
 			
-			assertFalse(r.getDatum().toString().equals(r6.getDatum().toString()));
-			assertFalse(r.getDauer() == r6.getDauer());
-			assertFalse(r.getPersonen() == r6.getPersonen());
-			assertFalse(r.getTischnummer() == r6.getTischnummer());
-			assertFalse(r.getName().equals(r6.getName()));
-			assertFalse(r.getTelefonnummer().equals(r6.getTelefonnummer()));
-			
-			assertTrue(r.getDatum().equals(toUpdate.getDatum()));
-			assertTrue(r.getDauer() == toUpdate.getDauer());
-			assertTrue(r.getPersonen() == toUpdate.getPersonen());
-			assertTrue(r.getTischnummer() == toUpdate.getTischnummer());
-			assertTrue(r.getName().equals(toUpdate.getName()));
-			assertTrue(r.getTelefonnummer().equals(toUpdate.getTelefonnummer()));
+			assertThat(r.getDatum().toString(), equalTo(toUpdate.getDatum().toString()));
+			assertThat(r.getDauer(), equalTo(toUpdate.getDauer()));
+			assertThat(r.getPersonen(), equalTo(toUpdate.getPersonen()));
+			assertThat(r.getTischnummer(), equalTo(toUpdate.getTischnummer()));
+			assertThat(r.getName(), equalTo(toUpdate.getName()));
+			assertThat(r.getTelefonnummer(), equalTo(toUpdate.getTelefonnummer()));
 		}
 	}
 
