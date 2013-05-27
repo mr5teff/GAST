@@ -36,8 +36,8 @@ public class TischDialogController extends Controller {
 		raucherRadio.setUserData("Raucher");
 		nichtRaucherRadio.setUserData("Nichtraucher");
 		
-		raucherToggleGroup.selectToggle(raucherRadio);
-   	 	
+		raucherRadio.setSelected(true);
+	
 	}
 	
 	 @FXML
@@ -118,11 +118,12 @@ public class TischDialogController extends Controller {
 	 public void setTisch(Tisch t) {
 		 this.t=t;
 		 if(t!=null) {
+			 System.out.println(t.getArt());
 				plaetzeTF.setText(t.getPlaetze().toString());
 				if(t.getArt().contentEquals("Raucher"))
-					raucherToggleGroup.selectToggle(raucherRadio);
+					raucherRadio.setSelected(true);
 				else
-					raucherToggleGroup.selectToggle(nichtRaucherRadio);
+					nichtRaucherRadio.setSelected(true);
 				beschreibung.setText(t.getBeschreibung());
 				nummerTF.setText(t.getNummer().toString());
 			}
