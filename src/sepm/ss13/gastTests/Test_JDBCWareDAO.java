@@ -51,14 +51,14 @@ public class Test_JDBCWareDAO {
 		dbc = (DBConnector) ac.getBean("databaseManager");
 		test = new JDBCWareDAO(dbc.getConnection());
 		
-		w1 = new Ware(-1, "Sauerkraut", "Kübel", 30);
-		w2 = new Ware(-1, "Mais", "Dosen", 15);
-		w3 = new Ware(-1, "Sauerkraut", "Kübel", 30);
-		w4 = new Ware(-1, "Mais", "Dosen", 15);
-		w5 = new Ware(-1, "Sauerkraut", "Kübel", 30);
-		w6 = new Ware(-1, "Mais", "Dosen", 15);
-		w7 = new Ware(-1, "Sauerkraut", "Kübel", 30);
-		w8 = new Ware(-1, "Mais", "Dosen", 15);
+		w1 = new Ware(-1, "Sauerkraut", "gramm", 30);
+		w2 = new Ware(-1, "Bier", "milliliter", 15);
+		w3 = new Ware(-1, "Sauerkraut", "gramm", 30);
+		w4 = new Ware(-1, "Bier", "milliliter", 15);
+		w5 = new Ware(-1, "Sauerkraut", "gramm", 30);
+		w6 = new Ware(-1, "Bier", "milliliter", 15);
+		w7 = new Ware(-1, "Sauerkraut", "gramm", 30);
+		w8 = new Ware(-1, "Bier", "milliliter", 15);
 		
 		Ware w_temp = null;
 		w_temp = test.create(w3);
@@ -198,7 +198,7 @@ public class Test_JDBCWareDAO {
 		w5 = test.create(w5);
 		mykeys_generated.add(w5.getId());
 		
-		Ware toUpdate = new Ware(w5.getId(), "SuperSauerkraut", "Faß, groß", 60);
+		Ware toUpdate = new Ware(w5.getId(), "Fanta", "milliliter", 60);
 		
 		test.update(toUpdate);
 		ArrayList<Ware> shouldBeUpdated = test.search(w5);
@@ -222,7 +222,7 @@ public class Test_JDBCWareDAO {
 		w6 = test.create(w6);
 		mykeys_generated.add(w6.getId());
 		
-		Ware toUpdate = new Ware(w6.getId(), "MexicoMais", "Dose, klein", 80);
+		Ware toUpdate = new Ware(w6.getId(), "Weißbier", "milliliter", 80);
 		
 		test.update(toUpdate);
 		ArrayList<Ware> shouldBeUpdated = test.search(w6);
@@ -261,7 +261,7 @@ public class Test_JDBCWareDAO {
 		
 		ArrayList<Ware> t_test = test.search(w8);
 		assertTrue(t_test.size() != 0);
-		test.delete(new Ware(w8.getId(), "blabla", "SuperMais", 30));
+		test.delete(new Ware(w8.getId(), "Cola", "milliliter", 30));
 		t_test = test.search(w8);
 		assertTrue(t_test.size() == 0);
 	}
