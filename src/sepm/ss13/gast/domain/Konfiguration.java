@@ -5,6 +5,7 @@ public class Konfiguration {
 	private String adresse;
 	private String tel;
 	private byte[] logo;
+	private int timerIntervall;
 	
 	
 	/**
@@ -12,14 +13,15 @@ public class Konfiguration {
 	 */
 	public Konfiguration()
 	{
-		this("", "", "", new byte[1]);
+		this("", "", "", new byte[1],0);
 	}
 	
-	public Konfiguration(String name, String adresse, String tel, byte[] logo) {
+	public Konfiguration(String name, String adresse, String tel, byte[] logo, int timerIntervall) {
 		this.setName(name);
 		this.setAdresse(adresse);
 		this.setTel(tel);
 		this.setLogo(logo);
+		this.setTimerIntervall(timerIntervall);
 	}
 
 	public String getName() {
@@ -54,5 +56,12 @@ public class Konfiguration {
 		this.logo = logo;
 	}
 	
+	public int getTimerIntervall() {
+		return timerIntervall;
+	}
+
+	public void setTimerIntervall(int timerIntervall) {
+		this.timerIntervall = timerIntervall;
+	}
 
 }

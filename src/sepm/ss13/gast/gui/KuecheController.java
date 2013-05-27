@@ -52,11 +52,20 @@ public class KuecheController extends Controller
 		listBestellungen();
 		
 		Timer t = new Timer(true);
-		t.schedule(new TimerTask() {
-			public void run() {
-				clickOnBearbeitungszeitAktualisieren();
-			}
-		}, 0, 10*1000);
+		try 
+		{
+			t.schedule(new TimerTask() 
+			{
+				public void run() 
+				{
+					clickOnBearbeitungszeitAktualisieren();
+				}
+			}, 0, s.loadKonfiguration().getTimerIntervall()*1000);
+		} 
+		catch (DAOException e) 
+		{
+			Dialogs.showErrorDialog(this.getStage(), "Konfiguration konnte nicht geladen werden.", "Ladefehler", "Konfiguration laden", e);
+		}
 	}
 		
 	@FXML
