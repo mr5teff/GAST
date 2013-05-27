@@ -59,6 +59,7 @@ public class KuecheController extends Controller
 				public void run() 
 				{
 					clickOnBearbeitungszeitAktualisieren();
+					if(!isActive()) this.cancel();
 				}
 			}, 0, s.loadKonfiguration().getTimerIntervall()*1000);
 		} 
@@ -172,11 +173,13 @@ public class KuecheController extends Controller
 	// Zum einfacheren Wechseln der Anzeige (aus Testgründen)
 	@FXML
 	public void clickOnManagement(ActionEvent event) {
+		this.setActive(false);
 		GUITools.loadFXML("Management.fxml",this.getStage());
 	}
 	 
 	@FXML
 	public void clickOnKassa(ActionEvent event) {
+		this.setActive(false);
 		GUITools.loadFXML("Kassa.fxml",this.getStage());
 	}
 }
