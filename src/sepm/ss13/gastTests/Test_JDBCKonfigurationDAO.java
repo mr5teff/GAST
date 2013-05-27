@@ -28,7 +28,6 @@ public class Test_JDBCKonfigurationDAO {
 	static Konfiguration kOrigin = null;
 	static Konfiguration k = null;
 	
-	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 

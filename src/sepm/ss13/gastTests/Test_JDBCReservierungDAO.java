@@ -44,6 +44,7 @@ public class Test_JDBCReservierungDAO {
 	static ArrayList<Integer> mykeys = new ArrayList<Integer>();
 	static ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
 
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");

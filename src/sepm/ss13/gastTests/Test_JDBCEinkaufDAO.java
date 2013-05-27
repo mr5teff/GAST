@@ -53,7 +53,6 @@ public class Test_JDBCEinkaufDAO {
 	static Einkauf e7 = null; // delete
 	static Einkauf e8 = null; // delete
 	
-	
 	static ArrayList<Integer> mykeys_Einkauf = new ArrayList<Integer>();
 	static ArrayList<Integer> mykeys_generated_Einkauf = new ArrayList<Integer>();
 	static ArrayList<Integer> mykeys_Ware = new ArrayList<Integer>();

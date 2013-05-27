@@ -43,7 +43,6 @@ public class Test_JDBCTischDAO {
 	
 	static ArrayList<Integer> mykeys = new ArrayList<Integer>();
 	static ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
-	
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
