@@ -25,31 +25,32 @@ import sepm.ss13.gast.domain.Tisch;
 
 public class Test_JDBCTischDAO {
 	
-	private static ApplicationContext ac;
-	static DBConnector dbc;
-	static JDBCTischDAO test = null;
+	private ApplicationContext ac;
+	private DBConnector dbc;
+	private JDBCTischDAO test = null;
 	
-	static Tisch t1 = null; //create
-	static Tisch t2 = null; //create
+	private Tisch t1 = null; //create
+	private Tisch t2 = null; //create
 	
-	static Tisch t3 = null; //search
-	static Tisch t4 = null; //search
+	private Tisch t3 = null; //search
+	private Tisch t4 = null; //search
 	
-	static Tisch t5 = null; //update
-	static Tisch t6 = null; //update
+	private Tisch t5 = null; //update
+	private Tisch t6 = null; //update
 	
-	static Tisch t7 = null; //delete
-	static Tisch t8 = null; //delete
+	private Tisch t7 = null; //delete
+	private Tisch t8 = null; //delete
 	
-	static ArrayList<Integer> mykeys = new ArrayList<Integer>();
-	static ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
 
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public void setUpBeforeClass() throws Exception {
 		dbc.getConnection().setAutoCommit(false); 
 		
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
+		dbc.getConnection().setAutoCommit(false); 
 		test = new JDBCTischDAO(dbc.getConnection());
 		
 		t1 = new Tisch(-1, 33, 5, "Stammtisch", "Nichtraucher", false);
@@ -70,41 +71,8 @@ public class Test_JDBCTischDAO {
 		mykeys.add(t4.getId());
 	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		for(int i = 0; i < mykeys.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM tisch WHERE id=?");
-				ps.setInt(1,mykeys.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete tisch from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
 	@After
 	public void tearDown() throws Exception {
-		for(int i = 0; i < mykeys_generated.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM tisch WHERE id=?");
-				ps.setInt(1,mykeys_generated.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete tisch category from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-		
 		dbc.getConnection().rollback();
 	}
 

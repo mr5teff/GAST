@@ -25,31 +25,30 @@ import sepm.ss13.gast.domain.Ware;
 
 public class Test_JDBCWareDAO {
 
-	private static ApplicationContext ac;
-	static DBConnector dbc;
-	static JDBCWareDAO test;
+	private ApplicationContext ac;
+	private DBConnector dbc;
+	private JDBCWareDAO test;
 	
-	static Ware w1 = null; //create
-	static Ware w2 = null; //create
+	private Ware w1 = null; //create
+	private Ware w2 = null; //create
 	
-	static Ware w3 = null; //search
-	static Ware w4 = null; //search
+	private Ware w3 = null; //search
+	private Ware w4 = null; //search
 	
-	static Ware w5 = null; //update
-	static Ware w6 = null; //update
+	private Ware w5 = null; //update
+	private Ware w6 = null; //update
 	
-	static Ware w7 = null; //delete
-	static Ware w8 = null; //delete
+	private Ware w7 = null; //delete
+	private Ware w8 = null; //delete
 	
-	static ArrayList<Integer> mykeys = new ArrayList<Integer>();
-	static ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
 	
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		dbc.getConnection().setAutoCommit(false); 
-		
+	public void setUpBeforeClass() throws Exception {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
+		dbc.getConnection().setAutoCommit(false);
 		test = new JDBCWareDAO(dbc.getConnection());
 		
 		w1 = new Ware(-1, "Sauerkraut", "gramm", 30);
@@ -70,41 +69,8 @@ public class Test_JDBCWareDAO {
 		mykeys.add(w4.getId());
 	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		for(int i = 0; i < mykeys.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM ware WHERE id=?");
-				ps.setInt(1,mykeys.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete Ware from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
 	@After
 	public void tearDown() throws Exception {
-		for(int i = 0; i < mykeys_generated.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM ware WHERE id=?");
-				ps.setInt(1,mykeys_generated.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete Ware from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-		
 		dbc.getConnection().rollback();
 	}
 

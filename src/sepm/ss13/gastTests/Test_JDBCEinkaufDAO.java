@@ -20,51 +20,48 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.dao.DBConnector;
 import sepm.ss13.gast.dao.JDBCEinkaufDAO;
-import sepm.ss13.gast.dao.JDBCProduktDAO;
 import sepm.ss13.gast.dao.JDBCWareDAO;
 import sepm.ss13.gast.domain.Einkauf;
-import sepm.ss13.gast.domain.Tisch;
 import sepm.ss13.gast.domain.Ware;
 
 public class Test_JDBCEinkaufDAO {
 
-	private static ApplicationContext ac;
-	static DBConnector dbc;
-	static JDBCWareDAO test_Ware = null;
-	static JDBCEinkaufDAO test_Einkauf = null;
+	private ApplicationContext ac;
+	private DBConnector dbc;
+	private JDBCWareDAO test_Ware = null;
+	private JDBCEinkaufDAO test_Einkauf = null;
 
-	static Ware w1 = null; //create
-	static Ware w2 = null; //create
-	static Einkauf e1 = null; // create
-	static Einkauf e2 = null; // create
+	private Ware w1 = null; //create
+	private Ware w2 = null; //create
+	private Einkauf e1 = null; // create
+	private Einkauf e2 = null; // create
 
-	static Ware w3 = null; // search
-	static Ware w4 = null; // search
-	static Einkauf e3 = null; // search
-	static Einkauf e4 = null; // search
+	private Ware w3 = null; // search
+	private Ware w4 = null; // search
+	private Einkauf e3 = null; // search
+	private Einkauf e4 = null; // search
 
-	static Ware w5 = null; // update
-	static Ware w6 = null; // update
-	static Einkauf e5 = null; // update
-	static Einkauf e6 = null; // update
+	private Ware w5 = null; // update
+	private Ware w6 = null; // update
+	private Einkauf e5 = null; // update
+	private Einkauf e6 = null; // update
 
-	static Ware w7 = null; // delete
-	static Ware w8 = null; // delete
-	static Einkauf e7 = null; // delete
-	static Einkauf e8 = null; // delete
+	private Ware w7 = null; // delete
+	private Ware w8 = null; // delete
+	private Einkauf e7 = null; // delete
+	private Einkauf e8 = null; // delete
 	
-	static ArrayList<Integer> mykeys_Einkauf = new ArrayList<Integer>();
-	static ArrayList<Integer> mykeys_generated_Einkauf = new ArrayList<Integer>();
-	static ArrayList<Integer> mykeys_Ware = new ArrayList<Integer>();
-	static ArrayList<Integer> mykeys_generated_Ware = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_Einkauf = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_generated_Einkauf = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_Ware = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_generated_Ware = new ArrayList<Integer>();
 	
 	
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		dbc.getConnection().setAutoCommit(false); 
-		
+	public void setUpBeforeClass() throws Exception {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
+		dbc.getConnection().setAutoCommit(false);
 		test_Einkauf = new JDBCEinkaufDAO(dbc.getConnection());
 		test_Ware = new JDBCWareDAO(dbc.getConnection());
 		
@@ -107,70 +104,9 @@ public class Test_JDBCEinkaufDAO {
 		mykeys_Ware.add(w4.getId());
 		mykeys_Einkauf.add(e4.getId());
 	}
-	
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		for(int i = 0; i < mykeys_Einkauf.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM einkauf WHERE id=?");
-				ps.setInt(1,mykeys_Einkauf.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete Einkauf from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-		
-		for(int i = 0; i < mykeys_Ware.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM ware WHERE id=?");
-				ps.setInt(1,mykeys_Ware.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete ware from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-	}
-	
-	@Before
-	public void setUp() throws Exception {
-		dbc.getConnection().setAutoCommit(false);
-	}
 
 	@After
 	public void tearDown() throws Exception {
-		for(int i = 0; i < mykeys_generated_Einkauf.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM einkauf WHERE id=?");
-				ps.setInt(1,mykeys_generated_Einkauf.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete Einkauf from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-		
-
-		for(int i = 0; i < mykeys_generated_Ware.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM ware WHERE id=?");
-				ps.setInt(1,mykeys_generated_Ware.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete ware from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-		
 		dbc.getConnection().rollback();
 	}
 

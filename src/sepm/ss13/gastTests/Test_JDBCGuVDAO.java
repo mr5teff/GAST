@@ -11,15 +11,7 @@ import org.junit.Test;
 public class Test_JDBCGuVDAO {
 
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
+	public void setUpBeforeClass() throws Exception {
 	}
 
 	@After

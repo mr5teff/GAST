@@ -31,28 +31,29 @@ import sepm.ss13.gast.domain.Rechnung;
  */
 public class Test_JDBCRechnungDAO {
 
-	private static ApplicationContext ac;
-	static DBConnector dbc;
-	static JDBCRechnungDAO test = null;
+	private ApplicationContext ac;
+	private DBConnector dbc;
+	private JDBCRechnungDAO test = null;
 	
-	static Rechnung r1 = null; //create
-	static Rechnung r2 = null; //create
+	private Rechnung r1 = null; //create
+	private Rechnung r2 = null; //create
 	
-	static Rechnung r3 = null; //serach
-	static Rechnung r4 = null; //serach
-	static Rechnung r5 = null; //serach
+	private Rechnung r3 = null; //serach
+	private Rechnung r4 = null; //serach
+	private Rechnung r5 = null; //serach
 	
 	
-	static ArrayList<Integer> mykeys = new ArrayList<Integer>();
-	static ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
 	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public void setUpBeforeClass() throws Exception {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
+		dbc.getConnection().setAutoCommit(false);
 		test = new JDBCRechnungDAO(dbc.getConnection());
 		
 		
@@ -76,46 +77,9 @@ public class Test_JDBCRechnungDAO {
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		for(int i = 0; i < mykeys.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM rechnung WHERE id=?");
-				ps.setInt(1,mykeys.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete rechnung from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@After
 	public void tearDown() throws Exception {
-		for(int i = 0; i < mykeys_generated.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM rechnung WHERE id=?");
-				ps.setInt(1,mykeys_generated.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete rechnung from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
+		dbc.getConnection().rollback();
 	}
 
 	/**

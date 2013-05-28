@@ -32,41 +32,42 @@ import sepm.ss13.gast.domain.ProduktKategorie;
  */
 public class Test_JDBCProduktDAO {
 	
-	private static ApplicationContext ac;
-	static DBConnector dbc;
-	static JDBCProduktDAO test = null;
-	static JDBCProduktKategorieDAO testKategorie = null;
+	private ApplicationContext ac;
+	private DBConnector dbc;
+	private JDBCProduktDAO test = null;
+	private JDBCProduktKategorieDAO testKategorie = null;
 	
-	static ProduktKategorie p1_kategorie = null; //create
-	static ProduktKategorie p2_kategorie = null; //create
+	private ProduktKategorie p1_kategorie = null; //create
+	private ProduktKategorie p2_kategorie = null; //create
 
-	static Produkt p1 = null; //create
-	static Produkt p2 = null; //create
-	static Produkt p3 = null; //create
+	private Produkt p1 = null; //create
+	private Produkt p2 = null; //create
+	private Produkt p3 = null; //create
 
-	static Produkt p4 = null; //update
-	static Produkt p5 = null; //update
+	private Produkt p4 = null; //update
+	private Produkt p5 = null; //update
 	
-	static Produkt p6 = null; //serach
-	static Produkt p7 = null; //serach
-	static Produkt p8 = null; //serach
-	static Produkt p9 = null; //serach
+	private Produkt p6 = null; //serach
+	private Produkt p7 = null; //serach
+	private Produkt p8 = null; //serach
+	private Produkt p9 = null; //serach
 
-	static Produkt p10 = null; //update
-	static Produkt p11 = null; //update
+	private Produkt p10 = null; //update
+	private Produkt p11 = null; //update
 	
-	static ArrayList<Integer> mykeys_Kategorie = new ArrayList<Integer>();
-	static ArrayList<Integer> mykeys = new ArrayList<Integer>();
-	static ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_Kategorie = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
 	
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public void setUpBeforeClass() throws Exception {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
+		dbc.getConnection().setAutoCommit(false);
 		test = new JDBCProduktDAO(dbc.getConnection());
 		testKategorie = new JDBCProduktKategorieDAO(dbc.getConnection());
 		
@@ -111,42 +112,9 @@ public class Test_JDBCProduktDAO {
 		mykeys.add(p_temp.getId());
 	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		for(int i = 0; i < mykeys.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM produkt WHERE id=?");
-				ps.setInt(1,mykeys.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete product from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-		testKategorie.delete(p1_kategorie);
-		testKategorie.delete(p2_kategorie);
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
 	@After
 	public void tearDown() throws Exception {
-		for(int i = 0; i < mykeys_generated.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM produkt WHERE id=?");
-				ps.setInt(1,mykeys_generated.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete product from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
+		dbc.getConnection().rollback();
 	}
 
 	

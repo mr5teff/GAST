@@ -2,8 +2,6 @@ package sepm.ss13.gastTests;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 
 import org.junit.After;
@@ -21,37 +19,25 @@ import sepm.ss13.gast.domain.Konfiguration;
 
 public class Test_JDBCKonfigurationDAO {
 	
-	private static ApplicationContext ac;
-	static DBConnector dbc;
-	static JDBCKonfigurationDAO test = null;
+	private ApplicationContext ac;
+	private DBConnector dbc;
+	private JDBCKonfigurationDAO test = null;
 	
-	static Konfiguration kOrigin = null;
-	static Konfiguration k = null;
+	private Konfiguration kOrigin = null;
+	private Konfiguration k = null;
 	
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		dbc.getConnection().setAutoCommit(false); 
-
+	public void setUpBeforeClass() throws Exception {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
+		dbc.getConnection().setAutoCommit(false);
 		test = new JDBCKonfigurationDAO(dbc.getConnection());
 		
 		kOrigin = test.load();
 	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		dbc.getConnection().setAutoCommit(false);
-	}
-
 	@After
 	public void tearDown() throws Exception {
-		test.save(kOrigin);
-		
 		dbc.getConnection().rollback();
 	}
 

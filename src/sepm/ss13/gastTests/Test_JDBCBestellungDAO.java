@@ -37,49 +37,50 @@ import sepm.ss13.gast.domain.Rechnung;
  */
 public class Test_JDBCBestellungDAO {
 	
-	private static ApplicationContext ac;
-	static DBConnector dbc;
-	static JDBCBestellungDAO test = null;
+	private ApplicationContext ac;
+	private DBConnector dbc;
+	private JDBCBestellungDAO test = null;
 	static JDBCProduktDAO testProdukt = null;
-	static JDBCProduktKategorieDAO testKategorie = null;
-	static JDBCRechnungDAO testRechnung = null;
+	private JDBCProduktKategorieDAO testKategorie = null;
+	private JDBCRechnungDAO testRechnung = null;
 	
-	static ProduktKategorie p1_kategorie = null; //create
-	static ProduktKategorie p2_kategorie = null; //create
+	private ProduktKategorie p1_kategorie = null; //create
+	private ProduktKategorie p2_kategorie = null; //create
 	
-	static Produkt p1_produkt = null; //create
-	static Produkt p2_produkt = null; //create
-	static Produkt p3_produkt = null; //create
+	private Produkt p1_produkt = null; //create
+	private Produkt p2_produkt = null; //create
+	private Produkt p3_produkt = null; //create
 	
-	static Rechnung p1_rechnung = null; //create
-	static Rechnung p2_rechnung = null; //create
+	private Rechnung p1_rechnung = null; //create
+	private Rechnung p2_rechnung = null; //create
 
-	static Bestellung p1 = null; //create
-	static Bestellung p2 = null; //create
-	static Bestellung p3 = null; //create
+	private Bestellung p1 = null; //create
+	private Bestellung p2 = null; //create
+	private Bestellung p3 = null; //create
 	
-	static Bestellung p4 = null; //serach
-	static Bestellung p5 = null; //serach
-	static Bestellung p6 = null; //serach
-	static Bestellung p7 = null; //serach
+	private Bestellung p4 = null; //serach
+	private Bestellung p5 = null; //serach
+	private Bestellung p6 = null; //serach
+	private Bestellung p7 = null; //serach
 
-	static Bestellung p8 = null; //delete
-	static Bestellung p9 = null; //delete
+	private Bestellung p8 = null; //delete
+	private Bestellung p9 = null; //delete
 	
-	static ArrayList<Integer> mykeys_Rechnung = new ArrayList<Integer>();
-	static ArrayList<Integer> mykeys_Produkt = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_Rechnung = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_Produkt = new ArrayList<Integer>();
 	
-	static ArrayList<Integer> mykeys = new ArrayList<Integer>();
-	static ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
 	
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public void setUpBeforeClass() throws Exception {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
+		dbc.getConnection().setAutoCommit(false);
 		test = new JDBCBestellungDAO(dbc.getConnection());
 		testProdukt = new JDBCProduktDAO(dbc.getConnection());
 		testKategorie = new JDBCProduktKategorieDAO(dbc.getConnection());
@@ -155,74 +156,9 @@ public class Test_JDBCBestellungDAO {
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		for(int i = 0; i < mykeys.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM bestellung WHERE id=?");
-				ps.setInt(1,mykeys.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete bestellung from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-		for(int i = 0; i < mykeys_Produkt.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM produkt WHERE id=?");
-				ps.setInt(1,mykeys_Produkt.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete product from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-
-		testKategorie.delete(p1_kategorie);
-		testKategorie.delete(p2_kategorie);
-		
-		for(int i = 0; i < mykeys_Rechnung.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM rechnung WHERE id=?");
-				ps.setInt(1,mykeys_Rechnung.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete rechnung from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@After
 	public void tearDown() throws Exception {
-		for(int i = 0; i < mykeys_generated.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM bestellung WHERE id=?");
-				ps.setInt(1,mykeys_generated.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete bestellung from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
+		dbc.getConnection().rollback();
 	}
 
 	/**

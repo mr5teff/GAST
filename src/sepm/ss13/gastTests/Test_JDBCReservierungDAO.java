@@ -21,36 +21,36 @@ import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.dao.DBConnector;
 import sepm.ss13.gast.dao.JDBCReservierungDAO;
 import sepm.ss13.gast.domain.Reservierung;
-import sepm.ss13.gast.domain.Tisch;
 
 public class Test_JDBCReservierungDAO {
 	
-	private static ApplicationContext ac;
-	static DBConnector dbc;
-	static JDBCReservierungDAO test = null;
+	private ApplicationContext ac;
+	private DBConnector dbc;
+	private JDBCReservierungDAO test = null;
 	
-	static Reservierung r1 = null; //create
-	static Reservierung r2 = null; //create
+	private Reservierung r1 = null; //create
+	private Reservierung r2 = null; //create
 	
-	static Reservierung r3 = null; //search
-	static Reservierung r4 = null; //search
+	private Reservierung r3 = null; //search
+	private Reservierung r4 = null; //search
 	
-	static Reservierung r5 = null; //update
-	static Reservierung r6 = null; //update
+	private Reservierung r5 = null; //update
+	private Reservierung r6 = null; //update
 	
-	static Reservierung r7 = null; //delete
-	static Reservierung r8 = null; //delete
+	private Reservierung r7 = null; //delete
+	private Reservierung r8 = null; //delete
 	
-	static ArrayList<Integer> mykeys = new ArrayList<Integer>();
-	static ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys = new ArrayList<Integer>();
+	private ArrayList<Integer> mykeys_generated = new ArrayList<Integer>();
 
 	
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public void setUpBeforeClass() throws Exception {
 		dbc.getConnection().setAutoCommit(false); 
 		
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
+		dbc.getConnection().setAutoCommit(false);
 		test = new JDBCReservierungDAO(dbc.getConnection());
 		
 		r1 = new Reservierung(-1, new Date(0), 3, 7, 5, "Musterfrau", "0650 41 53 994");
@@ -71,41 +71,8 @@ public class Test_JDBCReservierungDAO {
 		mykeys.add(r4.getId());
 	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		for(int i = 0; i < mykeys.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM reservierung WHERE id=?");
-				ps.setInt(1,mykeys.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete Reservierung from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
 	@After
 	public void tearDown() throws Exception {
-		for(int i = 0; i < mykeys_generated.size();i++){
-			try {
-				PreparedStatement ps=dbc.getConnection().prepareStatement("DELETE FROM reservierung WHERE id=?");
-				ps.setInt(1,mykeys_generated.get(i));
-				ps.executeUpdate();
-			} catch (SQLException e) {
-				throw new DAOException("ERROR: failed to delete Reservierung from DB!");
-			}
-			catch (NullPointerException e) {
-				throw new IllegalArgumentException();
-			}
-		}
-		
 		dbc.getConnection().rollback();
 	}
 
