@@ -46,6 +46,8 @@ public class Test_JDBCWareDAO {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		dbc.getConnection().setAutoCommit(false); 
+		
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
 		test = new JDBCWareDAO(dbc.getConnection());
@@ -102,6 +104,8 @@ public class Test_JDBCWareDAO {
 				throw new IllegalArgumentException();
 			}
 		}
+		
+		dbc.getConnection().rollback();
 	}
 
 	@Test

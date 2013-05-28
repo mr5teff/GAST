@@ -30,6 +30,7 @@ public class Test_JDBCKonfigurationDAO {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		dbc.getConnection().setAutoCommit(false); 
 
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
@@ -44,11 +45,14 @@ public class Test_JDBCKonfigurationDAO {
 
 	@Before
 	public void setUp() throws Exception {
+		dbc.getConnection().setAutoCommit(false);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		test.save(kOrigin);
+		
+		dbc.getConnection().rollback();
 	}
 
 	@Test

@@ -61,6 +61,8 @@ public class Test_JDBCEinkaufDAO {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		dbc.getConnection().setAutoCommit(false); 
+		
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
 		test_Einkauf = new JDBCEinkaufDAO(dbc.getConnection());
@@ -137,6 +139,7 @@ public class Test_JDBCEinkaufDAO {
 	
 	@Before
 	public void setUp() throws Exception {
+		dbc.getConnection().setAutoCommit(false);
 	}
 
 	@After
@@ -167,6 +170,8 @@ public class Test_JDBCEinkaufDAO {
 				throw new IllegalArgumentException();
 			}
 		}
+		
+		dbc.getConnection().rollback();
 	}
 
 	@Test

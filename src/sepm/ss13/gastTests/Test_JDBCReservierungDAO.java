@@ -47,6 +47,8 @@ public class Test_JDBCReservierungDAO {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		dbc.getConnection().setAutoCommit(false); 
+		
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
 		test = new JDBCReservierungDAO(dbc.getConnection());
@@ -103,6 +105,8 @@ public class Test_JDBCReservierungDAO {
 				throw new IllegalArgumentException();
 			}
 		}
+		
+		dbc.getConnection().rollback();
 	}
 
 	@Test
