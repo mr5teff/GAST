@@ -62,7 +62,7 @@ public class JDBCRechnungDAO implements RechnungDAO {
 			ResultSet rs=ps.executeQuery();
 			ArrayList<Rechnung> al=new ArrayList<Rechnung>();
 			while(rs.next()) {
-				al.add(new Rechnung(rs.getInt("id"),rs.getDate("datum"),rs.getInt("trinkgeld"),rs.getBytes("pdf")));
+				al.add(new Rechnung(rs.getInt("id"),rs.getTimestamp("datum"),rs.getInt("trinkgeld"),rs.getBytes("pdf")));
 				
 			}
 			return al;
