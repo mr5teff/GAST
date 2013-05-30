@@ -23,7 +23,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialogs;
@@ -32,6 +34,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 
 public class BestellController extends RefreshableController {
 	private Service s;
@@ -39,8 +42,16 @@ public class BestellController extends RefreshableController {
 	private ObservableList<Integer> tischnummern;
 	private ObservableList<String> kategorien;
 	private ObservableList<String> produkte;
+	
 	private ArrayList<ProduktKategorie> pk;
 	private ArrayList<Produkt> p;
+	private ArrayList<Tisch> tischList;
+	
+	//Für die button Klick abfolge
+	private int buttonState = 0;
+	private Tisch clickedTisch;
+	private ProduktKategorie clickedPK;
+	
 
 	 
 	@FXML private ComboBox<Integer> tisch; 
@@ -53,9 +64,11 @@ public class BestellController extends RefreshableController {
 	@FXML private CheckBox alleBestellungen;
 	@FXML private TextField anzahl;
 	@FXML private ComboBox<Integer> zielTisch;
+	@FXML private GridPane gridPane;
 
 	 public void initialize(URL arg0, ResourceBundle arg1) {
 			s = (Service) this.getApplicationContext().getBean("GASTService");
+			
 			
 			bestellungTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 			nameCol.setCellValueFactory(new PropertyValueFactory<Bestellung,String>("pname"));
@@ -63,8 +76,8 @@ public class BestellController extends RefreshableController {
 			statusCol.setCellValueFactory(new PropertyValueFactory<Bestellung,String>("status"));
 			tischnummern = FXCollections.observableArrayList();
 			try {
-				ArrayList<Tisch> tische=s.searchTisch(new Tisch());
-				for(Tisch t : tische) {
+				tischList = s.searchTisch(new Tisch());
+				for(Tisch t : tischList) {
 					tischnummern.add(t.getNummer());
 				}
 			} catch (DAOException e1) {
@@ -113,6 +126,9 @@ public class BestellController extends RefreshableController {
 				}
 				
 			});
+			
+			addTischButtons(tischList);
+			//addProduktKategorieButtons(pk);
 			
 			this.startRefresh();
 		 }
@@ -267,5 +283,160 @@ public class BestellController extends RefreshableController {
 		@Override
 		protected void refresh() {
 			listBestellungen();
+		}
+		
+		
+		@FXML
+		public void back(ActionEvent event) {
+			
+			if(buttonState == 1)
+			{
+				addTischButtons(tischList);
+			}
+			else if(buttonState == 2)
+			{
+				addProduktKategorieButtons(this.pk);
+			}
+		
+		}
+		
+		private void addTischButtons(ArrayList<Tisch> tischList)
+		{
+			gridPane.getChildren().clear();
+			buttonState = 0;
+			
+			int size = tischList.size();
+			int index = 0;
+			for(int x=0; x<gridPane.getRowConstraints().size() && index < size; x++)
+			{
+				for(int y=0; y < gridPane.getColumnConstraints().size() && index < size; y++)
+				{
+					final Button b = new Button(tischList.get(index).getNummer().toString());
+					b.setUserData(tischList.get(index));
+					gridPane.add(b, y, x);
+					b.setOnAction(new EventHandler<ActionEvent>() {
+
+						public void handle(ActionEvent e) {
+							tischclicked(b);				
+						}
+						
+					});
+					
+					index++;
+				}
+			}
+	
+		}
+		
+		private void addProduktKategorieButtons(ArrayList<ProduktKategorie> pkList)
+		{
+			gridPane.getChildren().clear();
+			buttonState = 1;
+			
+			int size = pkList.size();
+			int index = 0;
+			for(int x=0; x<gridPane.getRowConstraints().size() && index < size; x++)
+			{
+				for(int y=0; y < gridPane.getColumnConstraints().size() && index < size; y++)
+				{
+					final Button b = new Button(pkList.get(index).getBezeichnung());
+					b.setUserData(pkList.get(index));
+					gridPane.add(b, y, x);
+					b.setOnAction(new EventHandler<ActionEvent>() {
+
+						public void handle(ActionEvent e) {
+							katgorieclicked(b);				
+						}
+						
+					});
+					
+					index++;
+				}
+			}
+	
+		}
+		
+		private void addProduktButtons(ArrayList<Produkt> pList)
+		{
+			gridPane.getChildren().clear();
+			buttonState = 2;
+			
+			int size = pList.size();
+			int index = 0;
+			for(int x=0; x<gridPane.getRowConstraints().size() && index < size; x++)
+			{
+				for(int y=0; y < gridPane.getColumnConstraints().size() && index < size; y++)
+				{
+					final Button b = new Button(pList.get(index).getName());
+					b.setUserData(pList.get(index));
+					gridPane.add(b, y, x);
+					b.setOnAction(new EventHandler<ActionEvent>() {
+
+						public void handle(ActionEvent e) {
+							produktclicked(b);				
+						}
+						
+					});
+					
+					index++;
+				}
+			}
+	
+		}
+		
+		private void tischclicked(Button b)
+		{
+					
+			Tisch t = (Tisch)b.getUserData();
+			clickedTisch = t;
+			
+			tisch.setValue(t.getNummer());
+			addProduktKategorieButtons(this.pk);
+		}
+		
+		private void katgorieclicked(Button b)
+		{
+			buttonState = 2;
+			
+			ProduktKategorie pk = (ProduktKategorie)b.getUserData();
+			clickedPK = pk;
+			
+			Produkt sProdukt = new Produkt();
+			sProdukt.setKategorie(pk.getId());
+			ArrayList<Produkt> pList = new ArrayList<Produkt>();
+			
+			try {
+				pList = s.searchProdukt(sProdukt);
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			addProduktButtons(pList);
+		}
+		
+		private void produktclicked(Button b)
+		{
+			 Produkt p = (Produkt) b.getUserData();
+			
+			 Bestellung bestellung=new Bestellung();
+			 bestellung.setTisch(clickedTisch.getNummer());
+			 bestellung.setProdukt(p.getId());
+			 bestellung.setPname(p.getName());
+			 bestellung.setPreis(p.getPreis());
+			 bestellung.setSteuer(clickedPK.getSteuer());
+			 bestellung.setStatus("bestellt");
+			 bestellung.setDeleted(false);
+			 try {
+				 s.createBestellung(bestellung);
+			 } catch (IllegalArgumentException e) {
+				 Dialogs.showErrorDialog(this.getStage(), "Bestellung konnte nicht erstellt werden.", "Speicherfehler", "Bestellung erstellen", e);
+			 } catch (DAOException e) {
+				 Dialogs.showErrorDialog(this.getStage(), "Bestellung konnte nicht erstellt werden.", "Speicherfehler", "Bestellung erstellen", e);
+			 }
+			 refresh();
 		}
 }

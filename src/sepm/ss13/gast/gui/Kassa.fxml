@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.KassaController">
   <fx:define>
-    <fx:include fx:id="bestellContent" source="Bestellungen.fxml" maxHeight="-1.0" prefWidth="-1.0" />
+    <fx:include fx:id="bestellContent" source="Bestellungen_v2.fxml" maxHeight="-1.0" prefWidth="-1.0" />
   </fx:define>
   <children>
     <TitledPane animated="false" cache="false" collapsible="false" contentDisplay="RIGHT" depthTest="INHERIT" disable="false" expanded="true" focusTraversable="true" graphicTextGap="10.0" mnemonicParsing="false" mouseTransparent="false" pickOnBounds="false" prefHeight="-1.0" prefWidth="-1.0" text="Kassa" textAlignment="LEFT" textOverrun="ELLIPSIS" underline="false" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
