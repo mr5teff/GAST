@@ -52,36 +52,27 @@ public class KuecheController extends RefreshableController
 	}
 		
 	@FXML
-	public void listBestellungen() 
-	{
+	public synchronized void listBestellungen() {
 		bestellungen = FXCollections.observableArrayList();
 		 
-		try 
-		{
-			Bestellung bestellungStatus = new Bestellung();
-			 		
+		try {
+			Bestellung bestellungStatus = new Bestellung(); 		
 			bestellungStatus.setStatus("bestellt");
-			
 			liste = s.searchBestellung(bestellungStatus);
-			
 			bestellungStatus.setStatus("wirdGekocht");
-			
 			liste.addAll(s.searchBestellung(bestellungStatus));
-
 			bestellungen.addAll(liste);		
 		}
-		catch(IllegalArgumentException e) 
-		{
+		catch(IllegalArgumentException e) {
 			Dialogs.showErrorDialog(this.getStage(), "Bestellungen konnten nicht geladen werden.", "Ladefehler", "Bestellungen laden", e);
 		} 
-		catch(DAOException e) 
-		{
+		catch(DAOException e) {
 			Dialogs.showErrorDialog(this.getStage(), "Bestellungen konnten nicht geladen werden.", "Ladefehler", "Bestellungen laden", e);
 		}
 		kuecheBestellungTableView.setItems(bestellungen);
 	}
 	
-	// todo: Die für die Speise laut Rezept notwendigen Waren aus dem Lager entfernen (Serviceschicht).
+	//TODO: Die für die Speise laut Rezept notwendigen Waren aus dem Lager entfernen (Serviceschicht).
 	@FXML
 	public void clickOnChangeStatusToWirdGekocht(ActionEvent event) 
 	{
@@ -93,8 +84,10 @@ public class KuecheController extends RefreshableController
 		{
 			try {
 				for(Bestellung b:gewaehlteBestellungen) {
-					b.setStatus("wirdGekocht");
-					s.updateBestellung(b);
+					if(b!=null) {
+						b.setStatus("wirdGekocht");
+						s.updateBestellung(b);
+					}
 				}
 			}
 			catch(DAOException e) 
@@ -118,10 +111,13 @@ public class KuecheController extends RefreshableController
 		{
 			try {
 				for(Bestellung b:gewaehlteBestellungen) {
-					b.setStatus("fertigGekocht");
-					s.updateBestellung(b);
-					s.aktualisiereBearbeitungszeit();
+					if(b!=null) {
+						b.setStatus("fertigGekocht");
+						s.updateBestellung(b);
+					}
 				}
+				
+				s.aktualisiereBearbeitungszeit();
 			}
 			catch(DAOException e) 
 			{

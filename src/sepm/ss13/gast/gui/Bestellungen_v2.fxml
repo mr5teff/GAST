@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" fx:id="root" maxHeight="-Infinity" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="1000.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.BestellController">
+  <children>
+    <SplitPane dividerPositions="0.47695390781563124" focusTraversable="true" prefHeight="536.0" prefWidth="796.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="534.0" prefWidth="611.0">
+          <children>
+            <GridPane fx:id="gridPane" blendMode="SRC_OVER" cache="false" depthTest="INHERIT" disable="false" focusTraversable="false" gridLinesVisible="true" hgap="6.0" layoutX="28.0" layoutY="89.0" prefHeight="316.0" prefWidth="418.0" vgap="6.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+              </columnConstraints>
+              <padding>
+                <Insets />
+              </padding>
+              <rowConstraints>
+                <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <Button layoutX="28.0" layoutY="417.0" mnemonicParsing="false" onAction="#back" text="Zurück" />
+            <Label fx:id="bestellLabel" layoutX="28.0" layoutY="57.0" text="Tisch auswählen" />
+          </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="534.0" prefWidth="369.0">
+          <children>
+            <Label layoutX="14.0" layoutY="27.0" text="Offene Bestellungen für den gewählten Tisch" />
+            <TableView fx:id="bestellungTableView" layoutX="14.0" layoutY="58.0" prefHeight="347.0" prefWidth="366.0">
+              <columns>
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="141.0" text="Produktname" fx:id="nameCol" />
+                <TableColumn id="" prefWidth="75.0" text="Preis" fx:id="preisCol" />
+                <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="150.0" text="Status" fx:id="statusCol" />
+              </columns>
+            </TableView>
+            <CheckBox fx:id="alleBestellungen" layoutX="14.0" layoutY="418.0" mnemonicParsing="false" onAction="#listBestellungen" text="Alle Bestellungen anzeigen" />
+            <Button layoutX="14.0" layoutY="469.0" mnemonicParsing="false" onAction="#storniereBestellung" text="Stornieren" />
+            <Button layoutX="115.0" layoutY="469.0" mnemonicParsing="false" onAction="#clickOnDruckeRechnung" text="Rechnung erstellen" />
+            <Button layoutX="251.0" layoutY="469.0" mnemonicParsing="false" onAction="#moveToTable" text="auf anderen Tisch verschieben:" />
+            <ComboBox fx:id="zielTisch" layoutX="444.0" layoutY="470.0" minHeight="20.0" prefWidth="65.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <Integer fx:value="1" />
+                  <Integer fx:value="2" />
+                  <Integer fx:value="3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <ComboBox id="table" fx:id="tisch" layoutX="285.0" layoutY="424.0" minHeight="20.0" prefWidth="95.0">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <Integer fx:value="1" />
+                  <Integer fx:value="2" />
+                  <Integer fx:value="3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <Label layoutX="245.0" layoutY="426.0" text="Tisch:" />
+          </children>
+        </AnchorPane>
+      </items>
+    </SplitPane>
+  </children>
+</AnchorPane>
