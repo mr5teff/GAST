@@ -19,31 +19,26 @@ import sepm.ss13.gast.domain.Konfiguration;
 
 public class Test_JDBCKonfigurationDAO {
 	
-	private ApplicationContext ac;
-	private DBConnector dbc;
-	private JDBCKonfigurationDAO test = null;
-	
-	private Konfiguration kOrigin = null;
-	private Konfiguration k = null;
+	private static ApplicationContext ac;
+	private static DBConnector dbc;
 	
 	@BeforeClass
-	public void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() throws Exception {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
-		dbc.getConnection().setAutoCommit(false);
-		test = new JDBCKonfigurationDAO(dbc.getConnection());
-		
-		kOrigin = test.load();
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public static void tearDown() throws Exception {
 		dbc.getConnection().rollback();
 	}
 
 	@Test
-	public void testSaveKonfig() throws DAOException {
-		k = new Konfiguration("TestBar", "TestStrasse 2 / 25", "0664 1122334455", kOrigin.getLogo(), 666);
+	public static void testSaveKonfig() throws DAOException {
+		JDBCKonfigurationDAO test = new JDBCKonfigurationDAO(dbc.getConnection());
+		Konfiguration kOrigin = test.load();
+		
+		Konfiguration k = new Konfiguration("TestBar", "TestStrasse 2 / 25", "0664 1122334455", kOrigin.getLogo(), 666);
 		test.save(k);
 		Konfiguration k_test = test.load();
 		

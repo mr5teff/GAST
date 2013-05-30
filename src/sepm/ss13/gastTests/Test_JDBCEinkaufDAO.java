@@ -26,42 +26,42 @@ import sepm.ss13.gast.domain.Ware;
 
 public class Test_JDBCEinkaufDAO {
 
-	private ApplicationContext ac;
-	private DBConnector dbc;
-	private JDBCWareDAO test_Ware = null;
-	private JDBCEinkaufDAO test_Einkauf = null;
+	static ApplicationContext ac;
+	static DBConnector dbc;
+	static JDBCWareDAO test_Ware = null;
+	static JDBCEinkaufDAO test_Einkauf = null;
 
-	private Ware w1 = null; //create
-	private Ware w2 = null; //create
-	private Einkauf e1 = null; // create
-	private Einkauf e2 = null; // create
+	static Ware w1 = null; //create
+	static Ware w2 = null; //create
+	static Einkauf e1 = null; // create
+	static Einkauf e2 = null; // create
 
-	private Ware w3 = null; // search
-	private Ware w4 = null; // search
-	private Einkauf e3 = null; // search
-	private Einkauf e4 = null; // search
+	static Ware w3 = null; // search
+	static Ware w4 = null; // search
+	static Einkauf e3 = null; // search
+	static Einkauf e4 = null; // search
 
-	private Ware w5 = null; // update
-	private Ware w6 = null; // update
-	private Einkauf e5 = null; // update
-	private Einkauf e6 = null; // update
+	static Ware w5 = null; // update
+	static Ware w6 = null; // update
+	static Einkauf e5 = null; // update
+	static Einkauf e6 = null; // update
 
-	private Ware w7 = null; // delete
-	private Ware w8 = null; // delete
-	private Einkauf e7 = null; // delete
-	private Einkauf e8 = null; // delete
+	static Ware w7 = null; // delete
+	static Ware w8 = null; // delete
+	static Einkauf e7 = null; // delete
+	static Einkauf e8 = null; // delete
 	
-	private ArrayList<Integer> mykeys_Einkauf = new ArrayList<Integer>();
-	private ArrayList<Integer> mykeys_generated_Einkauf = new ArrayList<Integer>();
-	private ArrayList<Integer> mykeys_Ware = new ArrayList<Integer>();
-	private ArrayList<Integer> mykeys_generated_Ware = new ArrayList<Integer>();
+	static ArrayList<Integer> mykeys_Einkauf = new ArrayList<Integer>();
+	static ArrayList<Integer> mykeys_generated_Einkauf = new ArrayList<Integer>();
+	static ArrayList<Integer> mykeys_Ware = new ArrayList<Integer>();
+	static ArrayList<Integer> mykeys_generated_Ware = new ArrayList<Integer>();
 	
 	
 	@BeforeClass
-	public void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() throws Exception {
 		ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
-		dbc.getConnection().setAutoCommit(false);
+		//dbc.getConnection().setAutoCommit(false);
 		test_Einkauf = new JDBCEinkaufDAO(dbc.getConnection());
 		test_Ware = new JDBCWareDAO(dbc.getConnection());
 		
