@@ -28,7 +28,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.Dialogs;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -40,8 +42,6 @@ public class BestellController extends RefreshableController {
 	private Service s;
 	private ObservableList<Bestellung> bestellungen;
 	private ObservableList<Integer> tischnummern;
-	private ObservableList<String> kategorien;
-	private ObservableList<String> produkte;
 	
 	private ArrayList<ProduktKategorie> pk;
 	private ArrayList<Produkt> p;
@@ -65,15 +65,17 @@ public class BestellController extends RefreshableController {
 	@FXML private TextField anzahl;
 	@FXML private ComboBox<Integer> zielTisch;
 	@FXML private GridPane gridPane;
+	@FXML private Label bestellLabel;
+	
 
 	 public void initialize(URL arg0, ResourceBundle arg1) {
 			s = (Service) this.getApplicationContext().getBean("GASTService");
-			
 			
 			bestellungTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 			nameCol.setCellValueFactory(new PropertyValueFactory<Bestellung,String>("pname"));
 			preisCol.setCellValueFactory(new PropertyValueFactory<Bestellung,Integer>("preis"));
 			statusCol.setCellValueFactory(new PropertyValueFactory<Bestellung,String>("status"));
+			
 			tischnummern = FXCollections.observableArrayList();
 			try {
 				tischList = s.searchTisch(new Tisch());
@@ -86,6 +88,7 @@ public class BestellController extends RefreshableController {
 			tisch.setItems(tischnummern);
 			tisch.setValue(tischnummern.get(0));
 			listBestellungen();
+			
 			tisch.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Integer>() {
 				public void changed(ObservableValue<? extends Integer> arg0,Integer arg1, Integer arg2) {
 					listBestellungen();
@@ -94,41 +97,16 @@ public class BestellController extends RefreshableController {
 			
 			zielTisch.setItems(tischnummern);
 
-			kategorien = FXCollections.observableArrayList();
+			
 			try {
 				pk = s.searchProduktKategorie(new ProduktKategorie());
-				for(int i=0;i<pk.size();i++) {
-					kategorien.add(pk.get(i).getBezeichnung());
-				}
 			} catch (IllegalArgumentException e) {
 				Dialogs.showErrorDialog(this.getStage(), "Kategorien konnten nicht geladen werden.", "Ladefehler", "Kategorien laden", e);
 			} catch (DAOException e) {
 				Dialogs.showErrorDialog(this.getStage(), "Kategorien konnten nicht geladen werden.", "Ladefehler", "Kategorien laden", e);
 			}
-			kategorie.setItems(kategorien);
-			kategorie.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
-				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-					produkte = FXCollections.observableArrayList();
-					try {
-						Produkt sprodukt=new Produkt();
-						sprodukt.setKategorie(pk.get(kategorie.getSelectionModel().getSelectedIndex()).getId());
-						p = s.searchProdukt(sprodukt);
-						for(int i=0;i<p.size();i++) {
-							produkte.add(p.get(i).getName());
-						}
-					} catch (IllegalArgumentException e) {
-						Dialogs.showErrorDialog(null, "Produkte konnten nicht geladen werden.", "Ladefehler", "Produkte laden", e);
-					} catch (DAOException e) {
-						Dialogs.showErrorDialog(null, "Produkte konnten nicht geladen werden.", "Ladefehler", "Produkte laden", e);
-					}
-					produkt.setItems(produkte);
-				}
-				
-			});
-			
+						
 			addTischButtons(tischList);
-			//addProduktKategorieButtons(pk);
 			
 			this.startRefresh();
 		 }
@@ -137,7 +115,7 @@ public class BestellController extends RefreshableController {
 		 public void listBestellungen() {
 			 bestellungen = FXCollections.observableArrayList();
 			 try {
-					Bestellung bestellung=new Bestellung();
+					Bestellung bestellung = new Bestellung();
 					if(alleBestellungen.isSelected()==false) {
 						bestellung.setTisch(tisch.getValue());
 					}
@@ -152,6 +130,7 @@ public class BestellController extends RefreshableController {
 				}
 				bestellungTableView.setItems(bestellungen);
 		 }
+		 
 		 @FXML
 		 public void clickOnTisch(ActionEvent event) {
 			 System.out.println("GEEEHT");
@@ -183,46 +162,7 @@ public class BestellController extends RefreshableController {
 			listBestellungen();
 		}
 		
-		 @FXML
-		 public void clickOnAddBestellung(ActionEvent event) {
-			 int n=0;
-			 String message="";
-			 try {
-				 n= Integer.parseInt(anzahl.getText());
-			 }
-			 catch(NumberFormatException e) {
-				 message+="Keine gueltige Anzahl ausgewaehlt!\n";
-				 }
-			 if((n!=0)&&(produkt.getSelectionModel().isEmpty()==false)) {
-				 for(int i=0; i<n;i++) {
-					 Bestellung bestellung=new Bestellung();
-					 bestellung.setTisch(tisch.getValue());
-					 bestellung.setProdukt(p.get(produkt.getSelectionModel().getSelectedIndex()).getId());
-					 bestellung.setPname(p.get(produkt.getSelectionModel().getSelectedIndex()).getName());
-					 bestellung.setPreis(p.get(produkt.getSelectionModel().getSelectedIndex()).getPreis());
-					 bestellung.setSteuer(pk.get(kategorie.getSelectionModel().getSelectedIndex()).getSteuer());
-					 bestellung.setStatus("bestellt");
-					 bestellung.setDeleted(false);
-					 try {
-						 s.createBestellung(bestellung);
-					 } catch (IllegalArgumentException e) {
-						 Dialogs.showErrorDialog(this.getStage(), "Bestellung konnte nicht erstellt werden.", "Speicherfehler", "Bestellung erstellen", e);
-					 } catch (DAOException e) {
-						 Dialogs.showErrorDialog(this.getStage(), "Bestellung konnte nicht erstellt werden.", "Speicherfehler", "Bestellung erstellen", e);
-					 }
-				 }
-				 listBestellungen();
-				 anzahl.setText("");
-			 }
-			 else{
-				 if(produkt.getSelectionModel().isEmpty()) {
-					 message+="Kein Produkt ausgewaehlt!";
-				 }
-				 Dialogs.showInformationDialog(this.getStage(), message , "Bestellung hinzufügen", "Information");
-			 }
 			 
-		 }
-		 
 		 @FXML
 		 public void moveToTable() {
 			 if(bestellungTableView.getSelectionModel().getSelectedItems().isEmpty()) {
@@ -292,10 +232,12 @@ public class BestellController extends RefreshableController {
 			if(buttonState == 1)
 			{
 				addTischButtons(tischList);
+				bestellLabel.setText("Tisch auswählen");
 			}
 			else if(buttonState == 2)
 			{
 				addProduktKategorieButtons(this.pk);
+				bestellLabel.setText("Tischnummer " + clickedTisch.getNummer());
 			}
 		
 		}
@@ -312,6 +254,8 @@ public class BestellController extends RefreshableController {
 				for(int y=0; y < gridPane.getColumnConstraints().size() && index < size; y++)
 				{
 					final Button b = new Button(tischList.get(index).getNummer().toString());
+					b.setPrefSize(100, 100);
+					b.setWrapText(true);
 					b.setUserData(tischList.get(index));
 					gridPane.add(b, y, x);
 					b.setOnAction(new EventHandler<ActionEvent>() {
@@ -341,6 +285,8 @@ public class BestellController extends RefreshableController {
 				{
 					final Button b = new Button(pkList.get(index).getBezeichnung());
 					b.setUserData(pkList.get(index));
+					b.setPrefSize(100, 100);
+					b.setWrapText(true);
 					gridPane.add(b, y, x);
 					b.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -369,6 +315,8 @@ public class BestellController extends RefreshableController {
 				{
 					final Button b = new Button(pList.get(index).getName());
 					b.setUserData(pList.get(index));
+					b.setPrefSize(100, 100);
+					b.setWrapText(true);
 					gridPane.add(b, y, x);
 					b.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -391,6 +339,8 @@ public class BestellController extends RefreshableController {
 			clickedTisch = t;
 			
 			tisch.setValue(t.getNummer());
+			
+			bestellLabel.setText("Tischnummer " + clickedTisch.getNummer());
 			addProduktKategorieButtons(this.pk);
 		}
 		
@@ -415,6 +365,7 @@ public class BestellController extends RefreshableController {
 				e.printStackTrace();
 			}
 			
+			bestellLabel.setText("Tischnummer " + clickedTisch.getNummer() + " >> " + pk.getBezeichnung());
 			addProduktButtons(pList);
 		}
 		
