@@ -112,7 +112,7 @@ public class BestellController extends RefreshableController {
 		 }
 	 
 		 @FXML
-		 public void listBestellungen() {
+		 public synchronized void listBestellungen() {
 			 bestellungen = FXCollections.observableArrayList();
 			 try {
 					Bestellung bestellung = new Bestellung();
@@ -138,18 +138,15 @@ public class BestellController extends RefreshableController {
 		 
 		 @FXML
 		 protected void storniereBestellung(ActionEvent event) {
-			 int gewaehlt=bestellungTableView.getSelectionModel().getSelectedItems().size();
-			 if(gewaehlt==0)
-			 {
+			 ObservableList<Bestellung> gewaehlteBestellungen=bestellungTableView.getSelectionModel().getSelectedItems();
+			 
+			 if(gewaehlteBestellungen.isEmpty()) {
 				 Dialogs.showInformationDialog(this.getStage(), "Keine Bestellung ausgewählt!", "Bestellung stornieren", "Information");
 				 return;
 			 }
 			 try {
-				 ObservableList<Bestellung> gewaehlteBestellungen=bestellungTableView.getSelectionModel().getSelectedItems();
-				 for(int i=0;i<gewaehlt;i++) {
-					Bestellung b= new Bestellung();
-				 	b.setId(gewaehlteBestellungen.get(i).getId());
-				 	s.deleteBestellung(b);
+				 for(Bestellung b:gewaehlteBestellungen) {
+					 if(b!=null) s.deleteBestellung(b);
 				 }
 				 
 			} catch (IllegalArgumentException e) {
@@ -165,16 +162,19 @@ public class BestellController extends RefreshableController {
 			 
 		 @FXML
 		 public void moveToTable() {
-			 if(bestellungTableView.getSelectionModel().getSelectedItems().isEmpty()) {
+			 ObservableList<Bestellung> gewaehlteBestellungen=bestellungTableView.getSelectionModel().getSelectedItems();
+			 
+			 if(gewaehlteBestellungen.isEmpty()) {
 				 Dialogs.showInformationDialog(this.getStage(), "Keine Bestellung ausgewählt!", "Bestellung verschieben", "Information");
 				 return;
 			 }
 			 
 			 try {
-				 ObservableList<Bestellung> gewaehlteBestellungen=bestellungTableView.getSelectionModel().getSelectedItems();
 				 for(Bestellung b:gewaehlteBestellungen) {
-					b.setTisch(zielTisch.getValue());
-					s.updateBestellung(b);
+					 if(b!=null) {
+						b.setTisch(zielTisch.getValue());
+						s.updateBestellung(b);
+					 }
 				 }
 			} catch (IllegalArgumentException e) {
 				Dialogs.showInformationDialog(this.getStage(), "Kein Tisch ausgewählt!", "Bestellung verschieben", "Information");
