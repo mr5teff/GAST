@@ -19,34 +19,43 @@ import sepm.ss13.gast.domain.Konfiguration;
 
 public class Test_JDBCKonfigurationDAO {
 	
-	private static ApplicationContext ac;
+	private static JDBCKonfigurationDAO testDAO;
 	private static DBConnector dbc;
-	
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		ac = new ClassPathXmlApplicationContext("spring-config.xml");
+		ApplicationContext ac = new ClassPathXmlApplicationContext("spring-config.xml");
 		dbc = (DBConnector) ac.getBean("databaseManager");
+		dbc.getConnection().setAutoCommit(false); 
+		testDAO = new JDBCKonfigurationDAO(dbc.getConnection());		
 	}
 
 	@After
-	public static void tearDown() throws Exception {
+	public void tearDown() throws Exception {
 		dbc.getConnection().rollback();
 	}
 
 	@Test
-	public static void testSaveKonfig() throws DAOException {
-		JDBCKonfigurationDAO test = new JDBCKonfigurationDAO(dbc.getConnection());
-		Konfiguration kOrigin = test.load();
+	public void testSaveKonfig() {
+		// Original sichern, neue Konfiguration erstellen, speichern, vergleichen
 		
-		Konfiguration k = new Konfiguration("TestBar", "TestStrasse 2 / 25", "0664 1122334455", kOrigin.getLogo(), 666);
-		test.save(k);
-		Konfiguration k_test = test.load();
-		
-		assertThat(k_test.getAdresse(), equalTo(k.getAdresse()));
-		assertThat(k_test.getName(), equalTo(k.getName()));
-		assertThat(k_test.getTel(), equalTo(k.getTel()));
-		assertThat(k_test.getTimerIntervall(), equalTo(k.getTimerIntervall()));
-		assertThat(k_test.getLogo(), equalTo(k.getLogo()));
+		try {
+			Konfiguration original = testDAO.load();
+			
+			Konfiguration k = new Konfiguration("Testbar", "Teststrasse 6", "0664 11223344", original.getLogo(), 666);
+			testDAO.save(k);
+			Konfiguration kTest = testDAO.load();
+			
+			assertThat(k.getName(), equalTo(kTest.getName()));
+			assertThat(k.getAdresse(), equalTo(kTest.getAdresse()));
+			assertThat(k.getTel(), equalTo(kTest.getTel()));
+			assertThat(k.getTimerIntervall(), equalTo(kTest.getTimerIntervall()));
+			assertThat(k.getLogo(), equalTo(kTest.getLogo()));
+			
+			testDAO.save(original);
+			
+		} catch(DAOException e) {
+			fail(e.getMessage());
+		}
 	}
-
 }
