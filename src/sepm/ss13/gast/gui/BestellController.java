@@ -87,17 +87,19 @@ public class BestellController extends RefreshableController {
 							if(item!=null){
 								if(item.equalsIgnoreCase("bestellt")){
 									this.setStyle("-fx-background-color: indianred;");
-									//this.setText("bestellt");
+									this.setText("bestellt");
 								}else if(item.equalsIgnoreCase("in Arbeit")){
 									this.setStyle("-fx-background-color: orange;");
+									this.setText("in Arbeit");
 								}else if(item.equalsIgnoreCase("zu liefern")){
 									this.setStyle("-fx-background-color: orangered;");
-									//this.setText("zu liefern");
+									this.setText("zu liefern");
 								}else if(item.equalsIgnoreCase("geliefert")){
 									this.setStyle("-fx-background-color: mediumseagreen;");
-									//this.setText("geliefert");
+									this.setText("geliefert");
 								}else if(item.equalsIgnoreCase("bezahlt")){
 									this.setStyle("-fx-background-color: seagreen;");
+									this.setText("bezahlt");
 								}
 					        	
 							}
