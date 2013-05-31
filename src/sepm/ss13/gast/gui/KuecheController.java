@@ -16,9 +16,11 @@ import javafx.fxml.FXML;
 
 import javafx.scene.control.Dialogs;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 public class KuecheController extends RefreshableController 
 {
@@ -47,6 +49,35 @@ public class KuecheController extends RefreshableController
 		bestelldatumCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Date>("bestelldatum"));
 		bearbeitungszeitCol.setCellValueFactory(new PropertyValueFactory<Bestellung, Integer>("bearbeitungszeit"));
 		
+		statusCol.setCellFactory(new Callback<TableColumn<Bestellung,String>,TableCell<Bestellung,String>>(){
+			//@Override
+			public TableCell<Bestellung, String> call(TableColumn<Bestellung, String> param) {
+				TableCell<Bestellung, String> cell = new TableCell<Bestellung, String>(){
+					@Override
+					public void updateItem(String item, boolean empty) {
+						if(item!=null){
+							if(item.equalsIgnoreCase("bestellt")){
+								this.setStyle("-fx-background-color: indianred;");
+								//this.setText("bestellt");
+							}else if(item.equalsIgnoreCase("in Arbeit")){
+								this.setStyle("-fx-background-color: orange;");
+							}else if(item.equalsIgnoreCase("zu liefern")){
+								this.setStyle("-fx-background-color: orangered;");
+								//this.setText("zu liefern");
+							}else if(item.equalsIgnoreCase("geliefert")){
+								this.setStyle("-fx-background-color: mediumseagreen;");
+								//this.setText("geliefert");
+							}else if(item.equalsIgnoreCase("bezahlt")){
+								this.setStyle("-fx-background-color: seagreen;");
+							}
+				        	
+						}
+					}
+				};  
+				return cell;
+			}
+		});
+		
 		listBestellungen();
 		this.startRefresh();
 	}
@@ -59,7 +90,7 @@ public class KuecheController extends RefreshableController
 			Bestellung bestellungStatus = new Bestellung(); 		
 			bestellungStatus.setStatus("bestellt");
 			liste = s.searchBestellung(bestellungStatus);
-			bestellungStatus.setStatus("wirdGekocht");
+			bestellungStatus.setStatus("in Arbeit");
 			liste.addAll(s.searchBestellung(bestellungStatus));
 			bestellungen.addAll(liste);		
 		}
@@ -85,7 +116,7 @@ public class KuecheController extends RefreshableController
 			try {
 				for(Bestellung b:gewaehlteBestellungen) {
 					if(b!=null) {
-						b.setStatus("wirdGekocht");
+						b.setStatus("in Arbeit");
 						s.updateBestellung(b);
 					}
 				}
@@ -112,7 +143,7 @@ public class KuecheController extends RefreshableController
 			try {
 				for(Bestellung b:gewaehlteBestellungen) {
 					if(b!=null) {
-						b.setStatus("fertigGekocht");
+						b.setStatus("zu liefern");
 						s.updateBestellung(b);
 					}
 				}

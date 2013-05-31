@@ -32,11 +32,13 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Dialogs;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.util.Callback;
 
 public class BestellController extends RefreshableController {
 	private Service s;
@@ -75,6 +77,35 @@ public class BestellController extends RefreshableController {
 			nameCol.setCellValueFactory(new PropertyValueFactory<Bestellung,String>("pname"));
 			preisCol.setCellValueFactory(new PropertyValueFactory<Bestellung,Integer>("preis"));
 			statusCol.setCellValueFactory(new PropertyValueFactory<Bestellung,String>("status"));
+			
+			statusCol.setCellFactory(new Callback<TableColumn<Bestellung,String>,TableCell<Bestellung,String>>(){
+				//@Override
+				public TableCell<Bestellung, String> call(TableColumn<Bestellung, String> param) {
+					TableCell<Bestellung, String> cell = new TableCell<Bestellung, String>(){
+						@Override
+						public void updateItem(String item, boolean empty) {
+							if(item!=null){
+								if(item.equalsIgnoreCase("bestellt")){
+									this.setStyle("-fx-background-color: indianred;");
+									//this.setText("bestellt");
+								}else if(item.equalsIgnoreCase("in Arbeit")){
+									this.setStyle("-fx-background-color: orange;");
+								}else if(item.equalsIgnoreCase("zu liefern")){
+									this.setStyle("-fx-background-color: orangered;");
+									//this.setText("zu liefern");
+								}else if(item.equalsIgnoreCase("geliefert")){
+									this.setStyle("-fx-background-color: mediumseagreen;");
+									//this.setText("geliefert");
+								}else if(item.equalsIgnoreCase("bezahlt")){
+									this.setStyle("-fx-background-color: seagreen;");
+								}
+					        	
+							}
+						}
+					};  
+					return cell;
+				}
+			});
 			
 			tischnummern = FXCollections.observableArrayList();
 			try {
