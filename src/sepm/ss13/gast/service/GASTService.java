@@ -15,6 +15,7 @@ import sepm.ss13.gast.dao.JDBCProduktDAO;
 import sepm.ss13.gast.dao.JDBCProduktKategorieDAO;
 import sepm.ss13.gast.dao.JDBCRechnungDAO;
 import sepm.ss13.gast.dao.JDBCReservierungDAO;
+import sepm.ss13.gast.dao.JDBCRezeptDAO;
 import sepm.ss13.gast.dao.JDBCTischDAO;
 import sepm.ss13.gast.dao.JDBCWareDAO;
 import sepm.ss13.gast.dao.KonfigurationDAO;
@@ -31,6 +32,7 @@ import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.domain.Rechnung;
 import sepm.ss13.gast.domain.Reservierung;
+import sepm.ss13.gast.domain.Rezept;
 import sepm.ss13.gast.domain.Tisch;
 import sepm.ss13.gast.domain.Ware;
 import sepm.ss13.gast.gui.GAST;
@@ -46,6 +48,7 @@ public class GASTService implements Service{
 	private ReservierungDAO reservierungDAO;
 	private WareDAO wareDAO;
 	private TischDAO tischDAO;
+	private JDBCRezeptDAO rezeptDAO;
 	
 	public GASTService(DBConnector dbCon) {	//Die Zuweisung hier sollte man glaub ich ueber spring machen
 		
@@ -59,6 +62,7 @@ public class GASTService implements Service{
 		this.reservierungDAO = new JDBCReservierungDAO(con);
 		this.wareDAO = new JDBCWareDAO(con);
 		this.tischDAO= new JDBCTischDAO(con);
+		this.rezeptDAO= new JDBCRezeptDAO(con);
 	}
 	
 	/*
@@ -280,6 +284,36 @@ public class GASTService implements Service{
 		if(ek==null) throw new IllegalArgumentException();
 		wareDAO.delete(ek);
 	}
+	
+	/*
+	 * Services fuer Rezept
+	 */
+
+	public void createRezept(Rezept w) throws DAOException, IllegalArgumentException {
+		if(w==null) throw new IllegalArgumentException();
+		Rezept toS = new Rezept(w.getProduktId(),w.getWareId(),-1,null);
+		ArrayList<Rezept> tmp = rezeptDAO.search(toS);
+		if(tmp.size() != 0){
+			Rezept toU = new Rezept(w.getProduktId(),w.getWareId(),w.getMenge() + tmp.get(0).getMenge(),null);
+			rezeptDAO.update(toU);
+		}else{
+			rezeptDAO.create(w);
+		}
+		
+		
+	}
+
+	
+	public ArrayList<Rezept> searchRezept(Rezept r) throws DAOException, IllegalArgumentException {
+		if(r==null) throw new IllegalArgumentException();
+		return rezeptDAO.search(r);
+	}
+	
+	public void deleteRezept(Rezept r) throws DAOException, IllegalArgumentException {
+		if(r==null) throw new IllegalArgumentException();
+		rezeptDAO.delete(r);
+	}
+
 	/*
 	 * Services fuer Tisch
 	 */

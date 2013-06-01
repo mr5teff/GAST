@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="352.0" prefWidth="984.0" xmlns:fx="http://javafx.com/fxml" fx:controller="sepm.ss13.gast.gui.RezeptController">
+  <children>
+    <Label layoutX="14.0" layoutY="14.0" prefWidth="572.0" text="Hier kann der Warenverbrauch pro Produkt konfiguriert werden">
+      <font>
+        <Font name="System Bold" size="13.0" />
+      </font>
+    </Label>
+    <Label layoutX="19.0" layoutY="54.0" prefWidth="286.0" text="1) Wählen Sie das Produkt aus" />
+    <Separator layoutX="19.0" layoutY="70.0" prefWidth="250.0" />
+    <ComboBox fx:id="produktKategorieBox" layoutX="38.0" layoutY="108.0" prefHeight="21.0" prefWidth="153.00009999999747">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="Item 1" />
+          <String fx:value="Item 2" />
+          <String fx:value="Item 3" />
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <Label layoutX="38.0" layoutY="84.0" prefWidth="154.0" text="Produktkategorie wählen" />
+    <Label layoutX="38.0" layoutY="144.0" prefWidth="153.0" text="Produkt wählen" />
+    <ComboBox fx:id="produkteBox" layoutX="38.0" layoutY="168.0" prefHeight="21.0" prefWidth="153.0" onAction="#listRezepte">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <Label layoutX="343.0" layoutY="54.0" prefWidth="286.0" text="2) Wählen Sie die benötigten Waren aus" />
+    <Separator layoutX="343.0" layoutY="70.0" prefWidth="250.0" />
+    <TableView fx:id="rezeptTable" layoutX="688.0" layoutY="108.0" prefHeight="125.0" prefWidth="236.0">
+      <columns>
+        <TableColumn fx:id="wareCol" prefWidth="136.0" text="Warenname" />
+        <TableColumn fx:id="mengeCol" prefWidth="100.0" text="Menge" />
+      </columns>
+    </TableView>
+    <ComboBox fx:id="wareBox" layoutX="359.0" layoutY="108.0" prefHeight="21.0" prefWidth="200.0">
+      <items>
+        <FXCollections fx:factory="observableArrayList">
+          <String fx:value="Item 1" />
+          <String fx:value="Item 2" />
+          <String fx:value="Item 3" />
+        </FXCollections>
+      </items>
+    </ComboBox>
+    <TextField fx:id="wMenge" layoutX="359.0" layoutY="168.0" prefWidth="200.0" />
+    <Button fx:id="clickAddWare" layoutX="359.0" layoutY="212.0" mnemonicParsing="false" onAction="#clickAddWare" prefWidth="200.0" text="Ware zur Liste hinzufügen &gt;" />
+    <Label layoutX="688.0" layoutY="53.0" prefWidth="250.0" text="3) Auswahl bestätigen" />
+    <Separator layoutX="688.0" layoutY="69.0" prefWidth="250.0" />
+    <Label layoutX="359.0" layoutY="84.0" prefWidth="154.0" text="Ware wählen" />
+    <Label layoutX="359.0" layoutY="144.0" prefWidth="153.0" text="Menge eingeben" />
+    <Label layoutX="688.0" layoutY="84.0" prefWidth="154.0" text="Gesamtverbrauch" />
+    <Button layoutX="688.0" layoutY="251.0" mnemonicParsing="false" prefWidth="184.0" text="Liste löschen" onAction="#clickDeleteAll" />
+  </children>
+</AnchorPane>
