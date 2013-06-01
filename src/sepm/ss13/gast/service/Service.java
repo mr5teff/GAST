@@ -6,6 +6,7 @@ import sepm.ss13.gast.dao.DAOException;
 import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.domain.Einkauf;
 import sepm.ss13.gast.domain.Konfiguration;
+import sepm.ss13.gast.domain.Konsumstatistik;
 import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.domain.Rechnung;
@@ -132,4 +133,10 @@ public interface Service {
 	 * Services für Küche
 	 */
 	public void aktualisiereBearbeitungszeit() throws DAOException, IllegalArgumentException;
+	
+	/*
+	 * Services fuer Konsumstatistik
+	 */
+	
+	public ArrayList<Konsumstatistik> showPopularProducts() throws DAOException, IllegalArgumentException; 
 }

@@ -11,6 +11,7 @@ import sepm.ss13.gast.dao.EinkaufDAO;
 import sepm.ss13.gast.dao.JDBCBestellungDAO;
 import sepm.ss13.gast.dao.JDBCEinkaufDAO;
 import sepm.ss13.gast.dao.JDBCKonfigurationDAO;
+import sepm.ss13.gast.dao.JDBCKonsumstatistikDAO;
 import sepm.ss13.gast.dao.JDBCProduktDAO;
 import sepm.ss13.gast.dao.JDBCProduktKategorieDAO;
 import sepm.ss13.gast.dao.JDBCRechnungDAO;
@@ -19,6 +20,7 @@ import sepm.ss13.gast.dao.JDBCRezeptDAO;
 import sepm.ss13.gast.dao.JDBCTischDAO;
 import sepm.ss13.gast.dao.JDBCWareDAO;
 import sepm.ss13.gast.dao.KonfigurationDAO;
+import sepm.ss13.gast.dao.KonsumstatistikDAO;
 import sepm.ss13.gast.dao.ProduktDAO;
 import sepm.ss13.gast.dao.ProduktKategorieDAO;
 import sepm.ss13.gast.dao.RechnungDAO;
@@ -28,6 +30,7 @@ import sepm.ss13.gast.dao.WareDAO;
 import sepm.ss13.gast.domain.Bestellung;
 import sepm.ss13.gast.domain.Einkauf;
 import sepm.ss13.gast.domain.Konfiguration;
+import sepm.ss13.gast.domain.Konsumstatistik;
 import sepm.ss13.gast.domain.Produkt;
 import sepm.ss13.gast.domain.ProduktKategorie;
 import sepm.ss13.gast.domain.Rechnung;
@@ -49,6 +52,7 @@ public class GASTService implements Service{
 	private WareDAO wareDAO;
 	private TischDAO tischDAO;
 	private JDBCRezeptDAO rezeptDAO;
+	private KonsumstatistikDAO konsumstatistikDAO;
 	
 	public GASTService(DBConnector dbCon) {	//Die Zuweisung hier sollte man glaub ich ueber spring machen
 		
@@ -63,6 +67,7 @@ public class GASTService implements Service{
 		this.wareDAO = new JDBCWareDAO(con);
 		this.tischDAO= new JDBCTischDAO(con);
 		this.rezeptDAO= new JDBCRezeptDAO(con);
+		this.konsumstatistikDAO= new JDBCKonsumstatistikDAO(con);
 	}
 	
 	/*
@@ -375,4 +380,13 @@ public class GASTService implements Service{
 			}
 		}
 	}	
+	
+	/*
+	 * Services fuer Konsumstatistik
+	 */
+	
+	public ArrayList<Konsumstatistik> showPopularProducts() throws DAOException, IllegalArgumentException 
+	{
+		return konsumstatistikDAO.searchPopularProducts();
+	}
 }

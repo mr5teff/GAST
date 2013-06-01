@@ -16,6 +16,7 @@
     <fx:include fx:id="warenContent" source="Waren.fxml" />  
     <fx:include fx:id="rezeptContent" source="Rezept.fxml" />  
     <fx:include fx:id="lagerContent" source="Lagerverwaltung.fxml" />
+    <fx:include fx:id="konsumstatistikContent" source="Konsumstatistik.fxml" prefHeight="641.0" prefWidth="1000.0" />
   </fx:define>
   <children>
     <TitledPane animated="false" collapsible="false" contentDisplay="RIGHT" prefHeight="400.0" prefWidth="1000.0" text="Management" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -29,7 +30,8 @@
                 <Tab closable="false" content="$speisekarteContent" text="Speisekarte verwalten" />
                 <Tab closable="false" content="$warenContent" text="Waren verwalten" />
                 <Tab closable="false" content="$rezeptContent" text="Warenverbrauch verwalten" />
-                 <Tab closable="false" content="$lagerContent" text="Lagerverwaltung" />           
+                <Tab closable="false" content="$lagerContent" text="Lagerverwaltung" />   
+                <Tab closable="false" content="$konsumstatistikContent" text="Konsumstatistik" />        
               </tabs>
             </TabPane>
           </children>
